@@ -3,7 +3,7 @@ module.exports = {
         electronBuilder: {
             nodeIntegration: true,
             builderOptions: {
-            "extraResources": [
+            extraResources: [
                 "./backend/dist/**"
               ],
             }
