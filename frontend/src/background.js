@@ -9,12 +9,28 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
+// const { spawn } = require("child_process");
+// spawn('python',["./backend/api_server.py"] );
 
 async function createWindow() {
+
+  const {PythonShell} = require ('python-shell')
+  let options = {
+    pythonPath: '../backend/env/bin/python3',
+
+  };
+
+  PythonShell.run('../backend/api_server.py', options, function (err){
+    if (err)
+      throw err;
+    console.log('server stopped');
+  }); 
+
+
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1400,
+    height: 900,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
