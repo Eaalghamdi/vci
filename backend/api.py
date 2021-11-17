@@ -1,8 +1,6 @@
 # from FeatureExtraction.Utils import Processing
 # import FeatureExtraction
 
-from fastapi import FastAPI
-import uvicorn
 from fastapi import FastAPI, Request, Depends, BackgroundTasks, File, UploadFile
 from pydantic import BaseModel
 from schemas import ProjectRequest

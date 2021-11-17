@@ -4,7 +4,7 @@ module.exports = {
             nodeIntegration: true,
             builderOptions: {
             "extraResources": [
-                "./dist/**"
+                "./backend/dist/**"
               ],
             }
         }

@@ -13,6 +13,7 @@ from models import Project
 import os
 import sys
 from glob import glob
+from api import app
 # from pytube import YouTube
 
 from starlette.middleware import Middleware
@@ -23,4 +24,4 @@ sys.path.append('/backend/FeatureExtraction')
 
 
 if __name__ == '__main__':
-    uvicorn.run('api:app', host='0.0.0.0', port=8001, reload=True)
+    uvicorn.run('api:app', host='0.0.0.0', port=8001, reload=False)
