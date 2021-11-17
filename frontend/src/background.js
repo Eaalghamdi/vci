@@ -9,18 +9,18 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
-// const { spawn } = require("child_process");
-// spawn('python',["./backend/api_server.py"] );
+
 
 async function createWindow() {
 
   const {PythonShell} = require ('python-shell')
   let options = {
-    pythonPath: '../backend/env/bin/python3',
+ 
+    scriptPath: path.join(__dirname, '/dist/api_server'),
 
   };
 
-  PythonShell.run('../backend/api_server.py', options, function (err){
+  PythonShell.run('api_server.py', options, function (err){
     if (err)
       throw err;
     console.log('server stopped');
