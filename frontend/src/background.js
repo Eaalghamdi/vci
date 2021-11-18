@@ -52,9 +52,9 @@ const getScriptPath = () => {
     return  '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server'
   }
   if (process.platform === 'win32') {
-    return  app.getAppPath() + 'dist/api_server.exe'
+    return  app.getAppPath() + 'dist/api_server/api_server.exe'
   }
-  return app.getAppPath() +  'dist/api_server.exe'
+  return app.getAppPath() +  'dist/api_server/api_server.exe'
 }
 
 const createPyProc = () => {
@@ -78,7 +78,7 @@ async function createWindow() {
 
  
   let options = {
- 
+    pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python3',
     scriptPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
 
   };
