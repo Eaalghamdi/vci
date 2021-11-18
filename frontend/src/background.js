@@ -4,27 +4,42 @@ import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
+const {path} = require('path')
+const {PythonShell} = require ('python-shell')
+
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
+var exec = require('child_process').execFile;
+
+var startServer =function(){
+   console.log("the server started");
+   let server = path.join(__dirname, '/dist/api_server/api_server.exe')
+   exec(server, function(err) {  
+        console.log(err)
+                     
+    });  
+}
+
 
 async function createWindow() {
+  startServer();
 
-  const {PythonShell} = require ('python-shell')
-  let options = {
  
-    scriptPath: path.join(__dirname, '/dist/api_server'),
+  // let options = {
+ 
+  //   scriptPath: path.join(__dirname, '/dist/api_server/'),
 
-  };
+  // };
 
-  PythonShell.run('api_server.py', options, function (err){
-    if (err)
-      throw err;
-    console.log('server stopped');
-  }); 
+  // PythonShell.run('api_server.py', options, function (err){
+  //   if (err)
+  //     throw err;
+  //   console.log('server stopped');
+  // }); 
 
 
   // Create the browser window.
