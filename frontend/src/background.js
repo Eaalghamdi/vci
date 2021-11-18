@@ -4,7 +4,7 @@ import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
-const {path} = require('path')
+// const {path} = require('path')
 const {PythonShell} = require ('python-shell')
 
 
@@ -24,22 +24,70 @@ var startServer =function(){
     });  
 }
 
+// const pyshell = require('python-shell').PythonShell
+
+
+var options = {
+    scriptPath : '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
+    args : [],
+};
+
+
+let pyProc = null
+
+const exitPyProc = () => {
+  pyProc.kill()
+  console.log("server stopped")
+  pyProc = null
+  pyPort = null
+}
+
+const guessPackaged = () => {
+  const fullPath = app.getAppPath() + 'dist'
+  return require('fs').existsSync(fullPath)
+}
+
+const getScriptPath = () => {
+  if (!guessPackaged()) {
+    return  '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server'
+  }
+  if (process.platform === 'win32') {
+    return  app.getAppPath() + 'dist/api_server.exe'
+  }
+  return app.getAppPath() +  'dist/api_server.exe'
+}
+
+const createPyProc = () => {
+  let script = getScriptPath()
+  console.log(script)
+ 
+  if (guessPackaged()) {
+    pyProc = require('child_process').execFile(script)
+  } else {
+    pyProc =  new pyshell('api_server.py', options);
+  }
+
+  if (pyProc != null) {
+    // console.log(pyProc)
+    console.log('child process success on port')
+  }
+}
 
 async function createWindow() {
-  startServer();
+  // createPyProc();
 
  
-  // let options = {
+  let options = {
  
-  //   scriptPath: path.join(__dirname, '/dist/api_server/'),
+    scriptPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
 
-  // };
+  };
 
-  // PythonShell.run('api_server.py', options, function (err){
-  //   if (err)
-  //     throw err;
-  //   console.log('server stopped');
-  // }); 
+  PythonShell.run('api_server.py', options, function (err){
+    if (err)
+      throw err;
+    console.log('server stopped');
+  }); 
 
 
   // Create the browser window.
@@ -101,11 +149,16 @@ if (isDevelopment) {
     process.on("message", (data) => {
       if (data === "graceful-exit") {
         app.quit();
+        exitPyProc();
       }
     });
   } else {
     process.on("SIGTERM", () => {
       app.quit();
+      exitPyProc();
     });
   }
 }
+
+
+
