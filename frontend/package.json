@@ -14,10 +14,13 @@
   "main": "background.js",
   "dependencies": {
     "axios": "^0.24.0",
+    "chart.js": "^3.6.0",
     "core-js": "^3.6.5",
-    "python-shell": "^3.0.1",
+    "primeflex": "^2.0.0",
+    "primeicons": "^4.1.0",
+    "primevue": "^3.1.1",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

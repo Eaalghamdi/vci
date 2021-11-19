@@ -3,6 +3,7 @@
 import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
+const path = require('path')
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 
@@ -81,6 +82,7 @@ async function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      enableRemoteModule: true,
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
     },
@@ -125,6 +127,77 @@ app.on("ready", async () => {
     }
   }
   createWindow();
+});
+
+
+
+// 1. Introduce dialog box and IPC communication module
+const ipc = require('electron').ipcMain
+const dialog = require('electron').dialog
+
+
+global.filepath = undefined;
+const defaultPath =  path.join(__dirname, '../assets/');
+  
+ipc.on('open-save-chart-dialog', function (event) {
+// If the platform is 'win32' or 'Linux'
+    if (process.platform !== 'darwin') {
+        // Resolves to a Promise<Object>
+        dialog.showOpenDialog({
+            title: 'Select the File to be uploaded',
+            defaultPath: path.join(__dirname, '../assets/'),
+          
+            // Restricting the user to only Text Files.
+            filters: [
+                {
+                    name: 'Video Files',
+                    extensions: ['mp4']
+                }, ],
+            // Specifying the File Selector Property
+            properties: ['openFile']
+        }).then(file => {
+            // Stating whether dialog operation was
+            // cancelled or not.
+            // console.log(file.canceled);
+            if (!file.canceled) {
+              // Updating the GLOBAL filepath variable 
+              // to user-selected file.
+              global.filepath = file.filePaths[0].toString();
+              // console.log(global.filepath);
+            }  
+        }).catch(err => {
+            console.log(err)
+        });
+    }
+    else {
+        // If the platform is 'darwin' (macOS)
+        dialog.showOpenDialog({
+            title: 'Select the File to be uploaded',
+            defaultPath: defaultPath,
+            filters: [
+                {
+                    name: 'Video Files',
+                    extensions: ['mp4']
+                }, ],
+            // Specifying the File Selector and Directory 
+            // Selector Property In macOS
+            properties: ['openFile', 'openDirectory']
+        }).then(file => {
+            // console.log(file.canceled);
+            if (!file.canceled) {
+              global.filepath = file.filePaths[0].toString();
+              // console.log(global.filepath + "from the background");
+              // console.log(defaultPath)
+              // copyFile(global.filepath, defaultPath)
+
+              event.sender.send('save-finished', global.filepath);
+             
+             
+            }  
+        }).catch(err => {
+            console.log(err)
+        });
+    }
 });
 
 // Exit cleanly on request from parent process in development mode.
