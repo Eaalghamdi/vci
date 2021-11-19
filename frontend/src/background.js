@@ -49,7 +49,7 @@ const guessPackaged = () => {
 
 const getScriptPath = () => {
   if (!guessPackaged()) {
-    return  '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server'
+    return  '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.exe'
   }
   if (process.platform === 'win32') {
     return  app.getAppPath() + 'dist/api_server/api_server.exe'
@@ -64,30 +64,31 @@ const createPyProc = () => {
   if (guessPackaged()) {
     pyProc = require('child_process').execFile(script)
   } else {
-    pyProc =  new pyshell('api_server.py', options);
+    pyProc =  require('child_process').execFile(script)
   }
 
   if (pyProc != null) {
     // console.log(pyProc)
     console.log('child process success on port')
+    console.log(app.getAppPath() )
   }
 }
 
 async function createWindow() {
-  // createPyProc();
+  createPyProc();
 
  
-  let options = {
-    pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python3',
-    scriptPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
+  // let options = {
+  //   pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python3',
+  //   scriptPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
 
-  };
+  // };
 
-  PythonShell.run('api_server.py', options, function (err){
-    if (err)
-      throw err;
-    console.log('server stopped');
-  }); 
+  // PythonShell.run('api_server.py', options, function (err){
+  //   if (err)
+  //     throw err;
+  //   console.log('server stopped');
+  // }); 
 
 
   // Create the browser window.
