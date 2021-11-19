@@ -4,8 +4,7 @@ import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 const isDevelopment = process.env.NODE_ENV !== "production";
-// const {path} = require('path')
-const {PythonShell} = require ('python-shell')
+
 
 
 // Scheme must be registered before the app is ready
@@ -23,9 +22,6 @@ var startServer =function(){
                      
     });  
 }
-
-// const pyshell = require('python-shell').PythonShell
-
 
 var options = {
     scriptPath : '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
@@ -70,25 +66,12 @@ const createPyProc = () => {
   if (pyProc != null) {
     // console.log(pyProc)
     console.log('child process success on port')
-    console.log(app.getAppPath() )
   }
 }
 
 async function createWindow() {
   createPyProc();
 
- 
-  // let options = {
-  //   pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python3',
-  //   scriptPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
-
-  // };
-
-  // PythonShell.run('api_server.py', options, function (err){
-  //   if (err)
-  //     throw err;
-  //   console.log('server stopped');
-  // }); 
 
 
   // Create the browser window.
