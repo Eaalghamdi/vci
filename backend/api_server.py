@@ -1,7 +1,5 @@
 from fastapi import FastAPI
 import uvicorn
-from fastapi import FastAPI
-import uvicorn
 from fastapi import FastAPI, Request, Depends, BackgroundTasks, File, UploadFile
 from pydantic import BaseModel
 from schemas import ProjectRequest
@@ -10,9 +8,7 @@ import models
 from db import SessionLocal, engine
 from sqlalchemy.orm import Session
 from models import Project
-import os
-import sys
-from glob import glob
+
 from api import app
 # from pytube import YouTube
 
