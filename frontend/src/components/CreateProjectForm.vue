@@ -74,7 +74,7 @@ export default {
       // }),
       this.loading = true;
       axios
-        .post("http://127.0.0.1:8001/api/add_projects", this.projects)
+        .post("http://127.0.0.1:8000/api/add_projects", this.projects)
         .then((res) => {
           this.loading = false;
          

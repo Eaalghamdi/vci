@@ -43,6 +43,7 @@ const guessPackaged = () => {
 
 const getScriptPath = () => {
   if (!guessPackaged()) {
+    //  start development server 
     pyProc =   PythonShell.run('/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py', options, function (err){
       if (err)
         throw err;

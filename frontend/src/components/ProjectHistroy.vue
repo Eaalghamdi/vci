@@ -28,7 +28,7 @@ export default {
   },
   mounted() {
     axios
-      .get("http://127.0.0.1:8001/api/all_projects")
+      .get("http://127.0.0.1:8000/api/all_projects")
       .then((response) => {
         this.projects = response.data;
         console.log(this.projects);
