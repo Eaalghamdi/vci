@@ -2,14 +2,14 @@
   <Panel header="Recent Projects">
     <div class="p-d-block">
       <div id="projectsList" v-if="projects.length > 0">
-        <div v-for="project in projects" :key="project.title">
+        <div v-for="project in projects" :key="project.ProjectTitle">
           <router-link
             :to="{
               name: 'toProject',
               params: { id: project.id },
             }"
           >
-            <h3 id="projectItem">{{ project.title }}</h3>
+            <h3 id="projectItem">{{ project.ProjectTitle }}</h3>
           </router-link>
         </div>
       </div>

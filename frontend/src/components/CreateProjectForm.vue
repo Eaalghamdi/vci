@@ -43,9 +43,9 @@ export default {
     return {
       loading: false,
       projects: {
-        title: "",
-        videoTitle: "",
-        videoPath: "",
+        ProjectTitle: "",
+        VideoTitle: "",
+        VideoPath: "",
       },
     };
   },
@@ -59,10 +59,10 @@ export default {
   },
 
   methods: {
-    handleSaveChart: function() {
+       handleSaveChart: function() {
       // Send a signal to the IPC channel, then the main thread receives the signal and immediately executes the corresponding response function
       const ipc = require("electron").ipcRenderer;
-      ipc.send("open-save-chart-dialog");
+      ipc.send('open-file-upload-dialog');
     },
 
     onProjectCreate() {
@@ -77,7 +77,7 @@ export default {
         .post("http://127.0.0.1:8001/api/add_projects", this.projects)
         .then((res) => {
           this.loading = false;
-          console.log(res + "coming from onProjectCreate");
+         
           this.$router.push({ name: "toProject", params: { id: res.data } });
         })
         .catch((error) => {

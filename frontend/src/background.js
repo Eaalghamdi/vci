@@ -20,12 +20,11 @@ var exec = require('child_process').execFile;
 
 
     // // start the api server 
-    // let options = {
-    //   pythonPath: 'usr/bin/python',
+  let options = {
 
-    //   // pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana/backend/env/bin/python3',
+      pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python',
 
-    // };
+    };
   
 
 let pyProc = null
@@ -44,7 +43,7 @@ const guessPackaged = () => {
 
 const getScriptPath = () => {
   if (!guessPackaged()) {
-    pyProc =    PythonShell.run('/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py', null, function (err){
+    pyProc =   PythonShell.run('/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py', options, function (err){
       if (err)
         throw err;
       console.log('server stopped');
@@ -133,15 +132,19 @@ app.on("ready", async () => {
 
 
 
+
+// app.on('ready', pythonServer())
 // 1. Introduce dialog box and IPC communication module
 const ipc = require('electron').ipcMain
 const dialog = require('electron').dialog
 
 
 global.filepath = undefined;
-const defaultPath =  path.join(__dirname, '../assets/');
+global.outDir = './temp';
+global.outDir = path.join(__dirname, '../temp/');
+
   
-ipc.on('open-save-chart-dialog', function (event) {
+ipc.on('open-file-upload-dialog', function (event) {
 // If the platform is 'win32' or 'Linux'
     if (process.platform !== 'darwin') {
         // Resolves to a Promise<Object>
@@ -165,7 +168,7 @@ ipc.on('open-save-chart-dialog', function (event) {
               // Updating the GLOBAL filepath variable 
               // to user-selected file.
               global.filepath = file.filePaths[0].toString();
-              // console.log(global.filepath);
+              console.log(global.filepath);
             }  
         }).catch(err => {
             console.log(err)
@@ -175,7 +178,7 @@ ipc.on('open-save-chart-dialog', function (event) {
         // If the platform is 'darwin' (macOS)
         dialog.showOpenDialog({
             title: 'Select the File to be uploaded',
-            defaultPath: defaultPath,
+            defaultPath: path.join(__dirname, '../assets/'),
             filters: [
                 {
                     name: 'Video Files',
@@ -188,11 +191,23 @@ ipc.on('open-save-chart-dialog', function (event) {
             // console.log(file.canceled);
             if (!file.canceled) {
               global.filepath = file.filePaths[0].toString();
-              // console.log(global.filepath + "from the background");
-              // console.log(defaultPath)
-              // copyFile(global.filepath, defaultPath)
+              var fs = require('fs');
+             
+                if (!fs.existsSync(global.outDir)) {
+                  fs.mkdirSync(global.outDir, {
+                    recursive: true
+                  });
+                };
+                const {basename} = require('path')
+                let fileName = basename(global.filepath)
+               
+                let outputFile = global.outDir + '/' + fileName  
+                fs.copyFile(global.filepath, outputFile, (err) => {
+                  if (err) throw err;
+                //   console.log(global.filepath + ' was copied to ' + outputFile);
+                });
 
-              event.sender.send('save-finished', global.filepath);
+              event.sender.send('save-finished', outputFile);
              
              
             }  
