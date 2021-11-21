@@ -4,6 +4,8 @@ import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 const path = require('path')
+const {PythonShell} = require ('python-shell')
+
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 
@@ -15,20 +17,16 @@ protocol.registerSchemesAsPrivileged([
 
 var exec = require('child_process').execFile;
 
-var startServer =function(){
-   console.log("the server started");
-   let server = path.join(__dirname, '/dist/api_server/api_server.exe')
-   exec(server, function(err) {  
-        console.log(err)
-                     
-    });  
-}
 
-var options = {
-    scriptPath : '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/',
-    args : [],
-};
 
+    // // start the api server 
+    // let options = {
+    //   pythonPath: 'usr/bin/python',
+
+    //   // pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana/backend/env/bin/python3',
+
+    // };
+  
 
 let pyProc = null
 
@@ -46,7 +44,11 @@ const guessPackaged = () => {
 
 const getScriptPath = () => {
   if (!guessPackaged()) {
-    return  '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.exe'
+    pyProc =    PythonShell.run('/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py', null, function (err){
+      if (err)
+        throw err;
+      console.log('server stopped');
+    }); 
   }
   if (process.platform === 'win32') {
     return  app.getAppPath() + 'dist/api_server/api_server.exe'
