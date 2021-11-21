@@ -20,11 +20,11 @@ from starlette.middleware.cors import CORSMiddleware
 import sys
 sys.path.append('/backend/FeatureExtraction')
 
-# origins = [
-#     "http://localhost:8080",
-#     "http://localhost",
-#     "https://localhost:8080",
-# ]
+origins = [
+    "http://localhost:8080",
+    "http://localhost",
+    "https://localhost:8080",
+]
 
 # middleware = [
 #     Middleware(CORSMiddleware,
@@ -38,7 +38,7 @@ sys.path.append('/backend/FeatureExtraction')
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=False,
     allow_methods=["DELETE", "GET", "POST", "PUT"],
     allow_headers=["*"]
