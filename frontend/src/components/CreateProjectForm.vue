@@ -4,7 +4,7 @@
       <div class="p-fluid p-mb-2">
         <InputText
           id="projectName"
-          v-model="projects.title"
+          v-model="projects.ProjectTitle"
           type="text"
           placeholder="Give it a name"
         />
@@ -13,7 +13,7 @@
       <div class="p-inputgroup">
         <InputText
           id="videoURL"
-          v-model="projects.videoURL"
+          v-model="projects.VideoPath"
           placeholder="upload a video"
         />
         <Button
