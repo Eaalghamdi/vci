@@ -1,12 +1,12 @@
 <template>
   <video
     id="player"
-    :key="f"
+    :key="videoFile"
     playsinline
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="../assets/GA17.mp4" type="video/mp4" />
+    <source src= "" type="video/mp4" />
   </video>
 </template>
 <script>
@@ -17,8 +17,8 @@ export default {
   props: ["id"],
   data() {
     return {
-      videoFile: "",
-      f: "https://www.youtube.com/watch?v=jt9LlHXGckg",
+      videoFile: " ",
+  
     };
   },
   methods: {
@@ -26,17 +26,20 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/projects/" + this.$route.params.id)
         .then((response) => {
-          this.videoFile = "../assets/" + response.data;
-          console.log(this.videoFile);
+          this.videoFile =  response.data.VideoPath;
+       
+          console.log("from Video Player: " + this.videoFile);
         })
         .catch(function(error) {
           console.log(error);
         });
     },
   },
+
   created() {
     this.getVideoURL();
   },
+  
 };
 </script>
 <style scoped>

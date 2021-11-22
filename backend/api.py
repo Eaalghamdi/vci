@@ -63,23 +63,7 @@ async def post_project(project_request: ProjectRequest, db: Session = Depends(ge
 
     project = Project()
     project.ProjectTitle = project_request.ProjectTitle
-    # project.videoURL = project_request.videoURL
-    # project.projectDirectory = project.ProjectTitle
-
-    # donwload YT video
-    # os.chdir("../assets")
-
-    # yt = YouTube(project.videoURL)
-    # stream = yt.streams.first()
-    # # stream.download(project.projectDirectory)
-    # # os.rename(project.projectDirectory, '1.mp4')
-    # stream.download()
-
-    # os.chdir("./")
-
-    # project.videoTitle = yt.title
     project.VideoTitle = project_request.VideoTitle
-
     project.VideoPath = project_request.VideoPath
 
     db.add(project)
@@ -96,6 +80,13 @@ def get_projects(db: Session = Depends(get_db)):
 def get_project(project_id: int, db: Session = Depends(get_db)):
     project = db.query(Project).filter(Project.ProjectId == project_id).first()
     return(project)
+
+
+
+@ app.post('/api/processing/sbd')
+async def shotBoundryDetection():
+    pass
+
 
 # @app.get('/video_processing')
 # def video_processing(video):
