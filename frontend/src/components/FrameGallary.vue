@@ -1,19 +1,34 @@
 <template>
   <ScrollPanel style="width: 100%; height: 360px">
     <div class="col">
-      <ul>
-        <li>
-          <img src="../assets/frames/GA17-Scene-001-01.jpg" />
-        </li>
-       
-      </ul>
+        <div v-for="frame in frames">
+            <img :src="frame" :key="frame" />
+        </div>
     </div>
   </ScrollPanel>
 </template>
 <script>
+let fs = require("fs");
+let path = require("path");
+
 export default {
   name: "FrameGallary",
-};
+  data() {
+    return {
+      frames: [],
+    };
+  },
+
+  created() {
+    let frameFolder = path.join(__dirname + "temp/frames")
+    
+    let files = fs.readdirSync(frameFolder)
+    files.sort()
+    this.frames = files
+      .filter(x => /\.(png|jpg|jpeg|gif)/i.test(x))
+      .map(x => path.join(frameFolder, x))
+    }
+  }
 </script>
 <style scoped>
 ul {

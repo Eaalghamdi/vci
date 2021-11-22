@@ -142,7 +142,7 @@ const dialog = require('electron').dialog
 
 global.filepath = undefined;
 global.outDir = path.join(__dirname, '../temp');
-
+global.appPath = app.getAppPath()
   
 ipc.on('open-file-upload-dialog', function (event) {
 // If the platform is 'win32' or 'Linux'
