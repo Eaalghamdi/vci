@@ -10,7 +10,7 @@
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col-12">
           <div class="p-field p-grid">
-            <label for="method" class="p-col-fixed" style="width:100px">
+            <label for="method" class="p-col-fixed" style="width: 100px">
               Method</label
             >
             <div class="p-col">

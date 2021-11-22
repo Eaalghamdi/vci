@@ -17,7 +17,7 @@
           <label for="city7">Static Sailency</label>
         </div>
         <div class="p-field p-grid">
-          <label for="firstname" class="p-col-fixed" style="width:100px">
+          <label for="firstname" class="p-col-fixed" style="width: 100px">
             Method</label
           >
           <div class="p-col">
@@ -32,7 +32,7 @@
       </div>
 
       <div class="p-field p-col-12">
-        <div class="p-formgroup-inline ">
+        <div class="p-formgroup-inline">
           <div class="p-field-checkbox p-col-6">
             <RadioButton
               id="motionSailency"
@@ -42,7 +42,7 @@
             <label for="city8">Motion Sailency</label>
           </div>
           <div class="p-field p-grid p-col-6">
-            <label for="firstname" class="p-col-fixed" style="width:100px">
+            <label for="firstname" class="p-col-fixed" style="width: 100px">
               Method</label
             >
             <div class="p-col">

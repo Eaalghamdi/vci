@@ -1,7 +1,7 @@
 <template>
   <TopMenu />
 
-  <div class="p-grid cont ">
+  <div class="p-grid cont">
     <div class="SideMenu">
       <div class="p-col col-1">
         <div class="p-col row-top">

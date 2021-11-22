@@ -5,7 +5,7 @@
         <p>Image Resolution Converter</p>
 
         <div class="p-field p-grid">
-          <label for="Height" class="p-col-fixed" style="width:100px"
+          <label for="Height" class="p-col-fixed" style="width: 100px"
             >Height</label
           >
           <div class="p-col">
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="p-field p-grid">
-          <label for="Width" class="p-col-fixed" style="width:100px"
+          <label for="Width" class="p-col-fixed" style="width: 100px"
             >Width</label
           >
           <div class="p-col">
@@ -42,12 +42,12 @@
             <label for="H264">H264</label>
           </div>
           <div class="p-field-checkbox">
-            <RadioButton 
-            id="H265_ID" 
-            name="H265"
-             value="H265"
-             v-model="Compression"
-              />
+            <RadioButton
+              id="H265_ID"
+              name="H265"
+              value="H265"
+              v-model="Compression"
+            />
             <label for="H265">H265</label>
           </div>
         </div>

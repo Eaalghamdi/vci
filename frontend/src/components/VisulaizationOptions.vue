@@ -3,7 +3,7 @@
     <div class="p-fluid p-formgrid p-grid">
       <div class="p-field p-col-12">
         <div class="p-field p-grid">
-          <label for="method" class="p-col-fixed" style="width:100px"> </label>
+          <label for="method" class="p-col-fixed" style="width: 100px"> </label>
           <div class="p-col">
             <Dropdown
               v-model="selectedCity1"
@@ -16,7 +16,7 @@
       </div>
       <div class="p-field p-col-12">
         <div class="p-field p-grid">
-          <label for="method" class="p-col-fixed" style="width:100px">
+          <label for="method" class="p-col-fixed" style="width: 100px">
             Y
           </label>
           <div class="p-col">
@@ -31,7 +31,7 @@
       </div>
       <div class="p-field p-col-12">
         <div class="p-field p-grid">
-          <label for="method" class="p-col-fixed" style="width:100px">
+          <label for="method" class="p-col-fixed" style="width: 100px">
             X
           </label>
           <div class="p-col">

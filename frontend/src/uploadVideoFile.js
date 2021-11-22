@@ -1,9 +1,7 @@
-'use strict';
-import { dialog } from 'electron';
-const path = require('path');
+"use strict";
+import { dialog } from "electron";
+const path = require("path");
 const fs = require("fs");
-
-
 
 export function uploadVideoFile() {
   // opens a window to choose file
@@ -23,8 +21,7 @@ export function uploadVideoFile() {
 
       // copy file from original location to app data folder
       fs.copyFile(filePath, imgFolderPath, (err) => {
-        if (err)
-          throw err;
+        if (err) throw err;
         console.log(fileName + " uploaded.");
       });
     }

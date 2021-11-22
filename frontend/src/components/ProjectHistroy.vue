@@ -33,7 +33,7 @@ export default {
         this.projects = response.data;
         console.log(this.projects);
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log(error);
       });
   },

@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="p-field p-grid">
-            <label for="firstname" class="p-col-fixed" style="width:100px">
+            <label for="firstname" class="p-col-fixed" style="width: 100px">
               Method</label
             >
             <div class="p-col">

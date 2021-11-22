@@ -1,13 +1,10 @@
 module.exports = {
-    pluginOptions: {
-        electronBuilder: {
-            nodeIntegration: true,
-            builderOptions: {
-            extraResources: [
-                "./dist/**"
-              ],
-            }
-        }
-    }
-}
-
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true,
+      builderOptions: {
+        extraResources: ["./dist/**"],
+      },
+    },
+  },
+};

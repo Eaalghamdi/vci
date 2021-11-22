@@ -4,7 +4,7 @@
       <div class="p-field p-col-12">
         <h4>Shot Bundry Detection</h4>
         <div class="p-field p-grid">
-          <label for="method" class="p-col-fixed" style="width:100px">
+          <label for="method" class="p-col-fixed" style="width: 100px">
             Method</label
           >
           <div class="p-col">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="p-field p-grid">
-          <label for="lastname" class="p-col-fixed" style="width:100px"
+          <label for="lastname" class="p-col-fixed" style="width: 100px"
             >Treshold</label
           >
           <div class="p-col">
@@ -39,7 +39,7 @@
           <h4>Manual Frame</h4>
         </div>
         <div class="p-field p-grid">
-          <label for="lastname" class="p-col-fixed" style="width:100px">
+          <label for="lastname" class="p-col-fixed" style="width: 100px">
             Per Second</label
           >
           <div class="p-col">
@@ -73,9 +73,7 @@ export default {
           name: "Content Detector",
           value: 1,
         },
-        { name: "Threshold Detector",
-         value: 2 
-         },
+        { name: "Threshold Detector", value: 2 },
       ],
     };
   },

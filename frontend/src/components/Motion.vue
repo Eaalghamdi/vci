@@ -9,7 +9,7 @@
     >
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col-12">
-          <label for="method" class="p-col-fixed" style="width:100px">
+          <label for="method" class="p-col-fixed" style="width: 100px">
             Method</label
           >
           <div class="p-col">
@@ -24,7 +24,7 @@
             <label for="stacked">Kernal Size</label>
             <InputNumber id="Kernal" v-model="motionKernalSize" showButtons />
           </div>
-          <div class="p-field p-col-12 ">
+          <div class="p-field p-col-12">
             <label for="stacked">Countor Size</label>
             <InputNumber id="Countor" v-model="motionCountorSize" showButtons />
           </div>

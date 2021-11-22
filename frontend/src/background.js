@@ -3,79 +3,71 @@
 import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
-const path = require('path')
-const {PythonShell} = require ('python-shell')
+const path = require("path");
+const { PythonShell } = require("python-shell");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
-
-
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
-var exec = require('child_process').execFile;
+// // start the api server
+let options = {
+  pythonPath:
+    "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python",
+};
 
-
-
-    // // start the api server 
-  let options = {
-
-      pythonPath: '/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python',
-
-    };
-  
-
-let pyProc = null
+let pyProc = null;
 
 const exitPyProc = () => {
-  pyProc.kill()
-  console.log("server stopped")
-  pyProc = null
-  pyPort = null
-}
+  pyProc.kill();
+  console.log("server stopped");
+  pyProc = null;
+};
 
 const guessPackaged = () => {
-  const fullPath = app.getAppPath() + 'dist'
-  return require('fs').existsSync(fullPath)
-}
+  const fullPath = app.getAppPath() + "dist";
+  return require("fs").existsSync(fullPath);
+};
 
 const getScriptPath = () => {
   if (!guessPackaged()) {
-    //  start development server 
-    pyProc =   PythonShell.run('/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py', options, function (err){
-      if (err)
-        throw err;
-      console.log('server stopped');
-    }); 
+    //  start development server
+    pyProc = PythonShell.run(
+      "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py",
+      options,
+      function (err) {
+        if (err) throw err;
+        console.log("server stopped");
+      }
+    );
   }
-  if (process.platform === 'win32') {
-    return  app.getAppPath() + 'dist/api_server/api_server.exe'
+  if (process.platform === "win32") {
+    return app.getAppPath() + "dist/api_server/api_server.exe";
   }
-  return app.getAppPath() +  'dist/api_server/api_server.exe'
-}
+  return app.getAppPath() + "dist/api_server/api_server.exe";
+};
 
 const createPyProc = () => {
-  let script = getScriptPath()
-  console.log(script)
- 
+  let script = getScriptPath();
+  console.log(script);
+
   if (guessPackaged()) {
-    pyProc = require('child_process').execFile(script)
+    pyProc = require("child_process").execFile(script);
   } else {
-    pyProc =  require('child_process').execFile(script)
+    pyProc = require("child_process").execFile(script);
   }
 
   if (pyProc != null) {
     // console.log(pyProc)
-    console.log('child process success')
+    console.log("child process success");
   }
-}
+};
 
 async function createWindow() {
   createPyProc();
-
-
 
   // Create the browser window.
   const win = new BrowserWindow({
@@ -84,6 +76,7 @@ async function createWindow() {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
+      webSecurity: false,
       enableRemoteModule: true,
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: !process.env.ELECTRON_NODE_INTEGRATION,
@@ -131,90 +124,91 @@ app.on("ready", async () => {
   createWindow();
 });
 
-
-
-
 // app.on('ready', pythonServer())
 // 1. Introduce dialog box and IPC communication module
-const ipc = require('electron').ipcMain
-const dialog = require('electron').dialog
-
+const ipc = require("electron").ipcMain;
+const dialog = require("electron").dialog;
 
 global.filepath = undefined;
-global.outDir = path.join(__dirname, '../temp');
-global.appPath = app.getAppPath()
-  
-ipc.on('open-file-upload-dialog', function (event) {
-// If the platform is 'win32' or 'Linux'
-    if (process.platform !== 'darwin') {
-        // Resolves to a Promise<Object>
-        dialog.showOpenDialog({
-            title: 'Select the File to be uploaded',
-            defaultPath: path.join(__dirname, '../assets/'),
-          
-            // Restricting the user to only Text Files.
-            filters: [
-                {
-                    name: 'Video Files',
-                    extensions: ['mp4']
-                }, ],
-            // Specifying the File Selector Property
-            properties: ['openFile']
-        }).then(file => {
-            // Stating whether dialog operation was
-            // cancelled or not.
-            // console.log(file.canceled);
-            if (!file.canceled) {
-              // Updating the GLOBAL filepath variable 
-              // to user-selected file.
-              global.filepath = file.filePaths[0].toString();
-              console.log(global.filepath);
-            }  
-        }).catch(err => {
-            console.log(err)
-        });
-    }
-    else {
-        // If the platform is 'darwin' (macOS)
-        dialog.showOpenDialog({
-            title: 'Select the File to be uploaded',
-            defaultPath: path.join(__dirname, '../assets/'),
-            filters: [
-                {
-                    name: 'Video Files',
-                    extensions: ['mp4']
-                }, ],
-            // Specifying the File Selector and Directory 
-            // Selector Property In macOS
-            properties: ['openFile', 'openDirectory']
-        }).then(file => {
-            // console.log(file.canceled);
-            if (!file.canceled) {
-              global.filepath = file.filePaths[0].toString();
-              var fs = require('fs');
-             
-                if (!fs.existsSync(global.outDir)) {
-                  fs.mkdirSync(global.outDir, {
-                    recursive: true
-                  });
-                };
-                const {basename} = require('path')
-                let fileName = basename(global.filepath)
-               
-                let outputFile = global.outDir + '/' + fileName  
-                fs.copyFile(global.filepath, outputFile, (err) => {
-                  if (err) throw err;
-                //   console.log(global.filepath + ' was copied to ' + outputFile);
-                });
+global.outDir = path.join(__dirname, "../temp");
+global.appPath = app.getAppPath();
 
-              event.sender.send('save-finished', outputFile);
-             
-             
-            }  
-        }).catch(err => {
-            console.log(err)
-        });
-    }
+ipc.on("open-file-upload-dialog", function (event) {
+  // If the platform is 'win32' or 'Linux'
+  if (process.platform !== "darwin") {
+    // Resolves to a Promise<Object>
+    dialog
+      .showOpenDialog({
+        title: "Select the File to be uploaded",
+        defaultPath: path.join(__dirname, "../assets/"),
+
+        // Restricting the user to only Text Files.
+        filters: [
+          {
+            name: "Video Files",
+            extensions: ["mp4"],
+          },
+        ],
+        // Specifying the File Selector Property
+        properties: ["openFile"],
+      })
+      .then((file) => {
+        // Stating whether dialog operation was
+        // cancelled or not.
+        // console.log(file.canceled);
+        if (!file.canceled) {
+          // Updating the GLOBAL filepath variable
+          // to user-selected file.
+          global.filepath = file.filePaths[0].toString();
+          console.log(global.filepath);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } else {
+    // If the platform is 'darwin' (macOS)
+    dialog
+      .showOpenDialog({
+        title: "Select the File to be uploaded",
+        defaultPath: path.join(__dirname, "../assets/"),
+        filters: [
+          {
+            name: "Video Files",
+            extensions: ["mp4"],
+          },
+        ],
+        // Specifying the File Selector and Directory
+        // Selector Property In macOS
+        properties: ["openFile", "openDirectory"],
+      })
+      .then((file) => {
+        // console.log(file.canceled);
+        if (!file.canceled) {
+          global.filepath = file.filePaths[0].toString();
+          var fs = require("fs");
+
+          if (!fs.existsSync(global.outDir)) {
+            fs.mkdirSync(global.outDir, {
+              recursive: true,
+            });
+          }
+          const { basename } = require("path");
+          let fileName = basename(global.filepath);
+
+          let outputFile = global.outDir + "/" + fileName;
+          fs.copyFile(global.filepath, outputFile, (err) => {
+            if (err) throw err;
+            //   console.log(global.filepath + ' was copied to ' + outputFile);
+          });
+
+          event.sender.send("save-finished", outputFile);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 });
 
 // Exit cleanly on request from parent process in development mode.
@@ -233,6 +227,3 @@ if (isDevelopment) {
     });
   }
 }
-
-
-

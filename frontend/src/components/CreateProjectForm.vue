@@ -29,7 +29,7 @@
     </form>
   </div>
   <div v-if="loading" class="loading">
-    <ProgressBar mode="indeterminate" style="height: .5em" />
+    <ProgressBar mode="indeterminate" style="height: 0.5em" />
   </div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
   },
   created() {
     const ipc = require("electron").ipcRenderer;
-    ipc.on("save-finished", function(event, filename) {
+    ipc.on("save-finished", function (event, filename) {
       // When filename equals null, it means the user clicked the cancel button
       // When the user clicks the save button, the value of filename is the absolute path of the corresponding file
       console.log(filename);
@@ -59,10 +59,10 @@ export default {
   },
 
   methods: {
-       handleSaveChart: function() {
+    handleSaveChart: function () {
       // Send a signal to the IPC channel, then the main thread receives the signal and immediately executes the corresponding response function
       const ipc = require("electron").ipcRenderer;
-      ipc.send('open-file-upload-dialog');
+      ipc.send("open-file-upload-dialog");
     },
 
     onProjectCreate() {
@@ -77,7 +77,7 @@ export default {
         .post("http://127.0.0.1:8000/api/add_projects", this.projects)
         .then((res) => {
           this.loading = false;
-         
+
           this.$router.push({ name: "toProject", params: { id: res.data } });
         })
         .catch((error) => {

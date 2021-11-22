@@ -6,7 +6,7 @@
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src= "" type="video/mp4" />
+    <source src="" type="video/mp4" />
   </video>
 </template>
 <script>
@@ -18,7 +18,6 @@ export default {
   data() {
     return {
       videoFile: " ",
-  
     };
   },
   methods: {
@@ -26,11 +25,11 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/projects/" + this.$route.params.id)
         .then((response) => {
-          this.videoFile =  response.data.VideoPath;
-       
+          this.videoFile = response.data.VideoPath;
+
           console.log("from Video Player: " + this.videoFile);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
         });
     },
@@ -39,7 +38,6 @@ export default {
   created() {
     this.getVideoURL();
   },
-  
 };
 </script>
 <style scoped>

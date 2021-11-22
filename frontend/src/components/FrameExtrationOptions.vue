@@ -1,12 +1,8 @@
 <template>
   <div class="stepsdemo-content">
     <Card>
-      <template #title>
-        Seat Information
-      </template>
-      <template #subtitle>
-        Choose your seat
-      </template>
+      <template #title> Seat Information </template>
+      <template #subtitle> Choose your seat </template>
       <template #content>
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col-12 p-md-6">
