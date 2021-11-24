@@ -27,7 +27,7 @@ export default {
         .then((response) => {
           this.VideoPath = response.data.VideoPath;
 
-          console.log("from Video Player: " + this.VideoPath);
+          console.log("from Video Player: " + this.$route.params.id);
         })
         .catch(function (error) {
           console.log(error);
