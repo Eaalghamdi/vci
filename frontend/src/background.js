@@ -160,7 +160,7 @@ ipc.on("open-file-upload-dialog", function (event) {
           // Updating the GLOBAL filepath variable
           // to user-selected file.
           global.filepath = file.filePaths[0].toString();
-          console.log(global.filepath);
+          // console.log(global.filepath);
         }
       })
       .catch((err) => {

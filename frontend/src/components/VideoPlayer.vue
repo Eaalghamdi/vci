@@ -1,12 +1,12 @@
 <template>
   <video
     id="player"
-    :key="videoFile"
+    key="VideoPath"
     playsinline
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="" type="video/mp4" />
+    <source src="../assets/1.mp4" type="video/mp4" />
   </video>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default {
   props: ["id"],
   data() {
     return {
-      videoFile: " ",
+      VideoPath: " ",
     };
   },
   methods: {
@@ -25,9 +25,9 @@ export default {
       axios
         .get("http://127.0.0.1:8000/api/projects/" + this.$route.params.id)
         .then((response) => {
-          this.videoFile = response.data.VideoPath;
+          this.VideoPath = response.data.VideoPath;
 
-          console.log("from Video Player: " + this.videoFile);
+          console.log("from Video Player: " + this.VideoPath);
         })
         .catch(function (error) {
           console.log(error);

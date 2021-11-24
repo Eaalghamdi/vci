@@ -65,6 +65,7 @@ async def post_project(project_request: ProjectRequest, db: Session = Depends(ge
     project.ProjectTitle = project_request.ProjectTitle
     project.VideoTitle = project_request.VideoTitle
     project.VideoPath = project_request.VideoPath
+    project.ProjectId = project_request.ProjectId
 
     db.add(project)
     db.commit()
