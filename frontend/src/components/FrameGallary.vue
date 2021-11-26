@@ -4,8 +4,8 @@
       <ul>
         <li v-for="image in images">
           <img
-            v-bind:src="'data:image/jpg;base64,' + image.base64"
-            :key="name"
+            :src="'data:image/jpg;base64,' + image.base64"
+            :key="image"
           />
         </li>
       </ul>
@@ -29,7 +29,7 @@ export default {
     scan() {
       // Iterate over all files in directory
       const outFrames =
-        "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/frontend/temp/frames";
+        "../assets/temp/frames";
       let files = fs.readdirSync(outFrames);
       const regex = /.jpe?g$/gim;
       for (let file of files) {

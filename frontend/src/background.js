@@ -130,7 +130,7 @@ const ipc = require("electron").ipcMain;
 const dialog = require("electron").dialog;
 
 global.filepath = undefined;
-global.outDir = path.join(__dirname, "../temp");
+global.outDir = path.join(__dirname, "../assets/temp");
 global.appPath = app.getAppPath();
 
 ipc.on("open-file-upload-dialog", function (event) {
@@ -187,22 +187,23 @@ ipc.on("open-file-upload-dialog", function (event) {
         if (!file.canceled) {
           global.filepath = file.filePaths[0].toString();
           var fs = require("fs");
+          const { basename } = require("path");
+          let fileName = basename(global.filepath);
+          let outFolder = global.outDir + "/" + fileName + "/";
 
-          if (!fs.existsSync(global.outDir)) {
-            fs.mkdirSync(global.outDir, {
+          if (!fs.existsSync(outFolder)) {
+            fs.mkdirSync(outFolder, {
               recursive: true,
             });
           }
-          const { basename } = require("path");
-          let fileName = basename(global.filepath);
+        
 
-          let outputFile = global.outDir + "/" + fileName;
-          fs.copyFile(global.filepath, outputFile, (err) => {
+          fs.copyFile(outFolder, fileName, (err) => {
             if (err) throw err;
             //   console.log(global.filepath + ' was copied to ' + outputFile);
           });
 
-          event.sender.send("save-finished", outputFile);
+          event.sender.send("save-finished", fileName);
         }
       })
       .catch((err) => {
