@@ -36,6 +36,7 @@ export default {
   },
 
   created() {
+    console.log("this the id for this video,", this.$route.params)
     this.getVideoURL();
   },
 };

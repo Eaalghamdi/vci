@@ -28,7 +28,7 @@ const exitPyProc = () => {
 };
 
 const guessPackaged = () => {
-  const fullPath = app.getAppPath() + "dist";
+  const fullPath = app.getAppPath() + "/dist";
   return require("fs").existsSync(fullPath);
 };
 
@@ -189,19 +189,19 @@ ipc.on("open-file-upload-dialog", function (event) {
           var fs = require("fs");
           const { basename } = require("path");
           let fileName = basename(global.filepath);
-          let outFolder = global.outDir + "/" + fileName + "/";
+          // let outFolder = global.outDir + "/" + fileName + "/";
 
-          if (!fs.existsSync(outFolder)) {
-            fs.mkdirSync(outFolder, {
-              recursive: true,
-            });
-          }
+          // if (!fs.existsSync(outFolder)) {
+          //   fs.mkdirSync(outFolder, {
+          //     recursive: true,
+          //   });
+          // }
         
 
-          fs.copyFile(outFolder, fileName, (err) => {
-            if (err) throw err;
-            //   console.log(global.filepath + ' was copied to ' + outputFile);
-          });
+          // fs.copyFile(outFolder, fileName, (err) => {
+          //   if (err) throw err;
+          //   //   console.log(global.filepath + ' was copied to ' + outputFile);
+          // });
 
           event.sender.send("save-finished", fileName);
         }

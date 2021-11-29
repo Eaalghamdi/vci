@@ -28,8 +28,7 @@ export default {
   methods: {
     scan() {
       // Iterate over all files in directory
-      const outFrames =
-        "../assets/temp/frames";
+      const outFrames = "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/frontend/src/assets/temp/frames";
       let files = fs.readdirSync(outFrames);
       const regex = /.jpe?g$/gim;
       for (let file of files) {
@@ -40,7 +39,7 @@ export default {
         let image = {};
         image.name = file;
         image.path = path.join(outFrames, file);
-        console.log(image);
+        // console.log(image);
         image.base64 = new Buffer(fs.readFileSync(image.path)).toString(
           "base64"
         );
