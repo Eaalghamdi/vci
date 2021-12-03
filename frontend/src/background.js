@@ -188,7 +188,7 @@ ipc.on("open-file-upload-dialog", function (event) {
         // console.log(file.canceled);
         if (!file.canceled) {
           let filepath = file.filePaths[0].toString();
-          console.log(filepath)   
+          
           var fs = require("fs");
           const { basename } = require("path");
           let fileName = basename(filepath, '.mp4');

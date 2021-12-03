@@ -6,7 +6,7 @@ from db import Base
 class Project(Base):
     __tablename__ = "projects"
 
-    ProjectId = Column(Integer, primary_key=True, index=True)
+    id = Column(Integer, primary_key=True, index=True)
     ProjectTitle = Column(String, unique=True, index=True)
     VideoTitle = Column(String(1000))
     VideoPath = Column(String(500))
@@ -21,7 +21,7 @@ class ObjectRecognition(Base):
     ObjectRecognitionId = Column(Integer, primary_key=True, index=True)
     ObjectRecognitionModel = Column(String, unique=True, index=True)
     ObjectRecognitionResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 
 class Colorfulness(Base):
@@ -30,7 +30,7 @@ class Colorfulness(Base):
     ColorfulnessID = Column(Integer, primary_key=True, index=True)
     ColorfulnessModel = Column(String, unique=True, index=True)
     ColorfulnessResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 
 class StructuralSimilarity(Base):
@@ -39,7 +39,7 @@ class StructuralSimilarity(Base):
     StructuralSimilarityID = Column(Integer, primary_key=True, index=True)
     StructuralSimilarityModel = Column(String, unique=True, index=True)
     StructuralSimilarityResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 class Compression(Base):
     __tablename__= "compression"
@@ -47,7 +47,7 @@ class Compression(Base):
     CompressionID = Column(Integer, primary_key=True, index=True)
     CompressionModel = Column(String, unique=True, index=True)
     CompressionResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 
 class FaceRecognition(Base):
@@ -56,7 +56,7 @@ class FaceRecognition(Base):
     FaceRecognitionId = Column(Integer, primary_key=True, index=True)
     FaceRecognitionModel = Column(String, unique=True, index=True)
     FaceRecognitionResults = Column(String()) 
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 class Motion(Base):
     __tablename__="motion"
@@ -64,7 +64,7 @@ class Motion(Base):
     MotionID = Column(Integer, primary_key=True, index=True)
     MotionModel = Column(String, unique=True, index=True)
     MotionResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 class Sailency(Base):
     __tablename__="sailency"
@@ -72,7 +72,7 @@ class Sailency(Base):
     SailencyId =  Column(Integer, primary_key=True, index=True)
     SailencyModel = Column(String, unique=True, index=True)
     SailencyResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
 
 class EdgeDetection(Base):
     __tablename__= "edgeDetection"
@@ -80,5 +80,5 @@ class EdgeDetection(Base):
     EdgeDetectionId = Column(Integer, primary_key=True, index=True)
     EdgeDetectionModel = Column(String, unique=True, index=True)
     EdgeDetectionResults = Column(String())
-    ProjectId = Column(Integer, ForeignKey("projects.ProjectId"))
+    id = Column(Integer, ForeignKey("projects.id"))
     

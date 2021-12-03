@@ -12,6 +12,7 @@ from models import Project
 import os
 import sys
 from glob import glob
+from fastapi.responses import JSONResponse
 # from pytube import YouTube
 
 from starlette.middleware import Middleware
@@ -65,11 +66,11 @@ async def post_project(project_request: ProjectRequest, db: Session = Depends(ge
     project.ProjectTitle = project_request.ProjectTitle
     project.VideoTitle = project_request.VideoTitle
     project.VideoPath = project_request.VideoPath
-    project.ProjectId = project_request.ProjectId
+  
 
     db.add(project)
     db.commit()
-    return project.ProjectId
+    return project.id
 
 
 @ app.get('/api/all_projects')
@@ -79,7 +80,7 @@ def get_projects(db: Session = Depends(get_db)):
 
 @app.get('/api/projects/{project_id}')
 def get_project(project_id: int, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.ProjectId == project_id).first()
+    project = db.query(Project).filter(Project.id == project_id).first()
     return(project)
 
 
@@ -116,3 +117,12 @@ async def shotBoundryDetection():
 
 
 
+
+
+
+@app.exception_handler(ValueError)
+async def value_error_exception_handler(request: Request, exc: ValueError):
+    return JSONResponse(
+        status_code=400,
+        content={"message": str(exc)},
+    )

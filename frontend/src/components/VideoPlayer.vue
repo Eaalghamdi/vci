@@ -17,17 +17,17 @@ export default {
   props: ["id"],
   data() {
     return {
-      VideoPath: " ",
+      VideoPath: "",
     };
   },
   methods: {
     getVideoURL() {
       axios
-        .get("http://127.0.0.1:8000/api/projects/" + this.$route.params.id)
+        .get("http://127.0.0.1:8000/api/projects/4")
         .then((response) => {
           this.VideoPath = response.data.VideoPath;
 
-          console.log("from Video Player: " + this.$route.params.id);
+          // console.log("from Video Player: " + this.$route.params.id);
         })
         .catch(function (error) {
           console.log(error);
