@@ -51,11 +51,11 @@ export default {
   },
   created() {
     const ipc = require("electron").ipcRenderer;
-    ipc.on("save-finished", function (event, filename) {
-      // When filename equals null, it means the user clicked the cancel button
-      // When the user clicks the save button, the value of filename is the absolute path of the corresponding file
-      this.VideoTitle = filename
-      console.log(filename, "from crreate form page");
+    ipc.on("save-finished", function (event, newProject) {
+
+      this.projects.VideoTitle = newProject.videoName
+      this.projects.VideoPath = newProject.videoPath
+      console.log(newProject, "from crreate form page");
     });
   },
 

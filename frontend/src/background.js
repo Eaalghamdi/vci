@@ -35,14 +35,15 @@ const guessPackaged = () => {
 const getScriptPath = () => {
   if (!guessPackaged()) {
     //  start development server
-    pyProc = PythonShell.run(
-      "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py",
-      options,
-      function (err) {
-        if (err) throw err;
-        console.log("server stopped");
-      }
-    );
+    // pyProc = PythonShell.run(
+    //   "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py",
+    //   options,
+    //   function (err) {
+    //     if (err) throw err;
+    //     console.log("server stopped");
+    //   }
+    // );
+    pyProc = null
   }
   if (process.platform === "win32") {
     return app.getAppPath() + "dist/api_server/api_server.exe";
@@ -52,7 +53,7 @@ const getScriptPath = () => {
 
 const createPyProc = () => {
   let script = getScriptPath();
-  console.log(script);
+  // console.log(script);
 
   if (guessPackaged()) {
     pyProc = require("child_process").execFile(script);
@@ -62,7 +63,7 @@ const createPyProc = () => {
 
   if (pyProc != null) {
     // console.log(pyProc)
-    console.log("child process success");
+    // console.log( "Seever is running at"  + script);
   }
 };
 
@@ -161,7 +162,7 @@ ipc.on("open-file-upload-dialog", function (event) {
         if (!file.canceled) {
           // Updating the GLOBAL filepath variable
           // to user-selected file.
-          global.filepath = file.filePaths[0].toString();
+          let filepath = file.filePaths[0].toString();
           // console.log(global.filepath);
         }
       })
@@ -191,24 +192,27 @@ ipc.on("open-file-upload-dialog", function (event) {
           
           var fs = require("fs");
           const { basename } = require("path");
-          let fileName = basename(filepath, '.mp4');
-         
-          let outFolder = global.outDir + "/" + fileName;
+          let videoName = basename(filepath, '.mp4');
+          let videoFolder = path.join(global.outDir,  fileName);
+          let videoPath =  path.join(videoFolder, basename(filepath));
          
   
 
-          if (!fs.existsSync(outFolder)) {
-            fs.mkdirSync(outFolder, {
+          if (!fs.existsSync(videoFolder)) {
+            fs.mkdirSync(videoFolder, {
               recursive: true,
             });
           }
-        
-          fs.copyFile(filepath, outFolder, (err) => {
+  
+          
+          fs.copyFileSync(filepath, videoPath, (err) => {
             if (err) throw err;
-            //   console.log(global.filepath + ' was copied to ' + outputFile);
+              console.log(global.filepath + ' was copied to ' + videoFolder);
           });
-
-          event.sender.send("save-finished", fileName);
+          videoName
+         const newProject = {videoName: videoName, videoPath: videoPath, videoFolder: videoFolder }
+    
+          event.sender.send("save-finished", newProject);
         }
       })
       .catch((err) => {
