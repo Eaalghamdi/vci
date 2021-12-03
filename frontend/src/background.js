@@ -129,9 +129,11 @@ app.on("ready", async () => {
 const ipc = require("electron").ipcMain;
 const dialog = require("electron").dialog;
 
-global.filepath = undefined;
+
 global.outDir = path.join(__dirname, "../assets/temp");
 global.appPath = app.getAppPath();
+const homeDir = app.getPath('home');
+const desktopDir = path.resolve(homeDir, 'Desktop');
 
 ipc.on("open-file-upload-dialog", function (event) {
   // If the platform is 'win32' or 'Linux'
@@ -140,7 +142,7 @@ ipc.on("open-file-upload-dialog", function (event) {
     dialog
       .showOpenDialog({
         title: "Select the File to be uploaded",
-        defaultPath: path.join(__dirname, "../assets/"),
+        defaultPath: desktopDir,
 
         // Restricting the user to only Text Files.
         filters: [
@@ -171,7 +173,7 @@ ipc.on("open-file-upload-dialog", function (event) {
     dialog
       .showOpenDialog({
         title: "Select the File to be uploaded",
-        defaultPath: path.join(__dirname, "../assets/"),
+        defaultPath: desktopDir,
         filters: [
           {
             name: "Video Files",
@@ -185,23 +187,26 @@ ipc.on("open-file-upload-dialog", function (event) {
       .then((file) => {
         // console.log(file.canceled);
         if (!file.canceled) {
-          global.filepath = file.filePaths[0].toString();
+          let filepath = file.filePaths[0].toString();
+          console.log(filepath)   
           var fs = require("fs");
           const { basename } = require("path");
-          let fileName = basename(global.filepath);
-          // let outFolder = global.outDir + "/" + fileName + "/";
+          let fileName = basename(filepath, '.mp4');
+         
+          let outFolder = global.outDir + "/" + fileName;
+         
+  
 
-          // if (!fs.existsSync(outFolder)) {
-          //   fs.mkdirSync(outFolder, {
-          //     recursive: true,
-          //   });
-          // }
+          if (!fs.existsSync(outFolder)) {
+            fs.mkdirSync(outFolder, {
+              recursive: true,
+            });
+          }
         
-
-          // fs.copyFile(outFolder, fileName, (err) => {
-          //   if (err) throw err;
-          //   //   console.log(global.filepath + ' was copied to ' + outputFile);
-          // });
+          fs.copyFile(filepath, outFolder, (err) => {
+            if (err) throw err;
+            //   console.log(global.filepath + ' was copied to ' + outputFile);
+          });
 
           event.sender.send("save-finished", fileName);
         }
