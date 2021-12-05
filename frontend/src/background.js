@@ -193,7 +193,7 @@ ipc.on("open-file-upload-dialog", function (event) {
           var fs = require("fs");
           const { basename } = require("path");
           let videoName = basename(filepath, '.mp4');
-          let videoFolder = path.join(global.outDir,  fileName);
+          let videoFolder = path.join(global.outDir,  videoName);
           let videoPath =  path.join(videoFolder, basename(filepath));
          
   
@@ -204,8 +204,8 @@ ipc.on("open-file-upload-dialog", function (event) {
             });
           }
   
-          
-          fs.copyFileSync(filepath, videoPath, (err) => {
+        
+          fs.copyFile(filepath, videoPath, (err) => {
             if (err) throw err;
               console.log(global.filepath + ' was copied to ' + videoFolder);
           });

@@ -1,18 +1,29 @@
 <template>
-  <Panel header="Recent Projects">
-    <div class="p-d-block">
+  <Panel header="Recent Projects" :toggleable="true">
+      <template #icons>
+        <button class="p-panel-header-icon p-link p-mr-2" @click="toggle">
+            <span class="pi pi-trash"></span>
+        </button>
+      </template> 
+    <div class="p-grid">
       <div id="projectsList" v-if="projects.length > 0">
-        <div v-for="project in projects" :key="project.ProjectTitle">
-          <router-link
+        <div v-for="project in projects" :key="project.ProjectTitle" class="p-field-checkbox" >
+            <Checkbox :id="project.id" name="project" :value="project.ProjectTitle" v-model="selectedProject" />
+              <label :for="project" >
+          <router-link id="projectItem"
             :to="{
               name: 'toProject',
               params: { id: project.id },
             }"
           >
-            <h3 id="projectItem">{{ project.ProjectTitle }}</h3>
+              {{ project.ProjectTitle }}
+    
           </router-link>
-        </div>
+            </label> 
+     
+ </div>
       </div>
+
     </div>
   </Panel>
 </template>
@@ -22,7 +33,8 @@ export default {
   name: "ProjectHistroy",
   data() {
     return {
-      selectedProject: null,
+      checked: false,
+      selectedProject: [],
       projects: [],
     };
   },
@@ -31,7 +43,7 @@ export default {
       .get("http://127.0.0.1:8000/api/all_projects")
       .then((response) => {
         this.projects = response.data;
-        console.log(this.projects);
+       
       })
       .catch(function (error) {
         console.log(error);
@@ -49,5 +61,10 @@ export default {
 
 #projectItem {
   color: gray;
+}
+
+.delete_btn {
+  float: right;
+
 }
 </style>
