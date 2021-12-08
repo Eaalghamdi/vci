@@ -1,14 +1,14 @@
 <template>
   <Panel header="Recent Projects" :toggleable="true">
       <template #icons>
-        <button class="p-panel-header-icon p-link p-mr-2" @click="toggle">
+        <button class="p-panel-header-icon p-link p-mr-2" @click="deleteProject">
             <span class="pi pi-trash"></span>
         </button>
       </template> 
     <div class="p-grid">
       <div id="projectsList" v-if="projects.length > 0">
         <div v-for="project in projects" :key="project.ProjectTitle" class="p-field-checkbox" >
-            <Checkbox :id="project.id" name="project" :value="project.ProjectTitle" v-model="selectedProject" />
+            <Checkbox :id="project.id" name="project" :value="project.id" v-model="selectedProject" />
               <label :for="project" >
           <router-link id="projectItem"
             :to="{
@@ -38,6 +38,16 @@ export default {
       projects: [],
     };
   },
+  methods: {
+    deleteProject () {
+      axios
+        .delete("http://127.0.0.1:8000/api/projects/delete/", this.selectedProject)
+        .catch((err) => {
+          console.log(err);
+        })
+      this.selectedProject = null;
+    },
+  },
   mounted() {
     axios
       .get("http://127.0.0.1:8000/api/all_projects")
@@ -45,7 +55,7 @@ export default {
         this.projects = response.data;
        
       })
-      .catch(function (error) {
+      .catch((error) =>{
         console.log(error);
       });
   },

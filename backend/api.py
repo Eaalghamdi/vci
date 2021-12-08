@@ -1,7 +1,7 @@
 # from FeatureExtraction.Utils import Processing
 # import FeatureExtraction
 
-from fastapi import FastAPI, Request, Depends, BackgroundTasks, File, UploadFile
+from fastapi import FastAPI, Request, Depends, BackgroundTasks, File, UploadFile, HTTPException
 from pydantic import BaseModel
 from schemas import ProjectRequest
 import sqlalchemy
@@ -41,7 +41,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=False,
-    allow_methods=["DELETE", "GET", "POST", "PUT"],
+    allow_methods=["DELETE", "GET", "POST", "PUT", "PATCH", "OPTIONS"],
     allow_headers=["*"]
 )
 
@@ -83,14 +83,15 @@ def get_project(project_id: int, db: Session = Depends(get_db)):
     project = db.query(Project).filter(Project.id == project_id).first()
     return(project)
 
-@app.delete('/api/projects/{project_id}')
-def delete_project(project_id: int, db: Session = Depends(get_db)):
-    project = db.query(Project).filter(Project.id == project_id).first()
-    if not project:
-        raise HTTPException(status_code=404, detail="project not found")
-    db.delete(project)
-    db.commit()
-    return {"ok": True}
+@app.delete('/api/projects/delete/{project_ids}')
+def delete_project(project_ids: int, db: Session = Depends(get_db)):
+    for project_id in project_ids:
+        project = db.query(Project).filter(Project.id == project_id).first()
+        if not project:
+            raise HTTPException(status_code=404, detail="project not found")
+        db.delete(project)
+        db.commit()
+        return {"ok": True}
 
 
 @ app.post('/api/processing/sbd')
