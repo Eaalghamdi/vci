@@ -41,7 +41,7 @@ export default {
   methods: {
     deleteProject () {
       axios
-        .delete("http://127.0.0.1:8000/api/projects/delete/", this.selectedProject)
+        .delete("http://127.0.0.1:8000/api/projects/delete", this.selectedProject)
         .catch((err) => {
           console.log(err);
         })

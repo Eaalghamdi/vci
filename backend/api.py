@@ -84,15 +84,21 @@ def get_project(project_id: int, db: Session = Depends(get_db)):
     return(project)
 
 @app.delete('/api/projects/delete/{project_ids}')
-def delete_project(project_ids: int, db: Session = Depends(get_db)):
+async def delete_project(project_ids: int, db: Session = Depends(get_db)):
     for project_id in project_ids:
         project = db.query(Project).filter(Project.id == project_id).first()
+        
         if not project:
             raise HTTPException(status_code=404, detail="project not found")
         db.delete(project)
         db.commit()
         return {"ok": True}
 
+# def find_project(id) -> Optional[Project]:
+#     for project in Project:
+#         if project.id == id:
+#             return project
+#     return None
 
 @ app.post('/api/processing/sbd')
 async def shotBoundryDetection():
