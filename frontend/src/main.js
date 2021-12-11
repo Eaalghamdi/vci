@@ -71,3 +71,4 @@ app.component("Column", Column);
 app.component("Chart", Chart);
 
 app.use(router).mount("#app");
+
