@@ -21,6 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.mp4
 
 #Electron-builder output
 /dist_electron

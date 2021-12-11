@@ -207,10 +207,10 @@ ipc.on("open-file-upload-dialog", function (event) {
         
           fs.copyFile(filepath, videoPath, (err) => {
             if (err) throw err;
-              console.log(global.filepath + ' was copied to ' + videoFolder);
+              console.log("There is an error copyign your file")
           });
-          videoName
-         const newProject = {videoName: videoName, videoPath: videoPath, videoFolder: videoFolder }
+         const newProject = {videoPath: filepath, ProjectTitle: videoName}
+         
     
           event.sender.send("save-finished", newProject);
         }

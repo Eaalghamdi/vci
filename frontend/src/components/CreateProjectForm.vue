@@ -43,19 +43,13 @@ export default {
     return {
       loading: false,
       projects: {
-        ProjectTitle: "",
-        VideoTitle: "",
-        VideoPath: "",
       },
     };
   },
   created() {
     const ipc = require("electron").ipcRenderer;
     ipc.on("save-finished", function (event, newProject) {
-
-      this.projects.VideoTitle = newProject.videoName
-      this.projects.VideoPath = newProject.videoPath
-      console.log(newProject, "from crreate form page");
+      this.projects = newProject
     });
   },
 
@@ -67,12 +61,7 @@ export default {
     },
 
     onProjectCreate() {
-      //   const ipc = require("electron").ipcRenderer;
-      //   ipc.on("save-finished", function(event, filename) {
-      //   // When filename equals null, it means the user clicked the cancel button
-      //   // When the user clicks the save button, the value of filename is the absolute path of the corresponding file
-      //   console.log(filename);
-      // }),
+      console.log(this.projects)
       this.loading = true;
       axios
         .post("http://127.0.0.1:8000/api/add_projects", this.projects)

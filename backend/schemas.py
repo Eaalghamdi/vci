@@ -4,5 +4,4 @@ from pydantic import BaseModel
 
 class ProjectRequest(BaseModel):
     ProjectTitle: str
-    VideoTitle: str
     VideoPath: str

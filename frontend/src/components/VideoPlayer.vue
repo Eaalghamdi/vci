@@ -6,11 +6,12 @@
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+    <source src="../assets/1.mp4" type="video/mp4" />
   </video>
 </template>
 <script>
 import axios from "axios";
+const path = require("path");
 
 export default {
   name: "VideoPlayer",
@@ -22,12 +23,12 @@ export default {
   },
   methods: {
     getVideoURL() {
+
+      let videoid = "http://127.0.0.1:8000/api/projects/" + this.$route.params.id
       axios
-        .get("http://127.0.0.1:8000/api/projects/4")
+        .get(videoid)
         .then((response) => {
           this.VideoPath = response.data.VideoPath;
-
-          // console.log("from Video Player: " + this.$route.params.id);
         })
         .catch(function (error) {
           console.log(error);
@@ -36,7 +37,6 @@ export default {
   },
 
   created() {
-    console.log("this the id for this video,", this.$route.params)
     this.getVideoURL();
   },
 };

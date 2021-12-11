@@ -41,7 +41,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_credentials=False,
-    allow_methods=["DELETE", "GET", "POST", "PUT", "PATCH", "OPTIONS"],
+    allow_methods=["DELETE", "GET", "POST", "PUT"],
     allow_headers=["*"]
 )
 
@@ -63,11 +63,10 @@ def get_db():
 async def post_project(project_request: ProjectRequest, db: Session = Depends(get_db)):
 
     project = Project()
+    print(project_request)
     project.ProjectTitle = project_request.ProjectTitle
-    project.VideoTitle = project_request.VideoTitle
     project.VideoPath = project_request.VideoPath
   
-
     db.add(project)
     db.commit()
     return project.id
@@ -79,13 +78,12 @@ def get_projects(db: Session = Depends(get_db)):
 
 
 @app.get('/api/projects/{project_id}')
-def get_project(project_id: int, db: Session = Depends(get_db)):
+def get_project(project_id: str, db: Session = Depends(get_db)):
     project = db.query(Project).filter(Project.id == project_id).first()
     return(project)
 
-@app.delete('/api/projects/delete/{project_ids}')
-async def delete_project(project_ids: int, db: Session = Depends(get_db)):
-    for project_id in project_ids:
+@app.delete('/api/projects/delete/{project_id}')
+def delete_project(project_id: int, db: Session = Depends(get_db)):
         project = db.query(Project).filter(Project.id == project_id).first()
         
         if not project:
