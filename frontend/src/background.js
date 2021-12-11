@@ -4,7 +4,6 @@ import { app, protocol, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS3_DEVTOOLS } from "electron-devtools-installer";
 const path = require("path");
-const { PythonShell } = require("python-shell");
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
@@ -13,11 +12,6 @@ protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
-// // start the api server
-let options = {
-  pythonPath:
-    "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/env/bin/python",
-};
 
 let pyProc = null;
 
@@ -27,43 +21,27 @@ const exitPyProc = () => {
   pyProc = null;
 };
 
-const guessPackaged = () => {
-  const fullPath = app.getAppPath() + "/dist";
-  return require("fs").existsSync(fullPath);
-};
+// const guessPackaged = () => {
+//   const fullPath = app.getAppPath() + "/dist";
+//   return require("fs").existsSync(fullPath);
+// };
 
 const getScriptPath = () => {
-  if (!guessPackaged()) {
-    //  start development server
-    // pyProc = PythonShell.run(
-    //   "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/backend/api_server.py",
-    //   options,
-    //   function (err) {
-    //     if (err) throw err;
-    //     console.log("server stopped");
-    //   }
-    // );
-    pyProc = null
-  }
+
   if (process.platform === "win32") {
-    return app.getAppPath() + "dist/api_server/api_server.exe";
+    return app.getAppPath() + "/dist/api_server/api_server.exe";
   }
-  return app.getAppPath() + "dist/api_server/api_server.exe";
+  return app.getAppPath() + "/dist/api_server/api_server.exe";
 };
 
 const createPyProc = () => {
   let script = getScriptPath();
-  // console.log(script);
+  pyProc = require("child_process").execFile(script);
 
-  if (guessPackaged()) {
-    pyProc = require("child_process").execFile(script);
-  } else {
-    pyProc = require("child_process").execFile(script);
-  }
 
   if (pyProc != null) {
     // console.log(pyProc)
-    // console.log( "Seever is running at"  + script);
+    console.log( "Seever is running at"  + script);
   }
 };
 

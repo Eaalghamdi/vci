@@ -1,13 +1,14 @@
 <template>
   <video
     id="player"
-    key="VideoPath"
+    :key="VideoPath"
     playsinline
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="../assets/1.mp4" type="video/mp4" />
+    <source :src="VideoPath" type="video/mp4" />
   </video>
+
 </template>
 <script>
 import axios from "axios";
@@ -21,23 +22,18 @@ export default {
       VideoPath: "",
     };
   },
-  methods: {
-    getVideoURL() {
 
+  created() {
       let videoid = "http://127.0.0.1:8000/api/projects/" + this.$route.params.id
       axios
         .get(videoid)
         .then((response) => {
           this.VideoPath = response.data.VideoPath;
+          console.log( this.VideoPath)
         })
         .catch(function (error) {
           console.log(error);
         });
-    },
-  },
-
-  created() {
-    this.getVideoURL();
   },
 };
 </script>
