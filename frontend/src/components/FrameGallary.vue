@@ -10,11 +10,13 @@
         </li>
       </ul>
     </div>
+    <p> {{VideoPath}} </p>
   </ScrollPanel>
 </template>
 <script>
 import fs from "fs";
 import path from "path";
+import axios from "axios";
 
 export default {
   name: "FrameGallary",
@@ -22,6 +24,7 @@ export default {
     return {
       images: [],
       sourcePath: null,
+      VideoPath: 'epmty',
     };
   },
 
@@ -46,9 +49,22 @@ export default {
         this.images.push(image);
       }
     },
+      getVideoPath() {
+      let videoid = "http://127.0.0.1:8000/api/projects/" + this.$route.params.id
+      axios
+        .get(videoid)
+        .then((response) => {
+          this.VideoPath = response.data.VideoPath;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
   },
+  },
+  
   created() {
-    this.scan();
+    // this.scan();
+    this.getVideoPath();
   },
 };
 </script>
