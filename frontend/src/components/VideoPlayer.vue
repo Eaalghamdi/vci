@@ -1,12 +1,13 @@
 <template>
   <video
     id="player"
+    :key="VideoPath"
 
     playsinline
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="../assets/temp/1/1.mp4" type="video/mp4" />
+    <source :src="VideoPath" type="video/mp4" />
   </video>
 
 </template>
