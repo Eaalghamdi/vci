@@ -7,7 +7,7 @@
     controls
     data-poster="/path/to/poster.jpg"
   >
-    <source src="1.mp4" type="video/mp4" />
+    <source src="assets/1.mp4" type="video/mp4" />
   </video>
 
 </template>

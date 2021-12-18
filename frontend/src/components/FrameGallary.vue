@@ -31,7 +31,7 @@ export default {
   methods: {
     scan() {
       // Iterate over all files in directory
-      const outFrames = "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/frontend/src/assets/temp/frames";
+      const outFrames = "/assets/temp/frames";
       let files = fs.readdirSync(outFrames);
       const regex = /.jpe?g$/gim;
       for (let file of files) {

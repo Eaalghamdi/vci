@@ -36,6 +36,7 @@ const getScriptPath = () => {
 
 const createPyProc = () => {
   let script = getScriptPath();
+  console.log(script)
   pyProc = require("child_process").execFile(script);
 
 
