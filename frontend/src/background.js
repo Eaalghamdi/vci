@@ -46,7 +46,7 @@ const createPyProc = () => {
 };
 
 async function createWindow() {
-  createPyProc();
+  
 
   // Create the browser window.
   const win = new BrowserWindow({
@@ -70,7 +70,10 @@ async function createWindow() {
     createProtocol("app");
     // Load the index.html when not in development
     win.loadURL("app://./index.html");
+    
+    win.webContents.openDevTools()    // delete this once you finished debugging in prodcution
   }
+  createPyProc();
 }
 
 // Quit when all windows are closed.

@@ -63,7 +63,7 @@ export default {
   },
   
   created() {
-    // this.scan();
+    this.scan();
     this.getVideoPath();
   },
 };
