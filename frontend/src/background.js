@@ -13,38 +13,98 @@ protocol.registerSchemesAsPrivileged([
 ]);
 
 
-let pyProc = null;
 
-const exitPyProc = () => {
-  pyProc.kill();
-  console.log("server stopped");
-  pyProc = null;
+/*************************************************************
+ * py process
+ *************************************************************/
+
+const PY_MAC_DIST_FOLDER = "../../app.asar.unpacked/daemon";
+const PY_WIN_DIST_FOLDER = "../../app.asar.unpacked/daemon";
+const PY_DIST_FILE = "daemon";
+const PY_FOLDER = "../backend";
+const PY_MODULE = "api_server"; // without .py suffix
+
+let pyProc = null;
+let ws = null;
+
+const guessPackaged = () => {
+  let packed;
+  if (process.platform === "win32") {
+    const fullPath = path.join(__dirname, PY_WIN_DIST_FOLDER);
+    packed = require("fs").existsSync(fullPath);
+    console.log(fullPath);
+    console.log(packed);
+    return packed;
+  }
+  const fullPath = path.join(__dirname, PY_MAC_DIST_FOLDER);
+  packed = require("fs").existsSync(fullPath);
+  console.log(fullPath);
+  console.log(packed);
+  return packed;
 };
 
-// const guessPackaged = () => {
-//   const fullPath = app.getAppPath() + "/dist";
-//   return require("fs").existsSync(fullPath);
-// };
-
 const getScriptPath = () => {
-
-  if (process.platform === "win32") {
-    return app.getAppPath() + "/dist/api_server/api_server.exe";
+  if (!guessPackaged()) {
+    return path.join(PY_FOLDER, PY_MODULE + ".py");
   }
-  return app.getAppPath() + "/dist/api_server/api_server.exe";
+  if (process.platform === "win32") {
+    return path.join(__dirname, PY_WIN_DIST_FOLDER, PY_DIST_FILE + ".exe");
+  }
+  return path.join(__dirname, PY_MAC_DIST_FOLDER, PY_DIST_FILE);
 };
 
 const createPyProc = () => {
   let script = getScriptPath();
-  console.log(script)
-  pyProc = require("child_process").execFile(script);
+  let processOptions = {};
+  //processOptions.detached = true;
+  //processOptions.stdio = "ignore";
+  pyProc = null;
+  if (guessPackaged()) {
+    try {
+      console.log("Running python executable: ");
+      const Process = require("child_process").spawn;
+      pyProc = new Process(script, [], processOptions);
+    } catch {
+      console.log("Running python executable: Error: ");
+      console.log("Script " + script);
+    }
+  } else {
+    console.log("Running python script");
+    console.log("Script " + script);
 
-
-  if (pyProc != null) {
-    // console.log(pyProc)
-    console.log( "Seever is running at"  + script);
+    const Process = require("child_process").spawn;
+    pyProc = new Process("python", [script], processOptions);
   }
+  if (pyProc != null) {
+    pyProc.stdout.setEncoding("utf8");
+
+    pyProc.stdout.on("data", function(data) {
+      process.stdout.write(data.toString());
+    });
+
+    pyProc.stderr.setEncoding("utf8");
+    pyProc.stderr.on("data", function(data) {
+      //Here is where the error output goes
+      process.stdout.write("stderr: " + data.toString());
+    });
+
+    pyProc.on("close", function(code) {
+      //Here you can get the exit code of the script
+      console.log("closing code: " + code);
+    });
+
+    console.log("child process success");
+  }
+  //pyProc.unref();
 };
+
+const exitPyProc = e => {};
+
+app.on("will-quit", exitPyProc);
+
+/*************************************************************
+ * window management
+ *************************************************************/
 
 async function createWindow() {
   
