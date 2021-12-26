@@ -24,6 +24,8 @@ const PY_DIST_FILE = "daemon";
 const PY_FOLDER = "../backend";
 const PY_MODULE = "api_server"; // without .py suffix
 
+
+
 let pyProc = null;
 let ws = null;
 
@@ -53,9 +55,9 @@ const getScriptPath = () => {
   return path.join(__dirname, PY_MAC_DIST_FOLDER, PY_DIST_FILE);
 };
 
-const createPyProc = () => {
+ const createPyProc = () => {
   let script = getScriptPath();
-  let processOptions = {};
+  let processOptions = {shell: false};
   //processOptions.detached = true;
   //processOptions.stdio = "ignore";
   pyProc = null;
@@ -73,7 +75,7 @@ const createPyProc = () => {
     console.log("Script " + script);
 
     const Process = require("child_process").spawn;
-    pyProc = new Process("python", [script], processOptions);
+    pyProc = new Process('../backend/env/bin/python3.9',[script], processOptions);
   }
   if (pyProc != null) {
     pyProc.stdout.setEncoding("utf8");
@@ -107,6 +109,8 @@ app.on("will-quit", exitPyProc);
  *************************************************************/
 
 async function createWindow() {
+
+  createPyProc();
   
 
   // Create the browser window.
@@ -134,7 +138,7 @@ async function createWindow() {
     
     win.webContents.openDevTools()    // delete this once you finished debugging in prodcution
   }
-  createPyProc();
+
 }
 
 // Quit when all windows are closed.
