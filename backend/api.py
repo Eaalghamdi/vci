@@ -27,23 +27,23 @@ origins = [
     "https://localhost:8080",
 ]
 
-middleware = [
-    Middleware(CORSMiddleware,
-    allow_origins=origins)
-]
+# middleware = [
+#     Middleware(CORSMiddleware,
+#     allow_origins=origins)
+# ]
 
-app = FastAPI(middleware=middleware)
-CORSMiddleware,
-allow_origins=["*"],
+# app = FastAPI(middleware=middleware)
+# CORSMiddleware,
+# allow_origins=["*"],
 
-# app = FastAPI()
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=False,
-#     allow_methods=["DELETE", "GET", "POST", "PUT"],
-#     allow_headers=["*"]
-# )
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["DELETE", "GET", "POST", "PUT"],
+    allow_headers=["*"]
+)
 
 # create database
 models.Base.metadata.create_all(bind=engine)
