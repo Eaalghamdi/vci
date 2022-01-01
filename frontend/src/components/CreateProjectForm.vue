@@ -50,6 +50,7 @@ export default {
     const ipc = require("electron").ipcRenderer;
     ipc.on("save-finished", function (event, newProject) {
       this.projects = newProject
+      console.log(this.projects)
     });
   },
 
@@ -61,18 +62,19 @@ export default {
     },
 
     onProjectCreate() {
-      console.log(this.projects)
+      console.log(JSON.stringify(this.projects))
+      let body = JSON.stringify(this.projects)
       this.loading = true;
-      axios
-        .post("http://127.0.0.1:8000/api/add_projects", this.projects)
-        .then((res) => {
-          this.loading = false;
+    //   axios
+    //     .post("http://127.0.0.1:8000/api/add_projects", body)
+    //     .then((res) => {
+    //       this.loading = false;
 
-          this.$router.push({ name: "toProject", params: { id: res.data } });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    //       this.$router.push({ name: "toProject", params: { id: res.data } });
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
     },
   },
 };
