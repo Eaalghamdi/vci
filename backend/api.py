@@ -63,13 +63,14 @@ def get_db():
 async def post_project(project_request: ProjectRequest, db: Session = Depends(get_db)):
 
     project = Project()
-    print(project_request)
+    
     project.ProjectTitle = project_request.ProjectTitle
     project.VideoPath = project_request.VideoPath
-  
+    project.VideoTitle = project_request.VideoTitle
+    print(project)
     db.add(project)
     db.commit()
-    return project.id
+    return project_request
 
 
 @ app.get('/api/all_projects')

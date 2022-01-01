@@ -62,19 +62,25 @@ export default {
     },
 
     onProjectCreate() {
-      console.log(JSON.stringify(this.projects))
-      let body = JSON.stringify(this.projects)
-      this.loading = true;
-    //   axios
-    //     .post("http://127.0.0.1:8000/api/add_projects", body)
-    //     .then((res) => {
-    //       this.loading = false;
+      // console.log(JSON.stringify(this.projects))
+      // let body = JSON.stringify(this.projects)
+      // this.loading = true;
+       const article =  {
+    "VideoPath": "/Users/emadalghamdi/Documents/GitHub/auvana_v_1/frontend/assets/temp/1/1.mp4",
+    "VideoTitle": null,
+    "ProjectTitle": "hand coded from frontend"
+  };
+  const jarticle = JSON.stringify(article);
+      axios
+        .post("http://127.0.0.1:8000/api/add_projects", jarticle)
+        .then((res) => {
+          this.loading = false;
 
-    //       this.$router.push({ name: "toProject", params: { id: res.data } });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
+          this.$router.push({ name: "toProject", params: { id: res.data } });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
