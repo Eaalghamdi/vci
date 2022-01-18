@@ -52,24 +52,3 @@ module.exports = {
     },
   },
 };
-
-
-  // "build": {
-  //   "appId": "com.codepitman.bookmark",
-  //   "productName": "bookmark",
-  //   "directories": {
-  //     "app": ".",
-  //     "output": "out",
-  //     "buildResources": "build-res"
-  //   },
-  //   "files": [
-  //     "package.json",
-  //     "app/**/*",
-  //     "node_modules",
-  //     "main.js"
-  //   ],
-  //   "extraResources": [
-  //     "api/dist/**/*"
-  //   ],
-
-  // }
