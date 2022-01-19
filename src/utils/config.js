@@ -26,12 +26,7 @@ export function productionPath() {
     let vals = prefs(prefKeys.basePath)
     if (vals != undefined) {
         return vals.toString().replace('app.asar', 'base/dist/api/api')
-    } else {
-        vals = prefs(prefKeys.basePath)
-        if (vals != undefined) {
-            return vals.toString().replace('app.asar', 'base/dist/api/api')
-        }
-    }
+    } 
 }
 
 export function guessPackaged() {
@@ -46,11 +41,6 @@ export function assetsPath() {
     let vals = prefs(prefKeys.mainPath)
     if (vals != undefined) {
         return vals.toString().replace('base/', 'assets/')
-    } else {
-        vals = prefs(prefKeys.mainPath)
-        if (vals != undefined) {
-            return vals.toString().replace('base/', 'assets/')
-        }
     }
 }
 
