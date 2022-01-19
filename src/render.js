@@ -1,4 +1,4 @@
-import { newProjCreated, emptyFieldAlert, delProConfirm, createProLoading, mainAppLoading } from './render/ipcs'
+import { newProjCreated, emptyFieldAlert, delProConfirm, createProLoading, mainAppLoading, mainAppShareData } from './render/ipcs'
 import { fieldEmpty, confirm } from './render/dialogs'
 import { ipcKeys } from './utils/config'
 import grabVideo from './render/grabVideo'
@@ -23,6 +23,8 @@ function render() {
     createProLoading()
 
     mainAppLoading()
+
+    mainAppShareData()
 
     grabVideo()
 }

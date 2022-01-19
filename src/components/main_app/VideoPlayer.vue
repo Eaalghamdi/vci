@@ -5,8 +5,7 @@
 </template>
 <script>
 // import { ipcRenderer } from "electron";
-import { ipcKeys, eventKeys } from "../../utils/config";
-import event from "../../utils/event";
+// import { ipcKeys, eventKeys } from "../../utils/config";
 
 export default {
   name: "VideoPlayer",
@@ -15,15 +14,10 @@ export default {
   data() {
     return {
       VideoPath: "",
-      videoSrc: "",
+      videoSrc: "video-server://" + this.$route.params.fileName,
     };
   },
 
-  mounted() {
-    event.on(eventKeys.getProjectData, (data) => {
-      this.videoSrc = "video-server://" + data["VideoTitle"];
-    });
-  },
 };
 </script>
 <style scoped>

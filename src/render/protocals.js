@@ -19,3 +19,4 @@ function registerLocalVideoProtocol() {
 }
 
 export default registerLocalVideoProtocol
+

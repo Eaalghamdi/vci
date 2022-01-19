@@ -45,10 +45,10 @@ export function assetsPath() {
 }
 
 export function tmpVideoDirectory() {
-    var tmp_dirc_name = 'tmp'
-    var tmp_path = prefs(prefKeys.tmpPath)
-    var pro_tmp_path = prefs(prefKeys.basePath)
-    var call;
+    let tmp_dirc_name = 'tmp'
+    let tmp_path = prefs(prefKeys.tmpPath)
+    let pro_tmp_path = prefs(prefKeys.basePath)
+    let call;
 
     if (pro_tmp_path.toString().includes('app.asar') == true) {
         var proTmpPath = pro_tmp_path.toString().replace('app.asar', tmp_dirc_name)
@@ -116,10 +116,9 @@ export const ipcKeys = {
     creProPgeLoadAck: "create-page-isloading-ack",
     mainAppLoading: "main-app-isloading",
     mainAppLoadingAck: "main-app-isloading-ack",
+    mainAppSendData: "main-app-send-data",
+    mainAppReciveData: "main-app-recive-data",
 }
 
-export const eventKeys = {
-    getProjectData: "get-project-data",
-}
 
 

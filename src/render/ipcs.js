@@ -76,6 +76,16 @@ export function mainAppLoading(callback) {
     })
 }
 
+export function mainAppShareData(callback) {
+    ipcMain.on(ipcKeys.mainAppSendData, (event, data) => {
+        event.reply(ipcKeys.mainAppReciveData, data)
+        ipcMain.removeListener(
+            ipcKeys.mainAppSendData,
+            () => { }
+        )
+    })
+}
+
 
 
 

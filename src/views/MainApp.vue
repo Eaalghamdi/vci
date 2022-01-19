@@ -45,10 +45,9 @@ import FrameExtraction from "../components/main_app/FrameExtraction.vue";
 import FrameGallary from "../components/main_app/FrameGallary.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
-import { ipcRenderer } from "electron";
-import { ipcKeys, eventKeys } from "../utils/config";
-import get_project from "../provider/get_project";
-import event from "../utils/event";
+// import { ipcRenderer } from "electron";
+// import { ipcKeys, eventKeys } from "../utils/config";
+// import getProject from "../provider/getProject";
 
 export default {
   name: "MainApp",
@@ -69,28 +68,6 @@ export default {
     FrameExtraction,
     Prepreossing,
     FrameGallary,
-  },
-
-  beforeMount() {
-    this.isLoading = true;
-    if (this.$route.params.filePath == "na") {
-      get_project((data) => {
-        event.emit(eventKeys.getProjectData, data);
-        this.projectData = data;
-        this.isLoading = false;
-      }, this.$route.params.id);
-    }
-  },
-
-  mounted() {
-    ipcRenderer.on(ipcKeys.mainAppLoadingAck, (event, data) => {
-      if (data == "loadnow") {
-        this.isLoading = true;
-      } else {
-        this.isLoading = false;
-      }
-      ipcRenderer.removeListener(ipcKeys.mainAppLoadingAck, () => {});
-    });
   },
 };
 </script>

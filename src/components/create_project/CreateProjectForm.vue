@@ -31,6 +31,7 @@ import createProject from "../../provider/createProject";
 import { ipcKeys, prefKeys } from "../../utils/config";
 import { prefs } from "../../utils/prefs";
 import { ipcRenderer } from "electron";
+import getProject from "../../provider/getProject";
 
 export default {
   name: "CreateProjectForm",
@@ -93,12 +94,18 @@ export default {
               // if project created successfuly then redirect to next page
               ipcRenderer.on(ipcKeys.newProCreatedSucc, () => {
                 ipcRenderer.removeListener(ipcKeys.newProCreatedSucc, () => {});
-                ipcRenderer.send(ipcKeys.createProPageLoading, "stopload");
-              
-                this.$router.push({
-                  name: "mainApp",
-                  params: { id: data["data"], filePath: "na", fileName: "na" },
-                });
+
+                getProject((subData) => {
+                  ipcRenderer.send(ipcKeys.createProPageLoading, "stopload");
+                  this.$router.push({
+                    name: "mainApp",
+                    params: {
+                      id: data["data"],
+                      filePath: subData["VideoPath"],
+                      fileName: subData["VideoTitle"],
+                    },
+                  });
+                }, data["data"]);
               });
             }
           }, this.projectTitle);
