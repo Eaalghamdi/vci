@@ -19,7 +19,7 @@ function createProject(callback, projectName) {
         fs.access(destDir, (err) => {
             if (err)
                 fs.mkdirSync(destDir);
-            copyFile(path.join(selVideoPath, selVideoFileName), path.join(destDir, selVideoFileName));
+            copyFile(selVideoPath + '/' + selVideoFileName, destDir + '/' + selVideoFileName);
         });
 
         function copyFile(src, dest) {

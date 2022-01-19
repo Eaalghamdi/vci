@@ -10,7 +10,7 @@ function deleteProject(selectedIds, reload, projects) {
             pyProcess(epMode.POST,
                 (datas) => {
                     if (JSON.parse(datas.toString("utf8"))['data'] == 'completed') {
-                        fs.unlink(path.join(projects[i].VideoPath, projects[i].VideoTitle), function (err) {
+                        fs.unlink(projects[i].VideoPath + '/' + projects[i].VideoTitle, function (err) {
                             console.log('error while delete video ' + err)
                         });
                         reload(selectedIds[i])

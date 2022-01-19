@@ -42,7 +42,7 @@ module.exports = {
           gatekeeperAssess: false,
         },
         win: {
-          target: "nsis"
+          target: ["nsis"]
         },
         linux: {
           target: "AppImage",

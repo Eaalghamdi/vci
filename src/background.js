@@ -9,7 +9,7 @@ import initProcess from './controller/initProcess'
 import render from './render'
 import { tmpVideoDirectory } from "./utils/config"
 import exitProcess from './controller/exitProcess'
-import path from 'path'
+
 
 
 // overwrite used for reinitialize all paths
@@ -93,7 +93,7 @@ function registerLocalVideoProtocol() {
     const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
     try {
       // eslint-disable-next-line no-undef
-      return callback(path.join(tmpVideoDirectory(), decodedUrl))
+      return callback(tmpVideoDirectory() + '/' + decodedUrl)
     } catch (error) {
       console.error(
         'ERROR: registerLocalVideoProtocol: Could not get file path:',

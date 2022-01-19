@@ -1,6 +1,5 @@
 import { prefs } from "./prefs";
 import fs from 'fs'
-import path from 'path'
 
 
 export function init(basepaths, overwrite) {
@@ -20,11 +19,19 @@ export function init(basepaths, overwrite) {
 
 export function developmentPath() {
     var file_name = 'api.py'
-    return path.join(prefs(prefKeys.mainPath), file_name)
+    return prefs(prefKeys.mainPath) + '/' + file_name
 }
 
 export function productionPath() {
-    return prefs(prefKeys.basePath).toString().replace('app.asar', 'base/dist/api/api')
+    let vals = prefs(prefKeys.basePath)
+    if (vals != undefined) {
+        return vals.toString().replace('app.asar', 'base/dist/api/api')
+    } else {
+        vals = prefs(prefKeys.basePath)
+        if (vals != undefined) {
+            return vals.toString().replace('app.asar', 'base/dist/api/api')
+        }
+    }
 }
 
 export function guessPackaged() {
@@ -36,7 +43,15 @@ export function guessPackaged() {
 }
 
 export function assetsPath() {
-    return prefs(prefKeys.mainPath).replace('base/', 'assets/')
+    let vals = prefs(prefKeys.mainPath)
+    if (vals != undefined) {
+        return vals.toString().replace('base/', 'assets/')
+    } else {
+        vals = prefs(prefKeys.mainPath)
+        if (vals != undefined) {
+            return vals.toString().replace('base/', 'assets/')
+        }
+    }
 }
 
 export function tmpVideoDirectory() {
@@ -46,7 +61,7 @@ export function tmpVideoDirectory() {
     var call;
 
     if (pro_tmp_path.toString().includes('app.asar') == true) {
-        var proTmpPath = pro_tmp_path.replace('app.asar', tmp_dirc_name)
+        var proTmpPath = pro_tmp_path.toString().replace('app.asar', tmp_dirc_name)
         if (fs.existsSync(proTmpPath)) {
             return proTmpPath
         } else {
@@ -57,14 +72,14 @@ export function tmpVideoDirectory() {
             return proTmpPath
         }
     } else {
-        if (fs.existsSync(path.join(tmp_path, tmp_dirc_name))) {
-            return path.join(tmp_path, tmp_dirc_name)
+        if (fs.existsSync(tmp_path + '/' + tmp_dirc_name)) {
+            return tmp_path + '/' + tmp_dirc_name
         } else {
             call = async function () {
-                await fs.promises.mkdir(path.join(tmp_path, tmp_dirc_name), { recursive: true })
+                await fs.promises.mkdir(tmp_path + '/' + tmp_dirc_name, { recursive: true })
             }
             call()
-            return path.join(tmp_path, tmp_dirc_name)
+            return tmp_path + '/' + tmp_dirc_name
         }
     }
 }
