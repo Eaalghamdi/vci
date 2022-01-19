@@ -88,21 +88,19 @@ export default {
           setTimeout(() => {
             deleteProject(
               this.selectedProject,
-              (lasRemovedId) => {
-                var index = this.selectedProject
-                  .map((x) => {
-                    return x;
-                  })
-                  .indexOf(lasRemovedId);
-                this.selectedProject.splice(index, 1);
+              (updatedData) => {
+                console.log(updatedData.length)
+                this.selectedProject = updatedData
+              },
+              this.projects,
+              () => {
                 getProjects((data) => {
                   this.projects = data;
                   if (this.selectedProject.length == 0) {
                     ipcRenderer.send(ipcKeys.createProPageLoading, "stopload");
                   }
                 });
-              },
-              this.projects
+              }
             );
           }, 1000);
         });
