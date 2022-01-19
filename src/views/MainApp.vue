@@ -1,25 +1,36 @@
 <template>
-  <TopMenu />
-  <div class="p-grid cont">
-    <div class="SideMenu">
-      <div class="p-col col-1">
-        <div class="p-col row-top">
-          <FrameExtraction />
-        </div>
-        <div class="p-col row-down">
-          <Prepreossing />
-        </div>
-      </div>
-    </div>
-    <div class="p-col col-2">
-      <div class="middleContainer">
-        <div class="p-col row-top">
-          <div class="videoContainer">
-            <VideoPlayer />
+  <div>
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="false"
+      :is-full-page="fullPage"
+      :color="color"
+      :background-color="bgColor"
+      :loader="loaderDesgin"
+      :opacity="opacity"
+    />
+    <TopMenu />
+    <div class="p-grid cont">
+      <div class="SideMenu">
+        <div class="p-col col-1">
+          <div class="p-col row-top">
+            <FrameExtraction />
+          </div>
+          <div class="p-col row-down">
+            <Prepreossing />
           </div>
         </div>
-        <div class="p-col row-down">
-          <FrameGallary />
+      </div>
+      <div class="p-col col-2">
+        <div class="middleContainer">
+          <div class="p-col row-top">
+            <div class="videoContainer">
+              <VideoPlayer />
+            </div>
+          </div>
+          <div class="p-col row-down">
+            <FrameGallary />
+          </div>
         </div>
       </div>
     </div>
@@ -32,15 +43,54 @@ import TopMenu from "../components/TopMenu.vue";
 import Prepreossing from "../components/main_app/Preprocessing.vue";
 import FrameExtraction from "../components/main_app/FrameExtraction.vue";
 import FrameGallary from "../components/main_app/FrameGallary.vue";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
+import { ipcRenderer } from "electron";
+import { ipcKeys, eventKeys } from "../utils/config";
+import get_project from "../provider/get_project";
+import event from "../utils/event";
 
 export default {
   name: "MainApp",
+  data() {
+    return {
+      isLoading: false,
+      fullPage: true,
+      color: "#ff8c00",
+      bgColor: "#1a1a1a",
+      loaderDesgin: "dots",
+      opacity: 0.85,
+    };
+  },
   components: {
+    Loading,
     VideoPlayer,
     TopMenu,
     FrameExtraction,
     Prepreossing,
     FrameGallary,
+  },
+
+  beforeMount() {
+    this.isLoading = true;
+    if (this.$route.params.filePath == "na") {
+      get_project((data) => {
+        event.emit(eventKeys.getProjectData, data);
+        this.projectData = data;
+        this.isLoading = false;
+      }, this.$route.params.id);
+    }
+  },
+
+  mounted() {
+    ipcRenderer.on(ipcKeys.mainAppLoadingAck, (event, data) => {
+      if (data == "loadnow") {
+        this.isLoading = true;
+      } else {
+        this.isLoading = false;
+      }
+      ipcRenderer.removeListener(ipcKeys.mainAppLoadingAck, () => {});
+    });
   },
 };
 </script>

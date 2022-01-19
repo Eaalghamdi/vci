@@ -9,7 +9,7 @@ const routes = [
     component: CreateProject
   },
   { 
-    path: '/mainapp/:id',
+    path: '/mainapp/:id/:filePath/:fileName',
     name: 'mainApp',
     props: true,
     component: MainApp

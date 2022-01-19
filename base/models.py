@@ -57,6 +57,26 @@ def get_all(tbname):
         return e
 
 
+def get_one(tbname, id):
+    sql = (f"SELECT * FROM {tbname} WHERE id=?")
+
+    def query_db(cur, one=True):
+        ab = [dict((cur.description[i][0], value)
+                   for i, value in enumerate(row)) for row in cur.fetchall()]
+        return (ab[0] if ab else None) if one else ab
+    try:
+        connection = db.create_connection()
+        cur = connection.cursor()
+        cur.execute(sql, id)
+        my_query = query_db(cur)
+        cur.close()
+        connection.close()
+        json_output = json.dumps(my_query)
+        return json_output
+    except Error as e:
+        return e
+
+
 def delete_one(tbname, id):
     sql = (f"DELETE FROM {tbname} WHERE id=?")
     try:

@@ -46,6 +46,7 @@ export default {
     // get the selected file name when the video has picked through dialog
     ipcRenderer.on(ipcKeys.uplVidStatAck, (event, dats) => {
       this.videoFileName = prefs(prefKeys.selVideoFileName);
+      ipcRenderer.removeListener(ipcKeys.uplVidStatAck, () => {});
     });
   },
 
@@ -91,16 +92,13 @@ export default {
 
               // if project created successfuly then redirect to next page
               ipcRenderer.on(ipcKeys.newProCreatedSucc, () => {
-                // time is used for let the video save and 
-                // give some time for prepare the video protocal 
-                setTimeout(() => {
-                  //hide loading spinner
-                  ipcRenderer.send(ipcKeys.createProPageLoading, "stopload");
-                  this.$router.push({
-                    name: "mainApp",
-                    params: { id: data["data"] },
-                  });
-                }, 2000);
+                ipcRenderer.removeListener(ipcKeys.newProCreatedSucc, () => {});
+                ipcRenderer.send(ipcKeys.createProPageLoading, "stopload");
+              
+                this.$router.push({
+                  name: "mainApp",
+                  params: { id: data["data"], filePath: "na", fileName: "na" },
+                });
               });
             }
           }, this.projectTitle);

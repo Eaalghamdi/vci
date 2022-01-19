@@ -1,36 +1,28 @@
 <template>
   <video id="player" :key="VideoPath" playsinline controls>
-    <source
-      src="video-server://file_example_MP4_640_3MG.mp4"
-      type="video/mp4"
-    />
+    <source :src="videoSrc" type="video/mp4" />
   </video>
 </template>
 <script>
-// import axios from "axios";
-// const path = require("path");
+// import { ipcRenderer } from "electron";
+import { ipcKeys, eventKeys } from "../../utils/config";
+import event from "../../utils/event";
 
 export default {
   name: "VideoPlayer",
-  props: ["id"],
+  props: ["id", "filePath", "fileName"],
+
   data() {
     return {
       VideoPath: "",
+      videoSrc: "",
     };
   },
 
-  created() {
-    //
-    // let videoid = "http://127.0.0.1:8000/api/projects/" + this.$route.params.id
-    // axios
-    //   .get(videoid)
-    //   .then((response) => {
-    //     this.VideoPath = response.data.VideoPath;
-    //     console.log( this.VideoPath)
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+  mounted() {
+    event.on(eventKeys.getProjectData, (data) => {
+      this.videoSrc = "video-server://" + data["VideoTitle"];
+    });
   },
 };
 </script>

@@ -56,6 +56,7 @@ export default {
       } else {
         this.isLoading = false;
       }
+      ipcRenderer.removeListener(ipcKeys.creProPgeLoadAck, () => {});
     });
   },
 };

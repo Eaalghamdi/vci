@@ -93,6 +93,7 @@ export const prefKeysForClear = [
 export const apiArgs = {
     init: "init",
     getProjects: "get_projects",
+    getProject: "get_project",
     createProject: "create_project",
     deleteProject: "delete_project"
 }
@@ -112,7 +113,13 @@ export const ipcKeys = {
     delPro: "delete-project",
     delProConfirm: "delete-project-confirm",
     createProPageLoading: "create-page-isloading",
-    creProPgeLoadAck: "create-page-isloading-ack"
+    creProPgeLoadAck: "create-page-isloading-ack",
+    mainAppLoading: "main-app-isloading",
+    mainAppLoadingAck: "main-app-isloading-ack",
+}
+
+export const eventKeys = {
+    getProjectData: "get-project-data",
 }
 
 

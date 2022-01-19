@@ -7,9 +7,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 var basepath = app.getAppPath()
 import initProcess from './controller/initProcess'
 import render from './render'
-import { tmpVideoDirectory } from "./utils/config"
 import exitProcess from './controller/exitProcess'
-
+import registerLocalVideoProtocol from './render/protocals'
 
 
 // overwrite used for reinitialize all paths
@@ -60,8 +59,6 @@ app.on('window-all-closed', () => {
   }
 })
 
-
-
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -84,24 +81,6 @@ app.on('ready', async () => {
   createWindow()
   render()
 })
-
-
-function registerLocalVideoProtocol() {
-  protocol.registerFileProtocol('video-server', (request, callback) => {
-    const url = request.url.replace(/^video-server:\/\//, '')
-    // Decode URL to prevent errors when loading filenames with UTF-8 chars or chars like "#"
-    const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
-    try {
-      // eslint-disable-next-line no-undef
-      return callback(tmpVideoDirectory() + '/' + decodedUrl)
-    } catch (error) {
-      console.error(
-        'ERROR: registerLocalVideoProtocol: Could not get file path:',
-        error
-      )
-    }
-  })
-}
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

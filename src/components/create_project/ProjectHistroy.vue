@@ -25,7 +25,11 @@
                 id="projectItem"
                 :to="{
                   name: 'mainApp',
-                  params: { id: project.id },
+                  params: {
+                    id: project.id,
+                    filePath: project.videoPath,
+                    fileName: project.videoFileName,
+                  },
                 }"
               >
                 {{ project.ProjectTitle }}
@@ -37,7 +41,11 @@
                 id="projectItem"
                 :to="{
                   name: 'mainApp',
-                  params: { id: project.id },
+                  params: {
+                    id: project.id,
+                    filePath: project.videoPath,
+                    fileName: project.videoFileName,
+                  },
                 }"
               >
                 {{
@@ -84,13 +92,14 @@ export default {
           "Are you sure you want to delete selected ?"
         );
         ipcRenderer.on(ipcKeys.delProConfirm, () => {
+          ipcRenderer.removeListener(ipcKeys.newProCreatedSucc, () => {});
           ipcRenderer.send(ipcKeys.createProPageLoading, "loadnow");
           setTimeout(() => {
             deleteProject(
               this.selectedProject,
               (updatedData) => {
-                console.log(updatedData.length)
-                this.selectedProject = updatedData
+                console.log(updatedData.length);
+                this.selectedProject = updatedData;
               },
               this.projects,
               () => {
@@ -112,6 +121,7 @@ export default {
     getProjects((data) => (this.projects = data));
     ipcRenderer.on(ipcKeys.newProCreatedSucc, () => {
       getProjects((data) => (this.projects = data));
+      ipcRenderer.removeListener(ipcKeys.newProCreatedSucc, () => {});
     });
   },
 };

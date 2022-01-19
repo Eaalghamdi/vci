@@ -11,5 +11,9 @@ def get_projects():
     return Models.get_all(Parms.TBNAME_PROJECTS)
 
 
+def get_project(id):
+    return Models.get_one(Parms.TBNAME_PROJECTS, id)
+
+
 def delete_project(id):
     return Models.delete_one(Parms.TBNAME_PROJECTS, id)
