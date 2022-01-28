@@ -2,73 +2,104 @@
   <Panel header="Frame Extraction">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12">
-        <h4>Shot Bundry Detection</h4>
-        <div class="p-field p-grid">
-          <label for="method" class="p-col-fixed" style="width: 100px">
-            Method</label
-          >
-          <div class="p-col">
-            <Dropdown
-              v-model="shotDetectors"
-              :options="shotDetectors"
-              optionLabel="name"
-              placeholder="Select a detector"
+        <div>
+          <div class="p-field-checkbox-a">
+            <RadioButton
+              id="shot-boundry-detection"
+              name="Shot Bundry Detection"
+              value="1"
+              v-model="slectedFrameExtrac"
             />
+            <label class="radio-label" for="shot-boundry-detection"
+              >Shot Bundry Detection</label
+            >
+          </div>
+          <div class="p-field-checkbox-b">
+            <RadioButton
+              id="manual-frame"
+              name="Manual Frame"
+              value="2"
+              v-model="slectedFrameExtrac"
+            />
+            <label class="radio-label" for="manual-frame">Manual Frame</label>
           </div>
         </div>
-        <div class="p-field p-grid">
-          <label for="lastname" class="p-col-fixed" style="width: 100px"
-            >Treshold</label
-          >
-          <div class="p-col">
-            <InputNumber
-              id="horizontal"
-              v-model="value18"
-              showButtons
-              buttonLayout="horizontal"
-              :step="1"
-              decrementButtonClass="p-button-danger"
-              incrementButtonClass="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-            />
+        <div v-if="slectedFrameExtrac == 1" class="fe-panel">
+          <div class="p-field p-grid">
+            <label for="method" class="p-col-fixed" style="width: 100px">
+              Method</label
+            >
+            <div class="p-col">
+              <Dropdown
+                v-model="selectedMethod"
+                :options="methodList"
+                optionLabel="name"
+                optionValue="value"
+                placeholder="Select a detector"
+              />
+            </div>
+          </div>
+          <div class="p-field p-grid">
+            <label for="lastname" class="p-col-fixed" style="width: 100px"
+              >Treshold</label
+            >
+            <div class="p-col">
+              <InputNumber
+                id="horizontal"
+                v-model="thrValue"
+                showButtons
+                buttonLayout="horizontal"
+                :step="1"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+            </div>
           </div>
         </div>
-
-        <div class="p-field p-col-12">
-          <h4>Manual Frame</h4>
-        </div>
-        <div class="p-field p-grid">
-          <label for="lastname" class="p-col-fixed" style="width: 100px">
-            Per Second</label
-          >
-          <div class="p-col">
-            <InputNumber
-              id="horizontal"
-              v-model="value18"
-              showButtons
-              buttonLayout="horizontal"
-              :step="1"
-              decrementButtonClass="p-button-danger"
-              incrementButtonClass="p-button-success"
-              incrementButtonIcon="pi pi-plus"
-              decrementButtonIcon="pi pi-minus"
-            />
+        <div v-if="slectedFrameExtrac == 2" class="fe-panel">
+          <div class="p-field p-grid">
+            <label for="lastname" class="p-col-fixed" style="width: 100px">
+              Per Second</label
+            >
+            <div class="p-col">
+              <InputNumber
+                id="horizontal"
+                v-model="secValue"
+                showButtons
+                buttonLayout="horizontal"
+                :step="1"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div class="p-col-3">
-        <Button label="Start" class="p-button-sm" />
+      <div v-if="slectedFrameExtrac != null" class="p-col-3">
+        <Button @click="onFrameExtraction" label="Start" class="p-button-sm" />
       </div>
     </div>
   </Panel>
 </template>
 <script>
+import shotBouDetec from "../../provider/shotBouDetec";
+import manFrame from "../../provider/manFrame";
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../utils/config";
+
 export default {
   name: "FrameExtraction",
+  props: ["id", "filePath", "fileName"],
+
   data() {
     return {
-      shotDetectors: [
+      selectedMethod: null,
+      slectedFrameExtrac: null,
+      methodList: [
         {
           name: "Content Detector",
           value: 1,
@@ -77,9 +108,70 @@ export default {
       ],
     };
   },
+
+  methods: {
+    onFrameExtraction() {
+      if (this.slectedFrameExtrac == 1) {
+        if (this.selectedMethod == null) {
+          ipcRenderer.send(
+            ipcKeys.mainAppFieldEmpty,
+            "Select a method before start"
+          );
+        } else if (this.slectedFrameExtrac == 1 && this.thrValue == undefined) {
+          ipcRenderer.send(
+            ipcKeys.mainAppFieldEmpty,
+            "Field cannot be empty on threshold"
+          );
+        } else {
+          ipcRenderer.send(ipcKeys.mainAppLoading, "loadnow");
+          setTimeout(() => {
+            shotBouDetec(
+              (data) => {
+                if (data["data"] == "completed") {
+                  ipcRenderer.send(ipcKeys.getGallary);
+                }
+              },
+              this.$route.params.fileName,
+              this.selectedMethod,
+              this.thrValue
+            );
+          }, 1000);
+        }
+      } else if (this.slectedFrameExtrac == 2) {
+        if (this.secValue == undefined) {
+          ipcRenderer.send(
+            ipcKeys.mainAppFieldEmpty,
+            "Field cannot be empty on per second"
+          );
+        } else {
+          ipcRenderer.send(ipcKeys.mainAppLoading, "loadnow");
+          setTimeout(() => {
+            manFrame(
+              (data) => {
+                if (data["data"] == "completed") {
+                  ipcRenderer.send(ipcKeys.getGallary);
+                }
+              },
+              this.$route.params.fileName,
+              this.secValue
+            );
+          }, 1000);
+        }
+      }
+    },
+  },
 };
 </script>
 <style scoped>
+.fe-panel {
+  padding-top: 30px;
+}
+.radio-label {
+  padding-left: 15px;
+}
+.p-field-checkbox-b {
+  padding-top: 10px;
+}
 .p-col {
   padding-top: 12px;
   padding-bottom: 15px;

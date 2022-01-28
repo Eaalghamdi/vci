@@ -1,0 +1,3 @@
+[console_scripts]
+scenedetect = scenedetect.__main__:main
+

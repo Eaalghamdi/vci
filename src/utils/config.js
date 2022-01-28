@@ -7,7 +7,7 @@ export function init(basepaths, overwrite) {
         prefs(prefKeys.mainPath, { val: __dirname.replace('dist_electron', 'base') })
         console.log('main path --- ' + prefs(prefKeys.mainPath))
 
-        prefs(prefKeys.tmpPath, { val: __dirname.replace('dist_electron', 'public') })
+        prefs(prefKeys.tmpPath, { val: __dirname.replace('dist_electron', '') })
         console.log('tmp path --- ' + prefs(prefKeys.tmpPath))
 
         prefs(prefKeys.basePath, { val: basepaths })
@@ -22,11 +22,15 @@ export function developmentPath() {
     return prefs(prefKeys.mainPath) + '/' + file_name
 }
 
+export function pyVenvPath() {
+    return prefs(prefKeys.mainPath) + '/env/bin/python3'
+}
+
 export function productionPath() {
     let vals = prefs(prefKeys.basePath)
     if (vals != undefined) {
         return vals.toString().replace('app.asar', 'base/dist/api/api')
-    } 
+    }
 }
 
 export function guessPackaged() {
@@ -87,7 +91,8 @@ export const prefKeysForClear = [
     "selVideoFileName",
     "selVideoPath",
     "mainPath",
-    "tmpPath"
+    "tmpPath",
+    "basePath"
 ]
 
 export const apiArgs = {
@@ -95,7 +100,9 @@ export const apiArgs = {
     getProjects: "get_projects",
     getProject: "get_project",
     createProject: "create_project",
-    deleteProject: "delete_project"
+    shotBounDetec: "shot_bundry_detection",
+    deleteProject: "delete_project",
+    manFrame: "manual_frame"
 }
 
 export const epMode = {
@@ -118,6 +125,9 @@ export const ipcKeys = {
     mainAppLoadingAck: "main-app-isloading-ack",
     mainAppSendData: "main-app-send-data",
     mainAppReciveData: "main-app-recive-data",
+    mainAppFieldEmpty: "main-app-fields-empty",
+    getGallary: "get-gallary-fetch-images",
+    getGallaryAck: "get-gallary-fetch-images-ack",
 }
 
 

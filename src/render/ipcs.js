@@ -86,6 +86,26 @@ export function mainAppShareData(callback) {
     })
 }
 
+export function mainAppFieldEmpty(callback) {
+    ipcMain.on(ipcKeys.mainAppFieldEmpty, (event, data) => {
+        callback(event, data)
+        ipcMain.removeListener(
+            ipcKeys.mainAppSendData,
+            () => { }
+        )
+    })
+}
+
+export function getGallary(callback) {
+    ipcMain.on(ipcKeys.getGallary, (event, data) => {
+        event.reply(ipcKeys.getGallaryAck)
+        ipcMain.removeListener(
+            ipcKeys.getGallary,
+            () => { }
+        )
+    })
+}
+
 
 
 

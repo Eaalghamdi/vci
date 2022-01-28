@@ -1,4 +1,4 @@
-import { init } from '../utils/config'
+import { init, productionPath, tmpVideoDirectory } from '../utils/config'
 import { prefsClearAll } from '../utils/prefs'
 import { initPyProcess } from '../controller/pyProcess'
 
@@ -10,6 +10,8 @@ function initProcess(basepath, overwrite) {
         var process = init(basepath, overwrite)
         console.log('initialization completed...')
         if (process.length == 2) {
+            console.log('production path : ' + productionPath())
+            console.log('tmp path : ' + tmpVideoDirectory())
             // make sure database has created
             console.log('initiate py process...')
             initPyProcess()

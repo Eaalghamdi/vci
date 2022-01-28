@@ -1,5 +1,5 @@
 import { execFile, spawn } from 'child_process'
-import { developmentPath, productionPath, guessPackaged, apiArgs, epMode } from '../utils/config'
+import { developmentPath, productionPath, guessPackaged, apiArgs, epMode, pyVenvPath } from '../utils/config'
 
 
 // to verify is under prodution or development
@@ -28,13 +28,13 @@ export function pyProcess(mode, widget, args) {
         console.log(argsMain)
         try {
             if (mode == epMode.GET) {
-                spawn('python3', argsMain).stdout
+                spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
                         widget(data);
                     });
                 argsMain = []
             } else if (mode == epMode.POST) {
-                spawn('python3', argsMain).stdout
+                spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
                         widget(data);
                     });
@@ -71,8 +71,8 @@ export function pyProcess(mode, widget, args) {
 export function closePyProcess() {
     if (getMode() == 'development') {
         try {
-            spawn('python3', [developmentPath()]).disconnect;
-            spawn('python3', [developmentPath()]).killed;
+            spawn(pyVenvPath(), [developmentPath()]).disconnect;
+            spawn(pyVenvPath(), [developmentPath()]).killed;
         } catch (e) {
             console.log(e);
             console.log('file not found ' + fileName);

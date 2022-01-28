@@ -27,8 +27,8 @@
                   name: 'mainApp',
                   params: {
                     id: project.id,
-                    filePath: project.videoPath,
-                    fileName: project.videoFileName,
+                    filePath: project.VideoPath,
+                    fileName: project.VideoTitle,
                   },
                 }"
               >
@@ -43,8 +43,8 @@
                   name: 'mainApp',
                   params: {
                     id: project.id,
-                    filePath: project.videoPath,
-                    fileName: project.videoFileName,
+                    filePath: project.VideoPath,
+                    fileName: project.VideoTitle,
                   },
                 }"
               >
