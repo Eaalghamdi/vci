@@ -5,10 +5,10 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       nodeIntegration: true,
-      nodeModulesPath: ['./node_modules'],
       builderOptions: {
         asar: true,
-        extraResources: ["./dist/**", "./base/dist/api/**"],
+        nodeModulesPath: ['./node_modules'],
+        extraResources: ["./dist/**", "./base/dist/**"],
         appId: "com.auvana.ai",
         productName: 'AUVANA',
         // afterSign: "./src/build/notarize.js",

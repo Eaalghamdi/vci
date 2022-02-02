@@ -11,57 +11,42 @@
   </ScrollPanel>
 </template>
 <script>
-// import fs from "fs";
-// import path from "path";
-// import axios from "axios";
+import getGallary from "../../provider/getGallary";
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../utils/config";
 
 export default {
   name: "FrameGallary",
+  props: ["id", "filePath", "fileName"],
+
   data() {
     return {
       images: [],
       sourcePath: null,
-      VideoPath: "epmty",
+      VideoPath:
+        this.$route.params.filePath + "/" + this.$route.params.fileName,
     };
   },
 
-  methods: {
-    scan() {
-      // // Iterate over all files in directory
-      // const outFrames = "/assets/temp/frames";
-      // let files = fs.readdirSync(outFrames);
-      // const regex = /.jpe?g$/gim;
-      // for (let file of files) {
-      //   // Ignore non jpg files
-      //   if (!file.match(regex)) {
-      //     continue;
-      //   }
-      //   let image = {};
-      //   image.name = file;
-      //   image.path = path.join(outFrames, file);
-      //   // console.log(image);
-      //   image.base64 = new Buffer(fs.readFileSync(image.path)).toString(
-      //     "base64"
-      //   );
-      //   this.images.push(image);
-      // }
-    },
-    getVideoPath() {
-      // let videoid = "http://127.0.0.1:8000/api/projects/" + this.$route.params.id
-      // axios
-      //   .get(videoid)
-      //   .then((response) => {
-      //     this.VideoPath = response.data.VideoPath;
-      //   })
-      //   .catch(function (error) {
-      //     console.log(error);
-      //   });
-    },
-  },
-
-  created() {
-    // this.scan();
-    this.getVideoPath();
+  mounted() {
+    getGallary(
+      (image) => {
+        this.images.push(image);
+      },
+      this.$route.params.filePath,
+      this.$route.params.fileName
+    );
+    ipcRenderer.on(ipcKeys.getGallaryAck, (event, data) => {
+      this.images = [];
+      getGallary(
+        (image) => {
+          this.images.push(image);
+          ipcRenderer.send(ipcKeys.mainAppLoading, "stopload");
+        },
+        this.$route.params.filePath,
+        this.$route.params.fileName
+      );
+    });
   },
 };
 </script>

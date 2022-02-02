@@ -11,8 +11,11 @@ function deleteProject(selectedIds, reload, projects, isCompleted) {
                 (datas) => {
                     if (JSON.parse(datas.toString("utf8"))['data'] == 'completed') {
                         fs.unlink(projects[i].VideoPath + '/' + projects[i].VideoTitle, function (err) {
-                            console.log('error while delete video ' + err)
+                            if (err != null) {
+                                console.log('error while delete video ' + err)
+                            }
                         });
+                        fs.rmSync(projects[i].VideoPath + '/' + projects[i].VideoTitle.substr(0, projects[i].VideoTitle.lastIndexOf('.')), { recursive: true, force: true });
                         let selList = selectedIds
                         let index = selList
                             .map((x) => {
