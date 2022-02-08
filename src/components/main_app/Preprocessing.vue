@@ -2,23 +2,6 @@
   <Panel header="Preprocessing">
     <div class="p-fluid p-grid">
       <div class="p-field p-col-12">
-        <p>Image Resolution Converter</p>
-        <div class="p-field p-grid">
-          <label for="Height" class="p-col-fixed" style="width: 100px"
-            >Height</label
-          >
-          <div class="p-col">
-            <InputText id="Height" type="text" />
-          </div>
-        </div>
-        <div class="p-field p-grid">
-          <label for="Width" class="p-col-fixed" style="width: 100px"
-            >Width</label
-          >
-          <div class="p-col">
-            <InputText id="Width" type="text" />
-          </div>
-        </div>
         <p>Video Compression</p>
         <div>
           <div class="p-field-checkbox">

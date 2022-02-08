@@ -15,13 +15,13 @@ export default {
         {
           label: "Preprocessing",
           icon: "pi pi-fw pi-video",
-          to: "/project/" + this.$route.params.id,
+          to: "/mainapp/" + this.$route.params.id,
         },
         {
           label: "Feature Extraction",
           icon: "pi pi-fw pi-cog",
-          to: "/feauextraction/",
-        },
+          to: "/feauextraction",
+        }, 
         {
           label: "Visualization",
           icon: "pi pi-chart-line",

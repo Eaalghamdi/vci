@@ -71,6 +71,9 @@ export function tmpVideoDirectory() {
     }
 }
 
+export const resDefaultHeight = 1024
+export const resDefaultWidth = 768
+
 // add same key in keysForClear while adding new key in keys
 export const prefKeys = {
     selVideoFileName: "selVideoFileName",

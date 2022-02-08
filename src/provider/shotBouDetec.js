@@ -1,5 +1,5 @@
 import { pyProcess } from "../controller/pyProcess";
-import { apiArgs, epMode, tmpVideoDirectory } from '../utils/config';
+import { apiArgs, epMode, tmpVideoDirectory, resDefaultHeight, resDefaultWidth } from '../utils/config';
 
 
 function shotBouDetec(callback, videoFileName, method, treshold) {
@@ -16,7 +16,7 @@ function shotBouDetec(callback, videoFileName, method, treshold) {
             (datas) => {
                 callback(JSON.parse(datas.toString("utf8")));
             },
-            [apiArgs.shotBounDetec, tmpVideoDirectory().toString("utf8"), videoFileName.toString("utf8"), methodVal.toString("utf8"), ('' + treshold).toString("utf8")]
+            [apiArgs.shotBounDetec, tmpVideoDirectory().toString("utf8"), videoFileName.toString("utf8"), methodVal.toString("utf8"), ('' + treshold).toString("utf8"), ('' + resDefaultHeight).toString("utf8"), ('' + resDefaultWidth).toString("utf8")]
         );
     }
 };

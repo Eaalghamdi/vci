@@ -9,21 +9,23 @@ import json
 import shutil
 
 
-def shot_bundry_detection(videoPath, videoFileName, method, treshold):
- 
+def shot_bundry_detection(videoPath, videoFileName, method, treshold, defaultH, defaultW):
+
     videoFolderName = str(videoFileName).split('.', 1)[0]
     pathOfDest = videoPath + "/" + videoFolderName
 
     if os.path.isdir(pathOfDest):
         shutil.rmtree(pathOfDest)
         createDir(videoPath, videoFolderName)
-        process(videoPath, videoFileName, method, treshold, pathOfDest)
+        process(videoPath, videoFileName, method,
+                treshold, pathOfDest, defaultH, defaultW)
         json_output = json.dumps(
             {'error': 'false', 'data': 'completed'})
         return json_output
     else:
         createDir(videoPath, videoFolderName)
-        process(videoPath, videoFileName, method, treshold, pathOfDest)
+        process(videoPath, videoFileName, method,
+                treshold, pathOfDest, defaultH, defaultW)
         json_output = json.dumps(
             {'error': 'false', 'data': 'completed'})
         return json_output
@@ -33,7 +35,7 @@ def createDir(videoPath, videoFolderName):
     os.makedirs(videoPath + "/" + videoFolderName, exist_ok=True)
 
 
-def process(videoPath, videoFileName, method, treshold, pathOfDest):
+def process(videoPath, videoFileName, method, treshold, pathOfDest, defaultH, defaultW):
     video_manager = VideoManager([videoPath + "/" + videoFileName])
     stats_manager = StatsManager()
     scene_manager = SceneManager(stats_manager)
@@ -66,8 +68,9 @@ def process(videoPath, videoFileName, method, treshold, pathOfDest):
         cap.set(1, cut_frame)
         ret, frame = cap.read()
         frame_name = "shot " + str(i) + ".jpg"
-        cv2.imwrite(pathOfDest + "/" + frame_name, frame)
-        
+        cv2.imwrite(pathOfDest + "/" + frame_name, cv2.resize(frame, (defaultH, defaultW),
+                                                              interpolation=cv2.INTER_NEAREST))
+
     cap.release()
     cv2.destroyAllWindows()
 

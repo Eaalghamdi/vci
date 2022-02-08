@@ -27,12 +27,17 @@ if __name__ == '__main__':
         videoFileName = sys.argv[3]
         method = sys.argv[4]
         treshold = sys.argv[5]
+        defaultH = int(sys.argv[6])
+        defaultW = int(sys.argv[7])
         print(Provider.fe_shot_boundry_det(
-            videoPath, videoFileName, method, treshold))
+            videoPath, videoFileName, method, treshold, defaultH, defaultW))
         sys.stdout.flush()
     elif sys.argv[1] == 'manual_frame':
         videoPath = sys.argv[2]
         videoFileName = sys.argv[3]
         time = sys.argv[4]
-        print(Provider.fe_manual_frame(videoPath, videoFileName, time))
+        defaultH = int(sys.argv[5])
+        defaultW = int(sys.argv[6])
+        print(Provider.fe_manual_frame(
+            videoPath, videoFileName, time, defaultH, defaultW))
         sys.stdout.flush()

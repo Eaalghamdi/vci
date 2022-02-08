@@ -21,9 +21,9 @@ def delete_project(id):
     return Models.delete_one(Parms.TBNAME_PROJECTS, id)
 
 
-def fe_shot_boundry_det(videoPath, videoFileName, method, treshold):
-    return SBDExtraction.shot_bundry_detection(videoPath, videoFileName, method, treshold)
+def fe_shot_boundry_det(videoPath, videoFileName, method, treshold, defaultH, defaultW):
+    return SBDExtraction.shot_bundry_detection(videoPath, videoFileName, method, treshold, defaultH, defaultW)
 
 
-def fe_manual_frame(videoPath, videoFileName, time):
-    return MFExtraction.manual_frame(videoPath, videoFileName, time)
+def fe_manual_frame(videoPath, videoFileName, time, defaultH, defaultW):
+    return MFExtraction.manual_frame(videoPath, videoFileName, time, defaultH, defaultW)
