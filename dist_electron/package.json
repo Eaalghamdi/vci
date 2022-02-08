@@ -1,0 +1,62 @@
+{
+  "name": "auvana",
+  "version": "0.1.0",
+  "private": true,
+  "author": "auvana",
+  "description": "auvana feature interface where users can choose what indices to compute.",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
+  },
+  "main": "background.js",
+  "dependencies": {
+    "chart.js": "^3.7.0",
+    "core-js": "^3.6.5",
+    "electron-notarize": "^1.1.1",
+    "electron-store": "^8.0.1",
+    "primeflex": "^3.1.2",
+    "primeicons": "^5.0.0",
+    "primevue": "^3.1.1",
+    "python-shell": "^3.0.1",
+    "vue": "^3.0.0",
+    "vue-loading-overlay": "^5.0.3",
+    "vue-router": "^4.0.6"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "babel-eslint": "^10.1.0",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0",
+    "vue-cli-plugin-electron-builder": "~2.1.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
