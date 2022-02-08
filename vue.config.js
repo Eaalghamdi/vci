@@ -7,7 +7,6 @@ module.exports = {
       nodeIntegration: true,
       builderOptions: {
         asar: true,
-        nodeModulesPath: ['./node_modules'],
         extraResources: ["./dist/**", "./base/dist/**"],
         appId: "com.auvana.ai",
         productName: 'AUVANA',
