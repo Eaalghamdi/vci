@@ -4,6 +4,7 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      nodeModulesPath: ['./node_modules'],
       nodeIntegration: true,
       builderOptions: {
         asar: true,
