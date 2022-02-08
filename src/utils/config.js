@@ -52,27 +52,20 @@ export function tmpVideoDirectory() {
     let tmp_dirc_name = 'tmp'
     let tmp_path = prefs(prefKeys.tmpPath)
     let pro_tmp_path = prefs(prefKeys.basePath)
-    let call;
 
     if (pro_tmp_path.toString().includes('app.asar') == true) {
         var proTmpPath = pro_tmp_path.toString().replace('app.asar', tmp_dirc_name)
         if (fs.existsSync(proTmpPath)) {
             return proTmpPath
         } else {
-            call = async function () {
-                await fs.promises.mkdir(proTmpPath, { recursive: true })
-            }
-            call()
+            fs.promises.mkdir(proTmpPath, { recursive: true })
             return proTmpPath
         }
     } else {
         if (fs.existsSync(tmp_path + '/' + tmp_dirc_name)) {
             return tmp_path + '/' + tmp_dirc_name
         } else {
-            call = async function () {
-                await fs.promises.mkdir(tmp_path + '/' + tmp_dirc_name, { recursive: true })
-            }
-            call()
+            fs.promises.mkdir(tmp_path + '/' + tmp_dirc_name, { recursive: true })
             return tmp_path + '/' + tmp_dirc_name
         }
     }
