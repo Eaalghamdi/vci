@@ -4,10 +4,10 @@ module.exports = {
   },
   pluginOptions: {
     electronBuilder: {
+      nodeModulesPath: ['./node_modules'],
       nodeIntegration: true,
       builderOptions: {
         asar: true,
-        nodeModulesPath: ['./node_modules'],
         extraResources: ["./dist/**", "./base/dist/**"],
         appId: "com.auvana.ai",
         productName: 'AUVANA',
