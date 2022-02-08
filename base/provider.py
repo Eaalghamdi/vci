@@ -1,6 +1,6 @@
 import database.models as Models
 import database.params as Parms
-# import frameExtraction.sbdExtraction as SBDExtraction
+import frameExtraction.sbdExtraction as SBDExtraction
 import frameExtraction.mfExtraction as MFExtraction
 
 
@@ -21,8 +21,8 @@ def delete_project(id):
     return Models.delete_one(Parms.TBNAME_PROJECTS, id)
 
 
-# def fe_shot_boundry_det(videoPath, videoFileName, method, treshold):
-#     return SBDExtraction.shot_bundry_detection(videoPath, videoFileName, method, treshold)
+def fe_shot_boundry_det(videoPath, videoFileName, method, treshold):
+    return SBDExtraction.shot_bundry_detection(videoPath, videoFileName, method, treshold)
 
 
 def fe_manual_frame(videoPath, videoFileName, time):
