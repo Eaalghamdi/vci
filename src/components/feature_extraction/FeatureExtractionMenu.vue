@@ -72,17 +72,17 @@
   </div>
 </template>
 <script>
-import ObjectDetection from "@/components/ObjectDetection.vue";
-import Colorfulness from "@/components/Colorfulness.vue";
-import FrameStructuralSimilarity from "@/components/FrameStructuralSimilarity.vue";
-import Compression from "@/components/Compression.vue";
-import FaceRecognition from "@/components/FaceRecognition.vue";
-import Motion from "@/components/Motion.vue";
-import Sailency from "@/components/Sailency.vue";
-import EdgeDetection from "@/components/EdgeDetection.vue";
+import ObjectDetection from "./fem/ObjectDetection.vue";
+import Colorfulness from "./fem/Colorfulness.vue";
+import FrameStructuralSimilarity from "./fem/FrameStructuralSimilarity.vue";
+import Compression from "./fem/Compression.vue";
+import FaceRecognition from "./fem/FaceRecognition.vue";
+import Motion from "./fem/Motion.vue";
+import Sailency from "./fem/Sailency.vue";
+import EdgeDetection from "./fem/EdgeDetection.vue";
 
 export default {
-  name: "FeatureExtractionMenu",
+  name: "FeatureExtraction",
   components: {
     ObjectDetection,
     Colorfulness,

@@ -20,7 +20,7 @@ export default {
         {
           label: "Feature Extraction",
           icon: "pi pi-fw pi-cog",
-          to: "/featureExtraction/" + this.$route.params.id,
+          to: "/feauextraction/",
         },
         {
           label: "Visualization",

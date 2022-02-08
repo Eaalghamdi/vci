@@ -1,10 +1,13 @@
 <template>
   <TopMenu />
   <div class="p-grid cont">
-    <div class="">
+    <div class="SideMenu">
       <div class="p-col col-1">
-        <div class="p-col row-top SideMenu">
-          <VisulaizationOptions />
+        <div class="p-col row-top">
+          <FeatureExtractionMenu />
+        </div>
+        <div class="p-col row-down">
+          <ResultsMenu />
         </div>
       </div>
     </div>
@@ -12,25 +15,29 @@
       <div class="middleContainer">
         <div class="p-col row-top">
           <div class="Results">
-            <VisulaizationCanves />
+            <ResultTable />
           </div>
         </div>
+        <div class="p-col row-down"></div>
       </div>
     </div>
   </div>
   <Bottom />
 </template>
 <script>
-import TopMenu from "@/components/TopMenu.vue";
-import VisulaizationOptions from "@/components/VisulaizationOptions.vue";
-import VisulaizationCanves from "@/components/VisulaizationCanves.vue";
+import TopMenu from "../components/common/TopMenu.vue";
+import FeatureExtractionMenu from "../components/feature_extraction/FeatureExtractionMenu.vue";
+import ResultsMenu from "../components/feature_extraction/ResultsMenu.vue";
+import ResultTable from "../components/feature_extraction/ResultTable.vue";
 
 export default {
-  name: "VisualizationView",
+  name: "FeatureExtraction",
+  props: ["id"],
   components: {
     TopMenu,
-    VisulaizationOptions,
-    VisulaizationCanves,
+    FeatureExtractionMenu,
+    ResultsMenu,
+    ResultTable,
   },
 };
 </script>

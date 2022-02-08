@@ -39,7 +39,7 @@
 
 <script>
 import VideoPlayer from "../components/main_app/VideoPlayer.vue";
-import TopMenu from "../components/TopMenu.vue";
+import TopMenu from "../components/common/TopMenu.vue";
 import Prepreossing from "../components/main_app/Preprocessing.vue";
 import FrameExtraction from "../components/main_app/FrameExtraction.vue";
 import FrameGallary from "../components/main_app/FrameGallary.vue";
