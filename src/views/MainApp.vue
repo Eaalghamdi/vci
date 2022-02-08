@@ -13,14 +13,8 @@
     <div class="p-grid cont">
       <div class="SideMenu">
         <div class="p-col col-1">
-          <div class="p-col row-down">
-            <Prepreossing />
-          </div>
           <div class="p-col row-top">
             <FrameExtraction />
-          </div>
-          <div class="p-col row-down">
-            <FrameReResolution />
           </div>
         </div>
       </div>
@@ -43,10 +37,8 @@
 <script>
 import VideoPlayer from "../components/main_app/VideoPlayer.vue";
 import TopMenu from "../components/common/TopMenu.vue";
-import Prepreossing from "../components/main_app/Preprocessing.vue";
 import FrameExtraction from "../components/main_app/FrameExtraction.vue";
 import FrameGallary from "../components/main_app/FrameGallary.vue";
-import FrameReResolution from "../components/main_app/FrameReResolution.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import { ipcRenderer } from "electron";
@@ -69,9 +61,7 @@ export default {
     VideoPlayer,
     TopMenu,
     FrameExtraction,
-    Prepreossing,
     FrameGallary,
-    FrameReResolution,
   },
 
   mounted() {

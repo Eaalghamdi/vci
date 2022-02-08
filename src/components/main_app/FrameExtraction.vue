@@ -26,6 +26,27 @@
         </div>
         <div v-if="slectedFrameExtrac == 1" class="fe-panel">
           <div class="p-field p-grid">
+            <Panel class="img-res">
+              <div class="p-field p-col-12">
+                <p>Image Resolution Converter (Optional)</p>
+                <div class="p-field p-grid">
+                  <label for="Height" class="p-col-fixed" style="width: 100px"
+                    >Height</label
+                  >
+                  <div class="p-col">
+                    <InputText id="Height" type="text" v-model="newHeight" />
+                  </div>
+                </div>
+                <div class="p-field p-grid">
+                  <label for="Width" class="p-col-fixed" style="width: 100px"
+                    >Width</label
+                  >
+                  <div class="p-col">
+                    <InputText id="Width" type="text" v-model="newWidth" />
+                  </div>
+                </div>
+              </div>
+            </Panel>
             <label for="method" class="p-col-fixed" style="width: 100px">
               Method</label
             >
@@ -60,6 +81,27 @@
         </div>
         <div v-if="slectedFrameExtrac == 2" class="fe-panel">
           <div class="p-field p-grid">
+            <Panel class="img-res">
+              <div class="p-field p-col-12">
+                <p>Image Resolution Converter (Optional)</p>
+                <div class="p-field p-grid">
+                  <label for="Height" class="p-col-fixed" style="width: 100px"
+                    >Height</label
+                  >
+                  <div class="p-col">
+                    <InputText id="Height" type="text" v-model="newHeight" />
+                  </div>
+                </div>
+                <div class="p-field p-grid">
+                  <label for="Width" class="p-col-fixed" style="width: 100px"
+                    >Width</label
+                  >
+                  <div class="p-col">
+                    <InputText id="Width" type="text" v-model="newWidth" />
+                  </div>
+                </div>
+              </div>
+            </Panel>
             <label for="lastname" class="p-col-fixed" style="width: 100px">
               Per Second</label
             >
@@ -133,7 +175,9 @@ export default {
               },
               this.$route.params.fileName,
               this.selectedMethod,
-              this.thrValue
+              this.thrValue,
+              this.newHeight,
+              this.newWidth
             );
           }, 1000);
         }
@@ -153,7 +197,9 @@ export default {
                 }
               },
               this.$route.params.fileName,
-              this.secValue
+              this.secValue,
+              this.newHeight,
+              this.newWidth
             );
           }, 1000);
         }
@@ -179,6 +225,10 @@ export default {
 .p-col-3 {
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+.img-res {
+  padding-bottom: 25px;
 }
 
 .p-slider-horizontal,

@@ -10,7 +10,7 @@ def manual_frame(videoPath, videoFileName, seconds, defaultH, defaultW):
 
     if os.path.isdir(pathOfDest):
         shutil.rmtree(pathOfDest)
-        createDir(videoPath, videoFolderName)
+        createDir(videoPath, videoFolderName) 
         process(videoFileName, videoPath, seconds,
                 pathOfDest, defaultH, defaultW)
         json_output = json.dumps(
