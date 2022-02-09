@@ -1,7 +1,7 @@
 # auvana_v_1
  
-for node_modules
+for install node_modules ->>
 yarn install
 
-for build
+for build app ->>
 yarn electron:build
