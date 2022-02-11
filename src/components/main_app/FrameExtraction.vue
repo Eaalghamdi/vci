@@ -141,6 +141,10 @@ export default {
     return {
       selectedMethod: null,
       slectedFrameExtrac: null,
+      newHeight: null,
+      thrValue: null,
+      newWidth: null,
+      secValue: null,
       methodList: [
         {
           name: "Content Detector",
