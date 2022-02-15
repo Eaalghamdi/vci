@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        utilitiespackage=utilitiespackage.__main__:main
+    

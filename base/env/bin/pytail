@@ -1,0 +1,12 @@
+#!/Users/niccanordhasm/Documents/GitHub/auvana_v_1/base/env/bin/python3
+# EASY-INSTALL-ENTRY-SCRIPT: 'tailer==0.4.1','console_scripts','pytail'
+__requires__ = 'tailer==0.4.1'
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('tailer==0.4.1', 'console_scripts', 'pytail')()
+    )

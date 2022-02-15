@@ -1,0 +1,12 @@
+#!/Users/niccanordhasm/Documents/GitHub/auvana_v_1/base/env/bin/python3
+# EASY-INSTALL-ENTRY-SCRIPT: 'utilities-package==0.0.8','console_scripts','utilitiespackage'
+__requires__ = 'utilities-package==0.0.8'
+import re
+import sys
+from pkg_resources import load_entry_point
+
+if __name__ == '__main__':
+    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])
+    sys.exit(
+        load_entry_point('utilities-package==0.0.8', 'console_scripts', 'utilitiespackage')()
+    )

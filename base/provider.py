@@ -2,6 +2,7 @@ import database.models as Models
 import database.params as Parms
 import frameExtraction.sbdExtraction as SBDExtraction
 import frameExtraction.mfExtraction as MFExtraction
+import featureExtraction.Colorfulness as Colorfulness
 
 
 def create_project(values):
@@ -27,3 +28,7 @@ def fe_shot_boundry_det(videoPath, videoFileName, method, treshold, defaultH, de
 
 def fe_manual_frame(videoPath, videoFileName, time, defaultH, defaultW):
     return MFExtraction.manual_frame(videoPath, videoFileName, time, defaultH, defaultW)
+
+
+def colorfulness(path, mode):
+    return Colorfulness.get_colorfulness(path, mode)

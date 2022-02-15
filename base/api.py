@@ -41,3 +41,8 @@ if __name__ == '__main__':
         print(Provider.fe_manual_frame(
             videoPath, videoFileName, time, defaultH, defaultW))
         sys.stdout.flush()
+    elif sys.argv[1] == 'colorfulness':
+        imgsPath = sys.argv[2]
+        imgsMode = int(sys.argv[3])
+        print(Provider.colorfulness(imgsPath, imgsMode))
+        sys.stdout.flush()
