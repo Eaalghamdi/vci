@@ -46,3 +46,6 @@ if __name__ == '__main__':
         imgsMode = int(sys.argv[3])
         print(Provider.colorfulness(imgsPath, imgsMode))
         sys.stdout.flush()
+    elif sys.argv[1] == 'get_colorfulness':
+        print(Provider.get_colorfulness())
+        sys.stdout.flush()

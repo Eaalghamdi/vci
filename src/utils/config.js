@@ -98,7 +98,9 @@ export const apiArgs = {
     createProject: "create_project",
     shotBounDetec: "shot_bundry_detection",
     deleteProject: "delete_project",
-    manFrame: "manual_frame"
+    manFrame: "manual_frame",
+    colorFulness: "colorfulness",
+    getColorfulness: "get_colorfulness"
 }
 
 export const epMode = {
@@ -124,6 +126,8 @@ export const ipcKeys = {
     mainAppFieldEmpty: "main-app-fields-empty",
     getGallary: "get-gallary-fetch-images",
     getGallaryAck: "get-gallary-fetch-images-ack",
+    getResultTable: "get-result-table",
+    getResultTableAck: "get-result-table-ack",
 }
 
 

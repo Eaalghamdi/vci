@@ -8,66 +8,84 @@
       position="center"
     >
       <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-12">
-          <div class="p-formgroup-inline">
-            <div class="p-field-checkbox">
-              <Checkbox
-                id="Single"
-                name="Single"
-                value="Single"
-                v-model="single"
-              />
-              <label for="Single">Single</label>
-            </div>
-            <div class="p-field-checkbox">
-              <Checkbox id="Pairs" name="Pairs" value="Pairs" v-model="pairs" />
-              <label for="Pairs"> Pairs</label>
-            </div>
-          </div>
-          <div class="p-field p-grid">
-            <label for="firstname" class="p-col-fixed" style="width: 100px">
-              Method</label
-            >
-            <div class="p-col">
-              <Dropdown
-                v-model="colorfulness"
-                :options="colorfulness"
-                optionLabel="name"
-                placeholder="Select a Method"
-              />
-            </div>
-          </div>
+        <div class="single-class">
+          <RadioButton
+            id="single"
+            name="Single"
+            value="0"
+            v-model="selectedMode"
+          />
+          <label class="radio-label" for="single-frame">Single Frame</label>
         </div>
-
+        <div class="pair-class">
+          <RadioButton id="pair" name="Pair" value="1" v-model="selectedMode" />
+          <label class="radio-label" for="pair-frame">Pair Frame</label>
+        </div>
         <div class="p-col-3">
-          <Button label="Start" class="p-button-sm" />
+          <Button @click="onStart" label="Start" class="p-button-sm" />
         </div>
       </div>
     </Dialog>
   </div>
 </template>
 <script>
+import colorFulness from "../../../provider/colorFulness";
+import getProject from "../../../provider/getProject";
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../../utils/config";
+
+let getProjectData;
+
 export default {
   name: "Colorfulness",
+  props: ["id"],
   data() {
     return {
       display: false,
-      single: "1",
-      pairs: "2",
-      colorfulness: [
-        {
-          name: "Hasler and Süsstrunk",
-          value: 1,
-        },
-      ],
+      selectedMode: null,
+      // colorfulness: [
+      //   {
+      //     name: "Hasler and Süsstrunk",
+      //     value: 1,
+      //   },
+      // ],
     };
   },
   methods: {
     showModal() {
       this.display = true;
     },
+    onStart() {
+      ipcRenderer.send(ipcKeys.mainAppLoading, "loadfe");
+      setTimeout(() => {
+        colorFulness(
+          (data) => {
+            ipcRenderer.send(ipcKeys.getResultTable, "colorfulness");
+          },
+          this.selectedMode,
+          getProjectData["VideoTitle"].split(".")[0]
+        );
+      }, 1000);
+    },
+  },
+
+  mounted() {
+    ipcRenderer.send(ipcKeys.mainAppLoading, "loadfe");
+    setTimeout(() => {
+      getProject((data) => {
+        getProjectData = data;
+        ipcRenderer.send(ipcKeys.mainAppLoading, "stoploadfe");
+        // ipcRenderer.send(ipcKeys.getGallary);
+      }, this.$route.params.id);
+    }, 1000);
   },
 };
 </script>
-<style></style>
-Hasler and Süsstrunk
+<style>
+.single-class {
+  padding-bottom: 5px;
+}
+.pair-class {
+  padding-bottom: 25px;
+}
+</style>

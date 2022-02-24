@@ -106,6 +106,16 @@ export function getGallary(callback) {
     })
 }
 
+export function getResultTable(callback) {
+    ipcMain.on(ipcKeys.getResultTable, (event, data) => {
+        event.reply(ipcKeys.getResultTableAck, data)
+        ipcMain.removeListener(
+            ipcKeys.getResultTable,
+            () => { }
+        )
+    })
+}
+
 
 
 

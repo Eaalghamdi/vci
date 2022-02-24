@@ -16,8 +16,9 @@ const routes = [
     component: MainApp
   },
   {
-    path: '/feauextraction',
+    path: '/feauextraction/:id',
     name: 'featureExtraction',
+    props: true,
     component: FeatureExtraction
   }
 ]

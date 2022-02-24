@@ -32,3 +32,16 @@ def fe_manual_frame(videoPath, videoFileName, time, defaultH, defaultW):
 
 def colorfulness(path, mode):
     return Colorfulness.get_colorfulness(path, mode)
+
+
+def insert_colorfulness(values):
+    return Models.insert_one(Parms.TBNAME_COLORFULNESS, (Parms.PARAMS_COLORFULNESS['imgcolor'], Parms.PARAMS_COLORFULNESS['meancolor'], Parms.PARAMS_COLORFULNESS['stdcolor'], Parms.PARAMS_COLORFULNESS['meanadj'], Parms.PARAMS_COLORFULNESS['stdadj'], Parms.PARAMS_COLORFULNESS['meanadjabs'], Parms.PARAMS_COLORFULNESS['stdadjabs']
+                                                         ), values)
+
+
+def clear_colorfulness():
+    return Models.clear_all(Parms.TBNAME_COLORFULNESS)
+
+
+def get_colorfulness():
+    return Models.get_all(Parms.TBNAME_COLORFULNESS)

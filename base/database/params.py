@@ -1,8 +1,19 @@
 TBNAME_PROJECTS = 'projects'
+TBNAME_COLORFULNESS = 'colorfulness'
 PARAMS_PROJECTS = {
     'projecttitle': 'ProjectTitle',
     'videotitle': 'VideoTitle',
     'videopath': 'VideoPath'
+}
+
+PARAMS_COLORFULNESS = {
+    'imgcolor': 'imgcolor',
+    'meancolor': 'meancolor',
+    'stdcolor': 'stdcolor',
+    'meanadj': 'meanadj',
+    'stdadj': 'stdadj',
+    'meanadjabs': 'meanadjabs',
+    'stdadjabs': 'stdadjabs'
 }
 
 

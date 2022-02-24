@@ -28,15 +28,21 @@ export function pyProcess(mode, widget, args) {
         console.log(argsMain)
         try {
             if (mode == epMode.GET) {
+                let datasss = ''
                 spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
-                        widget(data);
+                        datasss = datasss + data
+                    }).on('end', () => {
+                        widget(datasss)
                     });
                 argsMain = []
             } else if (mode == epMode.POST) {
+                let datasss = ''
                 spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
-                        widget(data);
+                        datasss = datasss + data
+                    }).on('end', () => {
+                        widget(datasss)
                     });
                 argsMain = []
             }
@@ -50,13 +56,25 @@ export function pyProcess(mode, widget, args) {
         console.log(argsMain)
         try {
             if (mode == epMode.GET) {
+                let datasss = ''
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    widget(stdout);
+                    stdout
+                        .on('data', (data) => {
+                            datasss = datasss + data
+                        }).on('end', () => {
+                            widget(datasss)
+                        });
                 })
                 argsMain = []
             } else if (mode == epMode.POST) {
+                let datasss = ''
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    widget(stdout);
+                    stdout
+                        .on('data', (data) => {
+                            datasss = datasss + data
+                        }).on('end', () => {
+                            widget(datasss)
+                        });
 
                 })
                 argsMain = []
