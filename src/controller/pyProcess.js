@@ -56,26 +56,13 @@ export function pyProcess(mode, widget, args) {
         console.log(argsMain)
         try {
             if (mode == epMode.GET) {
-                let datasss = ''
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    stdout
-                        .on('data', (data) => {
-                            datasss = datasss + data
-                        }).on('end', () => {
-                            widget(datasss)
-                        });
+                    widget(stdout)
                 })
                 argsMain = []
             } else if (mode == epMode.POST) {
-                let datasss = ''
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    stdout
-                        .on('data', (data) => {
-                            datasss = datasss + data
-                        }).on('end', () => {
-                            widget(datasss)
-                        });
-
+                    widget(stdout)
                 })
                 argsMain = []
             }
