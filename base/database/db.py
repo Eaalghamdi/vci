@@ -91,7 +91,16 @@ CREATE_TABLE_LIST = [
     "stdadjabs" VARCHAR, 
 	PRIMARY KEY (id)
 );""",
+    """CREATE TABLE IF NOT EXISTS edgedetection (
+	id INTEGER NOT NULL, 
+	"meanval" VARCHAR, 
+	"stdval" VARCHAR, 
+	"meanadjabs" VARCHAR, 
+    "stdadjabs" VARCHAR, 
+	PRIMARY KEY (id)
+);""",
 ]
+
 
 # CREATE_INDEX_LIST = [
 #     """CREATE INDEX IF NOT EXISTS "ix_colorfulness_ColorfulnessID" ON colorfulness ("ColorfulnessID")""",

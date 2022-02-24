@@ -49,3 +49,14 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'get_colorfulness':
         print(Provider.get_colorfulness())
         sys.stdout.flush()
+    elif sys.argv[1] == 'edgedetection':
+        frameDir = sys.argv[2]
+        mode = sys.argv[3]
+        submode = sys.argv[4]
+        thrHold1 = int(sys.argv[5])
+        thrHold2 = int(sys.argv[6])
+        print(Provider.colorfulness(frameDir, mode, submode, thrHold1, thrHold2))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_edgedetection':
+        print(Provider.get_edgedetection())
+        sys.stdout.flush()

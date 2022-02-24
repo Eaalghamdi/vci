@@ -1,5 +1,6 @@
 TBNAME_PROJECTS = 'projects'
 TBNAME_COLORFULNESS = 'colorfulness'
+TBNAME_EDGEDETECTION = 'edgedetection'
 PARAMS_PROJECTS = {
     'projecttitle': 'ProjectTitle',
     'videotitle': 'VideoTitle',
@@ -12,6 +13,13 @@ PARAMS_COLORFULNESS = {
     'stdcolor': 'stdcolor',
     'meanadj': 'meanadj',
     'stdadj': 'stdadj',
+    'meanadjabs': 'meanadjabs',
+    'stdadjabs': 'stdadjabs'
+}
+
+PARAMS_EDGEDETECTION = {
+    'meanval': 'meanval',
+    'stdval': 'stdval',
     'meanadjabs': 'meanadjabs',
     'stdadjabs': 'stdadjabs'
 }

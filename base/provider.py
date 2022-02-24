@@ -3,6 +3,7 @@ import database.params as Parms
 import frameExtraction.sbdExtraction as SBDExtraction
 import frameExtraction.mfExtraction as MFExtraction
 import FeatureExtraction.Colorfulness as Colorfulness
+import FeatureExtraction.EdgeDetection as EdgeDetection
 
 
 def create_project(values):
@@ -45,3 +46,20 @@ def clear_colorfulness():
 
 def get_colorfulness():
     return Models.get_all(Parms.TBNAME_COLORFULNESS)
+
+
+def edgedetection(frameDir, mode, submode, thrHold1, thrHold2):
+    return EdgeDetection.edge_detection(frameDir, mode, submode, thrHold1, thrHold2)
+
+
+def insert_edgedetection(values):
+    return Models.insert_one(Parms.TBNAME_EDGEDETECTION, (Parms.PARAMS_EDGEDETECTION['meanval'], Parms.PARAMS_EDGEDETECTION['stdval'], Parms.PARAMS_EDGEDETECTION['meanadjabs'], Parms.PARAMS_EDGEDETECTION['stdadjabs']
+                                                         ), values)
+
+
+def clear_edgedetection():
+    return Models.clear_all(Parms.TBNAME_EDGEDETECTION)
+
+
+def get_edgedetection():
+    return Models.get_all(Parms.TBNAME_EDGEDETECTION)
