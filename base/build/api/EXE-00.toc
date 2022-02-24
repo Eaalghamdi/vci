@@ -61,7 +61,7 @@
  [],
  False,
  True,
- 1645681219,
+ 1645693679,
  [('run',
    '/Users/niccanordhasm/Documents/GitHub/auvana_v_1/base/env/lib/python3.8/site-packages/PyInstaller/bootloader/Darwin-64bit/run',
    'EXECUTABLE')])

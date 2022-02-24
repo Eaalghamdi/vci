@@ -89,10 +89,4 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
             
             return 'completed'
 
-
-
-edge_detection(
-    '/Users/niccanordhasm/auvana_v_1/tmp/sample-mp4-file/shot0.jpg', 'static', 'spectral', 50, 50)
-
-
-
+ 

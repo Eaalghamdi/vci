@@ -55,7 +55,7 @@ if __name__ == '__main__':
         submode = sys.argv[4]
         thrHold1 = int(sys.argv[5])
         thrHold2 = int(sys.argv[6])
-        print(Provider.colorfulness(frameDir, mode, submode, thrHold1, thrHold2))
+        print(Provider.edgedetection(frameDir, mode, submode, thrHold1, thrHold2))
         sys.stdout.flush()
     elif sys.argv[1] == 'get_edgedetection':
         print(Provider.get_edgedetection())
