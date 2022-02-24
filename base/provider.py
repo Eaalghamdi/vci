@@ -2,7 +2,7 @@ import database.models as Models
 import database.params as Parms
 import frameExtraction.sbdExtraction as SBDExtraction
 import frameExtraction.mfExtraction as MFExtraction
-import featureExtraction.Colorfulness as Colorfulness
+import FeatureExtraction.Colorfulness as Colorfulness
 
 
 def create_project(values):

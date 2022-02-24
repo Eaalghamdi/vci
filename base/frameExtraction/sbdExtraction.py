@@ -1,12 +1,13 @@
-import cv2
-import os
-from scenedetect.video_manager import VideoManager
-from scenedetect.scene_manager import SceneManager
-from scenedetect.frame_timecode import FrameTimecode
-from scenedetect.stats_manager import StatsManager
-from scenedetect.detectors import ContentDetector, ThresholdDetector
 import json
+import os
 import shutil
+
+import cv2
+from scenedetect.detectors import ContentDetector, ThresholdDetector
+from scenedetect.frame_timecode import FrameTimecode
+from scenedetect.scene_manager import SceneManager
+from scenedetect.stats_manager import StatsManager
+from scenedetect.video_manager import VideoManager
 
 
 def shot_bundry_detection(videoPath, videoFileName, method, treshold, defaultH, defaultW):
