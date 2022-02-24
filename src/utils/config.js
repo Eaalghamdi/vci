@@ -100,7 +100,9 @@ export const apiArgs = {
     deleteProject: "delete_project",
     manFrame: "manual_frame",
     colorFulness: "colorfulness",
-    getColorfulness: "get_colorfulness"
+    getColorfulness: "get_colorfulness",
+    edgeDetection: "edgedetection",
+    getEdgeDetection: "get_edgedetection"
 }
 
 export const epMode = {
@@ -128,6 +130,8 @@ export const ipcKeys = {
     getGallaryAck: "get-gallary-fetch-images-ack",
     getResultTable: "get-result-table",
     getResultTableAck: "get-result-table-ack",
+    panelVisibility: "get-panel-visibility",
+    panelVisibilityAck: "get-panel-visibility-ack",
 }
 
 

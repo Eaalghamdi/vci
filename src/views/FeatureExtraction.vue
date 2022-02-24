@@ -15,7 +15,7 @@
       <div class="SideMenu">
         <div class="p-col col-1">
           <div class="p-col row-top">
-            <FeatureExtractionMenu />
+            <FeatureExtractionMenu :framePath="framePathData" />
           </div>
           <div class="p-col row-down">
             <ResultsMenu />
@@ -25,8 +25,11 @@
       <div class="p-col col-2">
         <div class="middleContainer">
           <div class="p-col row-top">
-            <div class="Results">
-              <ResultTable />
+            <div v-if="!isCFResultHidden" class="Results">
+              <CFResultTable />
+            </div>
+            <div v-if="!isEDResultHidden" class="Results">
+              <EDResultTable />
             </div>
           </div>
           <div class="p-col row-down"></div>
@@ -40,9 +43,11 @@
 import TopMenu from "../components/common/TopMenu.vue";
 import FeatureExtractionMenu from "../components/feature_extraction/FeatureExtractionMenu.vue";
 import ResultsMenu from "../components/feature_extraction/ResultsMenu.vue";
-import ResultTable from "../components/feature_extraction/ResultTable.vue";
+import CFResultTable from "../components/feature_extraction/result_table/CFResultTable.vue";
+import EDResultTable from "../components/feature_extraction/result_table/EDResultTable.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
+import getProject from "../provider/getProject";
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../utils/config";
 
@@ -57,6 +62,8 @@ export default {
       bgColor: "#1a1a1a",
       loaderDesgin: "dots",
       opacity: 0.85,
+      isCFResultHidden: true,
+      isEDResultHidden: true,
     };
   },
   components: {
@@ -64,9 +71,33 @@ export default {
     TopMenu,
     FeatureExtractionMenu,
     ResultsMenu,
-    ResultTable,
+    CFResultTable,
+    EDResultTable,
   },
   mounted() {
+    this.isLoading = true;
+
+    setTimeout(() => {
+      getProject((data) => {
+        this.framePathData = data;
+        ipcRenderer.send(ipcKeys.mainAppLoading, "stoploadfe");
+      }, this.$route.params.id);
+    }, 1000);
+
+    ipcRenderer.on(ipcKeys.panelVisibilityAck, (event, data) => {
+      if (data == "cfresultshow") {
+        this.isCFResultHidden = false;
+      } else {
+        this.isCFResultHidden = true;
+      }
+      if (data == "edresultshow") {
+        this.isEDResultHidden = false;
+      } else {
+        this.isEDResultHidden = true;
+      }
+      ipcRenderer.removeListener(ipcKeys.panelVisibilityAck, () => {});
+    });
+
     ipcRenderer.on(ipcKeys.mainAppLoadingAck, (event, data) => {
       if (data == "loadfe") {
         this.isLoading = true;
@@ -111,9 +142,6 @@ export default {
 .col-2 {
   flex-grow: 3;
 }
-
-/* .middleContainer {
-} */
 
 .p-col {
   margin: 0px;

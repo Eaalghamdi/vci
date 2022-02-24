@@ -60,29 +60,30 @@
           />
         </li>
       </ul>
-      <ObjectDetection ref="objectModal" />
-      <Colorfulness ref="colorModel" />
-      <FrameStructuralSimilarity ref="FSSModel" />
-      <Compression ref="CompressionModel" />
-      <FaceRecognition ref="FaceRecognitionModel" />
-      <Motion ref="MotionModel" />
-      <Sailency ref="SailencyModel" />
-      <EdgeDetection ref="EdgeDetectionModel" />
+      <ObjectDetection ref="objectModal" :frmPath="this.framePath" />
+      <Colorfulness ref="colorModel" :frmPath="this.framePath" />
+      <FrameStructuralSimilarity ref="FSSModel" :frmPath="this.framePath" />
+      <Compression ref="CompressionModel" :frmPath="this.framePath" />
+      <FaceRecognition ref="FaceRecognitionModel" :frmPath="this.framePath" />
+      <Motion ref="MotionModel" :frmPath="this.framePath" />
+      <Sailency ref="SailencyModel" :frmPath="this.framePath" />
+      <EdgeDetection ref="EdgeDetectionModel" :frmPath="this.framePath" />
     </div>
   </div>
 </template>
 <script>
-import ObjectDetection from "./fem/ObjectDetection.vue";
-import Colorfulness from "./fem/Colorfulness.vue";
-import FrameStructuralSimilarity from "./fem/FrameStructuralSimilarity.vue";
-import Compression from "./fem/Compression.vue";
-import FaceRecognition from "./fem/FaceRecognition.vue";
-import Motion from "./fem/Motion.vue";
-import Sailency from "./fem/Sailency.vue";
-import EdgeDetection from "./fem/EdgeDetection.vue";
+import ObjectDetection from "./dialogs/ObjectDetection.vue";
+import Colorfulness from "./dialogs/Colorfulness.vue";
+import FrameStructuralSimilarity from "./dialogs/FrameStructuralSimilarity.vue";
+import Compression from "./dialogs/Compression.vue";
+import FaceRecognition from "./dialogs/FaceRecognition.vue";
+import Motion from "./dialogs/Motion.vue";
+import Sailency from "./dialogs/Sailency.vue";
+import EdgeDetection from "./dialogs/EdgeDetection.vue";
 
 export default {
   name: "FeatureExtraction",
+  props: ["id", "framePath"],
   components: {
     ObjectDetection,
     Colorfulness,

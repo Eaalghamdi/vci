@@ -1,6 +1,6 @@
 import { newProjCreated, emptyFieldAlert, delProConfirm, createProLoading, } from './render/ipcs'
 import { mainAppLoading, mainAppShareData, mainAppFieldEmpty, getGallary } from './render/ipcs'
-import { getResultTable } from './render/ipcs'
+import { getResultTable, getPanelVisibility } from './render/ipcs'
 import { fieldEmpty, confirm } from './render/dialogs'
 import { ipcKeys } from './utils/config'
 import grabVideo from './render/grabVideo'
@@ -38,6 +38,8 @@ function render() {
     getGallary()
 
     getResultTable()
+
+    getPanelVisibility()
 }
 
 export default render

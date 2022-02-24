@@ -59,4 +59,4 @@ if __name__ == '__main__':
         sys.stdout.flush()
     elif sys.argv[1] == 'get_edgedetection':
         print(Provider.get_edgedetection())
-        sys.stdout.flush()
+        sys.stdout.flush() 
