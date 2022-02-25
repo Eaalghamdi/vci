@@ -1,6 +1,9 @@
 TBNAME_PROJECTS = 'projects'
 TBNAME_COLORFULNESS = 'colorfulness'
 TBNAME_EDGEDETECTION = 'edgedetection'
+TBNAME_OBJECTDETECTION = 'objectdetection'
+TBNAME_STRUCTSIMILARITY = 'structuralsimilarity'
+
 PARAMS_PROJECTS = {
     'projecttitle': 'ProjectTitle',
     'videotitle': 'VideoTitle',
@@ -22,6 +25,19 @@ PARAMS_EDGEDETECTION = {
     'stdval': 'stdval',
     'meanadjabs': 'meanadjabs',
     'stdadjabs': 'stdadjabs'
+}
+
+PARAMS_OBJECTDETECTION = {
+    'classindex': 'classindex',
+    'confidence': 'confidence',
+    'bbox': 'bbox'
+}
+
+PARAMS_STRUCTSIMILARITY = {
+    'imganame': 'imganame',
+    'imgbname': 'imgbname',
+    'mse': 'mse',
+    'ssim': 'ssim'
 }
 
 

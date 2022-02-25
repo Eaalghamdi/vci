@@ -60,3 +60,11 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'get_edgedetection':
         print(Provider.get_edgedetection())
         sys.stdout.flush() 
+    elif sys.argv[1] == 'objectdetection':
+        frameDir = sys.argv[2]
+        thrHold = float(sys.argv[3])
+        print(Provider.objectdetection(frameDir, thrHold))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_objectdetection':
+        print(Provider.get_objectdetection())
+        sys.stdout.flush() 
