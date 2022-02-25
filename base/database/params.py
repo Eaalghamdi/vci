@@ -3,6 +3,7 @@ TBNAME_COLORFULNESS = 'colorfulness'
 TBNAME_EDGEDETECTION = 'edgedetection'
 TBNAME_OBJECTDETECTION = 'objectdetection'
 TBNAME_STRUCTSIMILARITY = 'structuralsimilarity'
+TBNAME_COMPRESSION = 'compression'
 
 PARAMS_PROJECTS = {
     'projecttitle': 'ProjectTitle',
@@ -38,6 +39,13 @@ PARAMS_STRUCTSIMILARITY = {
     'imgbname': 'imgbname',
     'mse': 'mse',
     'ssim': 'ssim'
+}
+
+PARAMS_COMPRESSION = {
+    'filename': 'filename',
+    'cnvformat': 'cnvformat',
+    'sizebytprev': 'sizebytprev',
+    'sizebytnew': 'sizebytnew',
 }
 
 

@@ -59,7 +59,7 @@ if __name__ == '__main__':
         sys.stdout.flush()
     elif sys.argv[1] == 'get_edgedetection':
         print(Provider.get_edgedetection())
-        sys.stdout.flush() 
+        sys.stdout.flush()
     elif sys.argv[1] == 'objectdetection':
         frameDir = sys.argv[2]
         thrHold = float(sys.argv[3])
@@ -67,4 +67,17 @@ if __name__ == '__main__':
         sys.stdout.flush()
     elif sys.argv[1] == 'get_objectdetection':
         print(Provider.get_objectdetection())
-        sys.stdout.flush() 
+        sys.stdout.flush()
+    elif sys.argv[1] == 'compression':
+        videoPath = sys.argv[2]
+        videoDir = sys.argv[3]
+        widthD = int(sys.argv[4])
+        heightD = int(sys.argv[5])
+        fps = int(sys.argv[6])
+        fileFormat = sys.argv[7]
+        print(Provider.compression(videoPath, videoDir,
+              widthD, heightD, fps, fileFormat))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_compression':
+        print(Provider.get_compression())
+        sys.stdout.flush()

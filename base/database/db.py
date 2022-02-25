@@ -50,6 +50,14 @@ CREATE_TABLE_LIST = [
     "ssim" VARCHAR,
 	PRIMARY KEY (id)
 );""",
+    """CREATE TABLE IF NOT EXISTS compression (
+	id INTEGER NOT NULL, 
+	"filename" VARCHAR, 
+	"cnvformat" VARCHAR, 
+	"sizebytprev" VARCHAR,
+    "sizebytnew" VARCHAR,
+	PRIMARY KEY (id)
+);""",
 ]
 
 

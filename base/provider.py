@@ -2,10 +2,11 @@ import database.models as Models
 import database.params as Parms
 import preprocessing.sbdextraction as SBDExtraction
 import preprocessing.mfextraction as MFExtraction
-import functions.colorfulness as Colorfulness
-import functions.edgedetection as EdgeDetection
-import functions.objectdetection as ObjectDetection
-import functions.structuralsimilarity as StructuralSimilarity
+import features.colorfulness as Colorfulness
+import features.edgedetection as EdgeDetection
+import features.objectdetection as ObjectDetection
+import features.structuralsimilarity as StructuralSimilarity
+import features.compression as Compression
 
 # project
 
@@ -112,3 +113,18 @@ def clear_structsimilarity():
 
 def get_structsimilarity():
     return Models.get_all(Parms.TBNAME_STRUCTSIMILARITY)
+
+# compression
+
+
+def compression(videoPath, videoDir, widthD, heightD, fps, fileFormat):
+    return Compression.compression(videoPath, videoDir, widthD, heightD, fps, fileFormat)
+
+
+def insert_compression(values):
+    return Models.insert_one(Parms.TBNAME_COMPRESSION, (Parms.PARAMS_COMPRESSION['filename'], Parms.PARAMS_COMPRESSION['cnvformat'], Parms.PARAMS_COMPRESSION['sizebytprev'], Parms.PARAMS_COMPRESSION['sizebytnew']
+                                                        ), values)
+
+
+def get_compression():
+    return Models.get_all(Parms.TBNAME_COMPRESSION)
