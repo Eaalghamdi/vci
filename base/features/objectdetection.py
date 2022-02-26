@@ -2,6 +2,9 @@ import cv2
 import os
 import provider as Provider
 
+DIRECTORY = str(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_ROOT = DIRECTORY.replace('features', 'src')
+
 
 def object_detection(frameDir, thrHold):
     imgs = []
@@ -12,10 +15,11 @@ def object_detection(frameDir, thrHold):
                 imgs.append(frameDir + '/' + x)
 
     for img in imgs:
-        config_file = '/Users/niccanordhasm/auvana_v_1/base/FeatureExtraction/src/object_detection/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt'
-        frozen_model = '/Users/niccanordhasm/auvana_v_1/base/FeatureExtraction/src/object_detection/frozen_inference_graph.pb'
-        coco = '/Users/niccanordhasm/auvana_v_1/base/FeatureExtraction/src/object_detection/coco.txt'
-        # imgss = '/Users/niccanordhasm/auvana_v_1/tmp/sample-mp4-file/shot1335.jpg'
+        config_file = (
+            DATABASE_ROOT + '/object_detection/ssd_mobilenet_v3_large_coco_2020_01_14.pbtxt')
+        frozen_model = (
+            DATABASE_ROOT + '/object_detection/frozen_inference_graph.pb')
+        coco = (DATABASE_ROOT + '/object_detection/coco.txt')
 
         model = cv2.dnn_DetectionModel(frozen_model, config_file)
         model.setInputSize(320, 320)
@@ -42,4 +46,3 @@ def object_detection(frameDir, thrHold):
             [ClassIndex, confidence, bbox])
 
         return 'completed'
-

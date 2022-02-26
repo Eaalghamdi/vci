@@ -2,9 +2,12 @@ import cv2
 import os
 import provider as Provider
 
+DIRECTORY = str(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_ROOT = DIRECTORY.replace('features', 'src')
 
-def facedetection(frameDir, minNeig, mode):
-    
+
+def facedetection(frameDir, minNeig):
+
     imgs = []
 
     if Provider.clear_facedetection() == 'completed':
@@ -13,7 +16,7 @@ def facedetection(frameDir, minNeig, mode):
                 imgs.append(frameDir + '/' + x)
 
     face_cascade = cv2.CascadeClassifier(
-        "/Users/niccanordhasm/auvana_v_1/base/src/face_detection/haarcascade_frontalface_default.xml")
+        (DATABASE_ROOT + "/face_detection/haarcascade_frontalface_default.xml"))
 
     for frame in imgs:
         img = cv2.imread(frame)
@@ -33,4 +36,3 @@ def facedetection(frameDir, minNeig, mode):
             [tail, numberFaces])
 
     return 'completed'
-

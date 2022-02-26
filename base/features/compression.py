@@ -2,6 +2,9 @@ import ffmpeg
 import os
 import provider as Provider
 
+DIRECTORY = str(os.path.dirname(os.path.abspath(__file__)))
+DATABASE_ROOT = DIRECTORY.replace('features', 'src')
+
 
 def video_comp(videoPath, videoDir, widthD, heightD, fps, fileFormat):
     input = ffmpeg.input(
@@ -12,7 +15,7 @@ def video_comp(videoPath, videoDir, widthD, heightD, fps, fileFormat):
     out = ffmpeg.output(
         audio, video, (videoDir + '/test.' + fileFormat))
     out.run(
-        cmd='/Users/niccanordhasm/auvana_v_1/base/src/ffmpeg/ffmpeg')
+        cmd=(DATABASE_ROOT + '/ffmpeg/ffmpeg'))
 
     return 1
 
@@ -35,4 +38,3 @@ def compression(videoPath, videoDir, widthD, heightD, fps, fileFormat):
         if add_to_db(videoPath, videoDir, fileFormat) == 1:
             os.remove((videoDir + '/test.' + fileFormat))
             return "completed"
-
