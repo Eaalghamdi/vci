@@ -37,6 +37,9 @@
             <div v-if="!isSSResultHidden" class="Results">
               <SSResultTable />
             </div>
+            <div v-if="!isCOResultHidden" class="Results">
+              <COResultTable />
+            </div>
           </div>
           <div class="p-col row-down"></div>
         </div>
@@ -53,6 +56,7 @@ import CFResultTable from "../components/feature_extraction/result_table/CFResul
 import EDResultTable from "../components/feature_extraction/result_table/EDResultTable.vue";
 import ODResultTable from "../components/feature_extraction/result_table/ODResultTable.vue";
 import SSResultTable from "../components/feature_extraction/result_table/SSResultTable.vue";
+import COResultTable from "../components/feature_extraction/result_table/COResultTable.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import getProject from "../provider/getProject";
@@ -74,6 +78,7 @@ export default {
       isEDResultHidden: true,
       isODResultHidden: true,
       isSSResultHidden: true,
+      isCOResultHidden: true,
     };
   },
   components: {
@@ -85,6 +90,7 @@ export default {
     EDResultTable,
     ODResultTable,
     SSResultTable,
+    COResultTable,
   },
   mounted() {
     this.isLoading = true;
@@ -116,6 +122,11 @@ export default {
         this.isSSResultHidden = false;
       } else {
         this.isSSResultHidden = true;
+      }
+      if (data == "coresultshow") {
+        this.isCOResultHidden = false;
+      } else {
+        this.isCOResultHidden = true;
       }
       ipcRenderer.removeListener(ipcKeys.panelVisibilityAck, () => {});
     });
