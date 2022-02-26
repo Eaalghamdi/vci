@@ -43,6 +43,6 @@ def object_detection(frameDir, thrHold):
         # cv2.imshow('', cv2.cvtColor(imgFinal, cv2.COLOR_BGR2RGB))
         # cv2.waitKey(0)
         Provider.insert_objectdetection(
-            [ClassIndex, confidence, bbox])
+            [str(ClassIndex), str(confidence), str(bbox)])
 
-        return 'completed'
+    return 'completed'

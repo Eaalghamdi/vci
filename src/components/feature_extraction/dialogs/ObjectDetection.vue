@@ -5,65 +5,77 @@
       v-model:visible="display"
       baseZIndex="999"
       autoZIndex="false"
-      position="top"
+      position="center"
     >
       <div class="p-fluid p-formgrid p-grid">
         <div class="p-field p-col-12">
-          <div class="p-formgroup-inline">
-            <div class="p-field-checkbox">
-              <RadioButton
-                id="city7"
-                name="city2"
-                value="Chicago"
-                v-model="city2"
-              />
-              <label for="city7">Chicago</label>
-            </div>
-            <div class="p-field-checkbox">
-              <RadioButton
-                id="city8"
-                name="city2"
-                value="Los Angeles"
-                v-model="city2"
-              />
-              <label for="city8">Los Angeles</label>
-            </div>
-          </div>
           <div class="p-field p-grid">
             <label for="firstname" class="p-col-fixed" style="width: 100px">
-              Method</label
+              Threshold</label
             >
-            <div class="p-col">
-              <Dropdown
-                v-model="selectedCity1"
-                :options="cities"
-                optionLabel="name"
-                placeholder="Select a City"
+            <div class="thr-cl">
+              <InputNumber
+                v-model="value1"
+                showButtons
+                buttonLayout="horizontal"
+                decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success"
+                incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus"
+                mode="decimal"
+                class="input-thr"
               />
             </div>
           </div>
         </div>
 
-        <div class="p-col-3">
-          <Button label="Start" class="p-button-sm" />
+        <div class="start-btn">
+          <Button @click="onStart" label="Start" class="p-button-sm" />
         </div>
       </div>
     </Dialog>
   </div>
 </template>
 <script>
+import objectDetection from "../../../provider/objectDetection";
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../../utils/config";
+
 export default {
   name: "ObjectDetection",
+  props: ["id", "frmPath"],
   data() {
     return {
       display: false,
+      value1: 0.5,
     };
   },
   methods: {
     showModal() {
       this.display = true;
+      ipcRenderer.send(ipcKeys.panelVisibility, "odresultshow");
+    },
+    onStart() {
+      ipcRenderer.send(ipcKeys.mainAppLoading, "loadfe");
+      this.display = false;
+      setTimeout(() => {
+        objectDetection(
+          (data) => {
+            ipcRenderer.send(ipcKeys.getResultTable, "objectdetection");
+          },
+          this.frmPath["VideoTitle"].split(".")[0],
+          this.value1
+        );
+      }, 1000);
     },
   },
 };
 </script>
-<style></style>
+<style>
+.thr-cl {
+  padding-top: 10px;
+}
+.start-btn {
+  padding-top: 40px;
+}
+</style>

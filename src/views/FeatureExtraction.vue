@@ -31,6 +31,9 @@
             <div v-if="!isEDResultHidden" class="Results">
               <EDResultTable />
             </div>
+            <div v-if="!isODResultHidden" class="Results">
+              <ODResultTable />
+            </div>
           </div>
           <div class="p-col row-down"></div>
         </div>
@@ -45,6 +48,7 @@ import FeatureExtractionMenu from "../components/feature_extraction/FeatureExtra
 import ResultsMenu from "../components/feature_extraction/ResultsMenu.vue";
 import CFResultTable from "../components/feature_extraction/result_table/CFResultTable.vue";
 import EDResultTable from "../components/feature_extraction/result_table/EDResultTable.vue";
+import ODResultTable from "../components/feature_extraction/result_table/ODResultTable.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import getProject from "../provider/getProject";
@@ -64,6 +68,7 @@ export default {
       opacity: 0.85,
       isCFResultHidden: true,
       isEDResultHidden: true,
+      isODResultHidden: true,
     };
   },
   components: {
@@ -73,6 +78,7 @@ export default {
     ResultsMenu,
     CFResultTable,
     EDResultTable,
+    ODResultTable,
   },
   mounted() {
     this.isLoading = true;
@@ -94,6 +100,11 @@ export default {
         this.isEDResultHidden = false;
       } else {
         this.isEDResultHidden = true;
+      }
+      if (data == "odresultshow") {
+        this.isODResultHidden = false;
+      } else {
+        this.isODResultHidden = true;
       }
       ipcRenderer.removeListener(ipcKeys.panelVisibilityAck, () => {});
     });

@@ -102,7 +102,9 @@ export const apiArgs = {
     colorFulness: "colorfulness",
     getColorfulness: "get_colorfulness",
     edgeDetection: "edgedetection",
-    getEdgeDetection: "get_edgedetection"
+    getEdgeDetection: "get_edgedetection",
+    objectdetection: "objectdetection",
+    getObjectdetection: "get_objectdetection"
 }
 
 export const epMode = {
