@@ -81,3 +81,28 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'get_compression':
         print(Provider.get_compression())
         sys.stdout.flush()
+    elif sys.argv[1] == 'facedetection':
+        videoPath = sys.argv[2]
+        minNegi = int(sys.argv[3])
+        print(Provider.facedetection(videoPath, minNegi,
+                                     ))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_facedetection':
+        print(Provider.get_facedetection())
+        sys.stdout.flush()
+    elif sys.argv[1] == 'motion':
+        videoPath = sys.argv[2]
+        minNegi = int(sys.argv[3])
+        print(Provider.motion(videoPath, minNegi
+                              ))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_motion':
+        print(Provider.get_motion())
+        sys.stdout.flush()
+    elif sys.argv[1] == 'saliency':
+        frameDir = sys.argv[2]
+        print(Provider.saliency(frameDir))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_saliency':
+        print(Provider.get_saliency())
+        sys.stdout.flush()

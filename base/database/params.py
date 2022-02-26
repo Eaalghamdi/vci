@@ -4,6 +4,9 @@ TBNAME_EDGEDETECTION = 'edgedetection'
 TBNAME_OBJECTDETECTION = 'objectdetection'
 TBNAME_STRUCTSIMILARITY = 'structuralsimilarity'
 TBNAME_COMPRESSION = 'compression'
+TBNAME_FACEDTECTION = 'facedetection'
+TBNAME_MOTION = 'motion'
+TBNAME_SALIENCY = 'saliency'
 
 PARAMS_PROJECTS = {
     'projecttitle': 'ProjectTitle',
@@ -46,6 +49,31 @@ PARAMS_COMPRESSION = {
     'cnvformat': 'cnvformat',
     'sizebytprev': 'sizebytprev',
     'sizebytnew': 'sizebytnew',
+}
+
+PARAMS_FACEDTECTION = {
+    'filename': 'filename',
+    'numfaces': 'numfaces',
+}
+
+PARAMS_MOTION = {
+    'videoname': 'videoname',
+    'numberofmovingobjects': 'numberofmovingobjects',
+    'movingdurationms': 'movingdurationms',
+    'ratioofmovingobjectsns': 'ratioofmovingobjectsns',
+    'ratioofmovingobjectsnm': 'ratioofmovingobjectsnm',
+    'movingdurtiondifferencemean': 'movingdurtiondifferencemean',
+    'movingdurtiondifferencevaraince': 'movingdurtiondifferencevaraince',
+    'movingdurtiondifferencesd': 'movingdurtiondifferencesd',
+    'ratioofmovingdurtionts': 'ratioofmovingdurtionts',
+    'ratioofmovingdurtiontm': 'ratioofmovingdurtiontm',
+    'satrtendtimes': 'satrtendtimes',
+}
+
+PARAMS_SALIENCY = {
+    'filename': 'filename',
+    'mean': 'mean',
+    'std': 'std'
 }
 
 

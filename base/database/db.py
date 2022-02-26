@@ -58,6 +58,34 @@ CREATE_TABLE_LIST = [
     "sizebytnew" VARCHAR,
 	PRIMARY KEY (id)
 );""",
+    """CREATE TABLE IF NOT EXISTS facedetection (
+	id INTEGER NOT NULL, 
+	"filename" VARCHAR, 
+	"numfaces" VARCHAR,
+	PRIMARY KEY (id)
+);""",
+    """CREATE TABLE IF NOT EXISTS motion (
+	id INTEGER NOT NULL, 
+	"videoname" VARCHAR, 
+	"numberofmovingobjects" VARCHAR,
+    "movingdurationms" VARCHAR,
+    "ratioofmovingobjectsns" VARCHAR,
+    "ratioofmovingobjectsnm" VARCHAR,
+    "movingdurtiondifferencemean" VARCHAR,
+    "movingdurtiondifferencevaraince" VARCHAR,
+    "movingdurtiondifferencesd" VARCHAR,
+    "ratioofmovingdurtionts" VARCHAR,
+    "ratioofmovingdurtiontm" VARCHAR,
+    "satrtendtimes" VARCHAR,
+	PRIMARY KEY (id)
+);""",
+    """CREATE TABLE IF NOT EXISTS saliency (
+	id INTEGER NOT NULL, 
+    "filename" VARCHAR, 
+	"mean" VARCHAR, 
+	"std" VARCHAR,
+	PRIMARY KEY (id)
+);""",
 ]
 
 
