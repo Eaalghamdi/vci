@@ -115,7 +115,7 @@ def clear_objectdetection():
 def get_objectdetection():
     return Models.get_all(Parms.TBNAME_OBJECTDETECTION)
 
-# objectdetection
+# structsimilarity
 
 
 def structsimilarity(frameDir):

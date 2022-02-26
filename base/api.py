@@ -106,3 +106,10 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'get_saliency':
         print(Provider.get_saliency())
         sys.stdout.flush()
+    elif sys.argv[1] == 'strusimilarity':
+        frameDir = sys.argv[2]
+        print(Provider.structsimilarity(frameDir))
+        sys.stdout.flush()
+    elif sys.argv[1] == 'get_strusimilarity':
+        print(Provider.get_structsimilarity())
+        sys.stdout.flush()

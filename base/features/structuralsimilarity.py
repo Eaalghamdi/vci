@@ -68,4 +68,4 @@ def strctural_similarity(frameDir):
             Provider.insert_structsimilarity(
                 [tailf1, tailf2, mse_value, ssim_value])
 
-            return 'completed'
+    return 'completed'

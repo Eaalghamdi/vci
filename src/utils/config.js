@@ -104,7 +104,9 @@ export const apiArgs = {
     edgeDetection: "edgedetection",
     getEdgeDetection: "get_edgedetection",
     objectdetection: "objectdetection",
-    getObjectdetection: "get_objectdetection"
+    getObjectdetection: "get_objectdetection",
+    structSimilarity: "strusimilarity",
+    getStructSimilarity: "get_strusimilarity"
 }
 
 export const epMode = {
