@@ -108,7 +108,9 @@ export const apiArgs = {
     structSimilarity: "strusimilarity",
     getStructSimilarity: "get_strusimilarity",
     compression: "compression",
-    getCompression: "get_compression"
+    getCompression: "get_compression",
+    faceDetection: "facedetection",
+    getFaceDetection: "get_facedetection"
 }
 
 export const epMode = {

@@ -1,47 +1,66 @@
 <template>
   <div>
     <Dialog
-      header="Face Recognition & Tracking"
+      header="Face Recognition"
       v-model:visible="display"
       baseZIndex="999"
       autoZIndex="false"
-      position="top"
+      position="center"
     >
       <div class="p-fluid p-formgrid p-grid">
-        <div class="p-field p-col-12">
-          <div class="p-field p-grid">
-            <label for="method" class="p-col-fixed" style="width: 100px">
-              Method</label
-            >
-            <div class="p-col">
-              <Dropdown
-                v-model="selectedCity1"
-                :options="cities"
-                optionLabel="name"
-                placeholder="Select a Method"
-              />
-            </div>
-          </div>
+        <div class="thr-gorup-b">
+          <label class="title-thr">Min Neighbour</label>
+          <InputNumber
+            v-model="value"
+            showButtons
+            buttonLayout="horizontal"
+            decrementButtonClass="p-button-danger"
+            incrementButtonClass="p-button-success"
+            incrementButtonIcon="pi pi-plus"
+            decrementButtonIcon="pi pi-minus"
+            mode="decimal"
+            class="input-thr"
+          />
         </div>
 
-        <div class="p-col-3">
-          <Button label="Start" class="p-button-sm" />
+        <div class="button-start">
+          <Button @click="onStart" label="Start" class="p-button-sm" />
         </div>
       </div>
     </Dialog>
   </div>
 </template>
 <script>
+import faceDetection from "../../../provider/faceDetection";
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../../utils/config";
+
 export default {
   name: "FaceRecognition",
+  props: ["id", "frmPath"],
   data() {
     return {
       display: false,
+      value: 10,
     };
   },
   methods: {
     showModal() {
       this.display = true;
+      ipcRenderer.send(ipcKeys.panelVisibility, "fdresultshow");
+    },
+    onStart() {
+      ipcRenderer.send(ipcKeys.mainAppLoading, "loadfe");
+      this.display = false;
+      setTimeout(() => {
+        faceDetection(
+          (data) => {
+            ipcRenderer.send(ipcKeys.getResultTable, "facedetection");
+          },
+          this.frmPath["VideoTitle"].split(".")[0],
+          this.value
+        );
+      }, 1000);
     },
   },
 };

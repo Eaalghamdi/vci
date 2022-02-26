@@ -82,9 +82,9 @@ if __name__ == '__main__':
         print(Provider.get_compression())
         sys.stdout.flush()
     elif sys.argv[1] == 'facedetection':
-        videoPath = sys.argv[2]
+        frameDir = sys.argv[2]
         minNegi = int(sys.argv[3])
-        print(Provider.facedetection(videoPath, minNegi,
+        print(Provider.facedetection(frameDir, minNegi,
                                      ))
         sys.stdout.flush()
     elif sys.argv[1] == 'get_facedetection':
