@@ -12,7 +12,7 @@
   </Dialog>
 </template>
 <script>
-import motion from "../../../provider/motion";
+import saliency from "../../../provider/saliency";
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../../../utils/config";
 
@@ -33,9 +33,9 @@ export default {
       ipcRenderer.send(ipcKeys.mainAppLoading, "loadfe");
       this.display = false;
       setTimeout(() => {
-        motion((data) => {
+        saliency((data) => {
           ipcRenderer.send(ipcKeys.getResultTable, "saliency");
-        }, this.frmPath["VideoTitle"]);
+        }, this.frmPath["VideoTitle"].split(".")[0]);
       }, 1000);
     },
   },

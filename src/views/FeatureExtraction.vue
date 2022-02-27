@@ -46,6 +46,9 @@
             <div v-if="!isMOResultHidden" class="Results">
               <MOResultTable />
             </div>
+            <div v-if="!isSAResultHidden" class="Results">
+              <SAResultTable />
+            </div>
           </div>
           <div class="p-col row-down"></div>
         </div>
@@ -65,6 +68,7 @@ import SSResultTable from "../components/feature_extraction/result_table/SSResul
 import COResultTable from "../components/feature_extraction/result_table/COResultTable.vue";
 import FDResultTable from "../components/feature_extraction/result_table/FDResultTable.vue";
 import MOResultTable from "../components/feature_extraction/result_table/MOResultTable.vue";
+import SAResultTable from "../components/feature_extraction/result_table/SAResultTable.vue";
 import Loading from "vue-loading-overlay";
 import "vue-loading-overlay/dist/vue-loading.css";
 import getProject from "../provider/getProject";
@@ -89,6 +93,7 @@ export default {
       isCOResultHidden: true,
       isFDResultHidden: true,
       isMOResultHidden: true,
+      isSAResultHidden: true,
     };
   },
   components: {
@@ -103,6 +108,7 @@ export default {
     COResultTable,
     FDResultTable,
     MOResultTable,
+    SAResultTable,
   },
   mounted() {
     this.isLoading = true;
@@ -149,6 +155,11 @@ export default {
         this.isMOResultHidden = false;
       } else {
         this.isMOResultHidden = true;
+      }
+      if (data == "saresultshow") {
+        this.isSAResultHidden = false;
+      } else {
+        this.isSAResultHidden = true;
       }
       ipcRenderer.removeListener(ipcKeys.panelVisibilityAck, () => {});
     });

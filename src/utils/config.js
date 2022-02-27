@@ -112,7 +112,9 @@ export const apiArgs = {
     faceDetection: "facedetection",
     getFaceDetection: "get_facedetection",
     motion: "motion",
-    getMotion: "get_motion"
+    getMotion: "get_motion",
+    saliency: "saliency",
+    getSaliency: "get_saliency"
 }
 
 export const epMode = {

@@ -21,9 +21,9 @@
   <Bottom />
 </template>
 <script>
-import TopMenu from "@/components/TopMenu.vue";
-import VisulaizationOptions from "@/components/VisulaizationOptions.vue";
-import VisulaizationCanves from "@/components/VisulaizationCanves.vue";
+import TopMenu from "../components/common/TopMenu.vue";
+import VisulaizationOptions from "../components/visualization/FrameExtrationOptions.vue";
+import VisulaizationCanves from "../components/visualization/VisulaizationCanves.vue";
 
 export default {
   name: "Visualization",

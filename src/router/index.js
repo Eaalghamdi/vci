@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import CreateProject from '../views/CreateProject.vue'
 import MainApp from '../views/MainApp.vue'
 import FeatureExtraction from '../views/FeatureExtraction.vue'
+import Visualization from '../views/Visualization.vue'
 
 const routes = [
   {
@@ -20,6 +21,12 @@ const routes = [
     name: 'featureExtraction',
     props: true,
     component: FeatureExtraction
+  },
+  {
+    path: '/visualization/:id',
+    name: 'visualization',
+    props: true,
+    component: Visualization
   }
 ]
 
