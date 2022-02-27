@@ -46,6 +46,7 @@ import { ipcKeys } from "../utils/config";
 
 export default {
   name: "MainApp",
+  props: ["id", "filePath", "fileName"],
   data() {
     return {
       isLoading: false,

@@ -77,7 +77,7 @@ import { ipcKeys } from "../utils/config";
 
 export default {
   name: "FeatureExtraction",
-  props: ["id"],
+  props: ["id", "filePath", "fileName"],
   data() {
     return {
       isLoading: false,

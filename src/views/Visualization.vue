@@ -27,6 +27,7 @@ import VisulaizationCanves from "../components/visualization/VisulaizationCanves
 
 export default {
   name: "Visualization",
+  props: ["id", "filePath", "fileName"],
   components: {
     TopMenu,
     VisulaizationOptions,
@@ -67,9 +68,6 @@ export default {
 .col-2 {
   flex-grow: 3;
 }
-
-/* .middleContainer {
-} */
 
 .p-col {
   margin: 0px;

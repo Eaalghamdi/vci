@@ -7,7 +7,7 @@
 <script>
 export default {
   name: "TopMenu",
-  props: ["id"],
+  props: ["id", "filePath", "fileName"],
   data() {
     return {
       items: [
@@ -15,13 +15,19 @@ export default {
         {
           label: "Preprocessing",
           icon: "pi pi-fw pi-video",
-          to: "/mainapp/" + this.$route.params.id,
+          to:
+            "/mainApp/" +
+            this.$route.params.id +
+            "/" +
+            this.$route.params.filePath +
+            "/" +
+            this.$route.params.fileName,
         },
         {
           label: "Feature Extraction",
           icon: "pi pi-fw pi-cog",
           to: "/feauextraction/" + this.$route.params.id,
-        }, 
+        },
         {
           label: "Visualization",
           icon: "pi pi-chart-line",
