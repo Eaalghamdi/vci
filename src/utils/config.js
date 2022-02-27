@@ -110,7 +110,9 @@ export const apiArgs = {
     compression: "compression",
     getCompression: "get_compression",
     faceDetection: "facedetection",
-    getFaceDetection: "get_facedetection"
+    getFaceDetection: "get_facedetection",
+    motion: "motion",
+    getMotion: "get_motion"
 }
 
 export const epMode = {

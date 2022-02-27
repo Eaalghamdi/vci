@@ -40,6 +40,15 @@ def motion(videoPath):
     frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+    numberOfMovingObjects = 0
+    movingObjects_s = 0
+    movingObjects_m = 0
+    movingDurtionDifference_mean = 0
+    movingDurtionDifference_varaince = 0
+    movingDurtionDifference_sd = 0
+    movingDurtion_s = 0
+    movingDurtion_m = 0
+
     while True:
         if frame1 is not None:
             status = 0  # initialise status variable. This stores the presence/absence of object in the current frame
@@ -112,18 +121,18 @@ def motion(videoPath):
             movingDurtionDifference_varaince = 0
             movingDurtionDifference_sd = 0
 
-    # add features to results
+    # # add features to results
     Provider.insert_motion(
         [videoName,
-            numberOfMovingObjects,
-            movingDurtionAll_ms,
-            movingObjects_s,
-            movingObjects_m,
-            movingDurtionDifference_mean,
-            movingDurtionDifference_varaince,
-            movingDurtionDifference_sd,
-            movingDurtion_s,
-            movingDurtion_m,
-            times])
+            str(numberOfMovingObjects),
+            str(movingDurtionAll_ms),
+            str(movingObjects_s),
+            str(movingObjects_m),
+            str(movingDurtionDifference_mean),
+            str(movingDurtionDifference_varaince),
+            str(movingDurtionDifference_sd),
+            str(movingDurtion_s),
+            str(movingDurtion_m),
+            str(times)])
 
     return 'completed'

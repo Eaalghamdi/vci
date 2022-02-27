@@ -187,17 +187,17 @@ def motion(videoPath):
 
 def insert_motion(values):
     return Models.insert_one(Parms.TBNAME_MOTION, (
-        Parms.PARAMS_FACEDTECTION['videoname'],
-        Parms.PARAMS_FACEDTECTION['numberofmovingobjects'],
-        Parms.PARAMS_FACEDTECTION['movingdurationms'],
-        Parms.PARAMS_FACEDTECTION['ratioofmovingobjectsns'],
-        Parms.PARAMS_FACEDTECTION['ratioofmovingobjectsnm'],
-        Parms.PARAMS_FACEDTECTION['movingdurtiondifferencevaraince'],
-        Parms.PARAMS_FACEDTECTION['movingdurtiondifferencemean'],
-        Parms.PARAMS_FACEDTECTION['movingdurtiondifferencesd'],
-        Parms.PARAMS_FACEDTECTION['ratioofmovingdurtionts'],
-        Parms.PARAMS_FACEDTECTION['ratioofmovingdurtiontm'],
-        Parms.PARAMS_FACEDTECTION['satrtendtimes']
+        Parms.PARAMS_MOTION['videoname'],
+        Parms.PARAMS_MOTION['numberofmovingobjects'],
+        Parms.PARAMS_MOTION['movingdurationms'],
+        Parms.PARAMS_MOTION['ratioofmovingobjectsns'],
+        Parms.PARAMS_MOTION['ratioofmovingobjectsnm'],
+        Parms.PARAMS_MOTION['movingdurtiondifferencevaraince'],
+        Parms.PARAMS_MOTION['movingdurtiondifferencemean'],
+        Parms.PARAMS_MOTION['movingdurtiondifferencesd'],
+        Parms.PARAMS_MOTION['ratioofmovingdurtionts'],
+        Parms.PARAMS_MOTION['ratioofmovingdurtiontm'],
+        Parms.PARAMS_MOTION['satrtendtimes']
     ), values)
 
 

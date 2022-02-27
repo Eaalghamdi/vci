@@ -92,9 +92,7 @@ if __name__ == '__main__':
         sys.stdout.flush()
     elif sys.argv[1] == 'motion':
         videoPath = sys.argv[2]
-        minNegi = int(sys.argv[3])
-        print(Provider.motion(videoPath, minNegi
-                              ))
+        print(Provider.motion(videoPath))
         sys.stdout.flush()
     elif sys.argv[1] == 'get_motion':
         print(Provider.get_motion())
