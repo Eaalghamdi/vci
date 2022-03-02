@@ -4,7 +4,7 @@
       <Button
         icon="pi pi-external-link"
         label="Export"
-        @click="exportCSV($event)"
+        @click="exportCSV()"
       />
     </div>
     <ScrollPanel style="height: 600px" class="custom">
@@ -21,6 +21,7 @@
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../../../utils/config";
 import getCompression from "../../../provider/getCompression";
+import toExcel from "../../../provider/toExcel";
 
 export default {
   name: "COResultTable",
@@ -31,7 +32,7 @@ export default {
   },
   methods: {
     exportCSV() {
-      this.$refs.dt.exportCSV();
+      toExcel(this.products, "compression");
     },
   },
   mounted() {

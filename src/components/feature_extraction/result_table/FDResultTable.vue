@@ -1,11 +1,7 @@
 <template>
   <div>
     <div style="text-align: right">
-      <Button
-        icon="pi pi-external-link"
-        label="Export"
-        @click="exportCSV($event)"
-      />
+      <Button icon="pi pi-external-link" label="Export" @click="exportCSV()" />
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1000px">
@@ -19,6 +15,7 @@
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../../../utils/config";
 import getFaceDetection from "../../../provider/getFaceDetection";
+import toExcel from "../../../provider/toExcel";
 
 export default {
   name: "FDResultTable",
@@ -29,7 +26,7 @@ export default {
   },
   methods: {
     exportCSV() {
-      this.$refs.dt.exportCSV();
+      toExcel(this.products, "facedetection");
     },
   },
   mounted() {

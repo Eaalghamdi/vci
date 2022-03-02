@@ -1,11 +1,7 @@
 <template>
   <div>
     <div style="text-align: right">
-      <Button
-        icon="pi pi-external-link"
-        label="Export"
-        @click="exportCSV($event)"
-      />
+      <Button icon="pi pi-external-link" label="Export" @click="exportCSV()" />
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1000px">
@@ -21,17 +17,30 @@
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../../../utils/config";
 import getObjectDetection from "../../../provider/getObjectDetection";
+import toExcel from "../../../provider/toExcel";
 
 export default {
   name: "ODResultTable",
   data() {
     return {
       products: [],
+      exportData: [
+        {
+          id: 1,
+          test: "eatew",
+          rest: "asasas",
+        },
+        {
+          id: 2,
+          test: "eatew",
+          rest: "asasas",
+        },
+      ],
     };
   },
   methods: {
     exportCSV() {
-      this.$refs.dt.exportCSV();
+      toExcel(this.products, "objectrecognition");
     },
   },
   mounted() {

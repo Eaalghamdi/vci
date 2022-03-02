@@ -1,11 +1,7 @@
 <template>
   <div>
     <div style="text-align: right">
-      <Button
-        icon="pi pi-external-link"
-        label="Export"
-        @click="exportCSV($event)"
-      />
+      <Button icon="pi pi-external-link" label="Export" @click="exportCSV()" />
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1800px">
@@ -55,6 +51,7 @@
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../../../utils/config";
 import getMotion from "../../../provider/getMotion";
+import toExcel from "../../../provider/toExcel";
 
 export default {
   name: "MOResultTable",
@@ -65,7 +62,7 @@ export default {
   },
   methods: {
     exportCSV() {
-      this.$refs.dt.exportCSV();
+      toExcel(this.products, "motion");
     },
   },
   mounted() {
