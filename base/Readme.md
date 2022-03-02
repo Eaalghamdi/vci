@@ -1,11 +1,12 @@
 pip install --upgrade pip
 pip install opencv-python-headless
 pip install opencv-contrib-python
-pip install imutils
-python -m pip install -U scikit-image
 pip install scenedetect
 pip install ffmpeg-python
 pip install pyinstaller
+
+pip install imutils
+
 
 ****TODO*****
 before use pyinstaller

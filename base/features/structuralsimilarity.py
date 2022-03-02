@@ -3,7 +3,7 @@ import os
 import cv2
 import numpy as np
 import provider as Provider
-from skimage import metrics
+# from skimage import metrics
 
 
 def mse(imageA, imageB):
@@ -15,13 +15,44 @@ def mse(imageA, imageB):
     return mse_error
 
 
-def compare(imageA, imageB):
-    # Calculate the MSE and SSIM
-    m = mse(imageA, imageB)
-    s = metrics.structural_similarity(imageA, imageB)
+def isBlack(crop):  # Function that tells if the crop is black
+    mask = np.zeros(crop.shape, dtype=int)
+    return not (np.bitwise_or(crop, mask)).any()
 
-    # Return the SSIM. The higher the value, the more "similar" the two images are.
-    return s
+
+def compare(imageA, imageB):
+    # This is the percentage of the width/height we're gonna cut
+    # 0.99 < percent < 0.1
+    percent = 0.01
+
+    before = imageA
+    after = imageB
+
+    # Here, we eliminate the biggest differences between before and after
+    result = after - before
+
+    h, w, _ = result.shape
+
+    hPercent = percent * h
+    wPercent = percent * w
+
+    for wFrom in range(0, w, int(wPercent)):  # Here we are gonna remove that noise
+        for hFrom in range(0, h, int(hPercent)):
+            wTo = int(wFrom+wPercent)
+            hTo = int(hFrom+hPercent)
+            crop = result[wFrom:wTo, hFrom:hTo]  # Crop the image
+
+            if isBlack(crop):  # If it is black, there is no shot in it
+                continue    # We dont need to continue with the algorithm
+
+            beforeCrop = before[wFrom:wTo, hFrom:hTo]  # Crop the image before
+
+            # If the image before is not black, it means there was a hot already there
+            if not isBlack(beforeCrop):
+                # So, we erase it from the result
+                result[wFrom:wTo, hFrom:hTo] = [0, 0, 0]
+
+    return result
 
 
 def strctural_similarity(frameDir):
@@ -60,8 +91,8 @@ def strctural_similarity(frameDir):
             exit()
 
         if round(ratio_orig, 2) == round(ratio_comp, 2):
-            mse_value = mse(gray1, gray2)
-            ssim_value = compare(gray1, gray2)
+            mse_value = np.mean(mse(gray1, gray2).astype("uint8"))
+            ssim_value = np.std(compare(image1, image2).astype("uint8"))
 
             imgf1 = os.path.basename(f1)
             imgf2 = os.path.basename(f2)
