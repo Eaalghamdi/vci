@@ -53,15 +53,19 @@ export function pyProcess(mode, widget, args) {
     } else if (getMode() == 'production') {
         var argsMain = [];
         argsMain.push.apply(argsMain, args);
-        console.log(argsMain)
+        console.log([productionPath(), argsMain])
         try {
             if (mode == epMode.GET) {
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
+                    console.log(error)
+                    console.log(stderror)
                     widget(stdout)
                 })
                 argsMain = []
             } else if (mode == epMode.POST) {
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
+                    console.log(error)
+                    console.log(stderror)
                     widget(stdout)
                 })
                 argsMain = []
