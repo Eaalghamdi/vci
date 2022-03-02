@@ -5,7 +5,9 @@ import { apiArgs, epMode } from '../utils/config';
 function getcolorFulness(callback) {
     pyProcess(epMode.POST,
         (datas) => {
-            callback(JSON.parse(datas.toString("utf8")));
+            let array = JSON.parse(datas.toString("utf8"))
+            let list = array.sort(function (a, b) { return parseInt(a.imgname) - parseInt(b.imgname) });
+            callback(list);
         },
         [apiArgs.getColorfulness]
     );

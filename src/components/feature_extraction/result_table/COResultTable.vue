@@ -9,7 +9,6 @@
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1400px">
-        <Column field="id" header="Id"></Column>
         <Column field="filename" header="File Name"></Column>
         <Column field="cnvformat" header="Converted Format"></Column>
         <Column field="sizebytprev" header="Previus Size (Bytes)"></Column>

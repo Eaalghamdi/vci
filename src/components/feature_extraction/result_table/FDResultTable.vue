@@ -9,7 +9,6 @@
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1000px">
-        <Column field="id" header="Id"></Column>
         <Column field="filename" header="File Name"></Column>
         <Column field="numfaces" header="No of Facess"></Column>
       </DataTable>

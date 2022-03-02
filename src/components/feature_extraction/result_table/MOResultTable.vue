@@ -9,7 +9,6 @@
     </div>
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1800px">
-        <Column field="id" header="Id"></Column>
         <Column field="videoname" header="Video Name"></Column>
         <Column
           field="numberofmovingobjects"

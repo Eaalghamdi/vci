@@ -67,7 +67,7 @@ def process(videoPath, videoFileName, method, treshold, pathOfDest, defaultH, de
         cut_frame = scene[0].get_frames()
         cap.set(1, cut_frame)
         ret, frame = cap.read()
-        frame_name = "shot " + str(i) + ".jpg"
+        frame_name = str(i) + "-shot" + ".jpg"
         cv2.imwrite(pathOfDest + "/" + frame_name, cv2.resize(frame, (defaultH, defaultW),
                                                               interpolation=cv2.INTER_NEAREST))
 

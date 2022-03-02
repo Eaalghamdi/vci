@@ -43,7 +43,7 @@ def process(videoFileName, videoPath, seconds, pathOfDest, defaultH, defaultW):
         success, image = vidcap.read()
 
         if frameId % multiplier == 0:
-            cv2.imwrite(pathOfDest + "/" + "shot%d.jpg" %
+            cv2.imwrite(pathOfDest + "/" + "%d-shot.jpg" %
                         frameId, cv2.resize(image, (defaultH, defaultW),
                                             interpolation=cv2.INTER_NEAREST))
 
