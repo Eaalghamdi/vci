@@ -175,8 +175,8 @@ def freeze(G):
     >>> G = nx.freeze(G)
     >>> try:
     ...     G.add_edge(4, 5)
-    ... except nx.NetworkXError as e:
-    ...     print(str(e))
+    ... except nx.NetworkXError as err:
+    ...     print(str(err))
     Frozen graph can't be modified
 
     Notes
@@ -574,7 +574,16 @@ def info(G, n=None):
     NetworkXError
         If n is not in the graph G
 
+    .. deprecated:: 2.7
+       ``info`` is deprecated and will be removed in NetworkX 3.0.
     """
+    import warnings
+
+    warnings.warn(
+        ("info is deprecated and will be removed in version 3.0.\n"),
+        DeprecationWarning,
+        stacklevel=2,
+    )
     if n is None:
         return str(G)
     if n not in G:
@@ -1295,7 +1304,7 @@ def path_weight(G, path, weight):
         raise nx.NetworkXNoPath("path does not exist")
     for node, nbr in nx.utils.pairwise(path):
         if multigraph:
-            cost += min([v[weight] for v in G[node][nbr].values()])
+            cost += min(v[weight] for v in G[node][nbr].values())
         else:
             cost += G[node][nbr][weight]
     return cost

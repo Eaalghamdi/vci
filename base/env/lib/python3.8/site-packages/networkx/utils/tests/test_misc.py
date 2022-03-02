@@ -26,16 +26,7 @@ from networkx.utils import (
 nested_depth = (
     1,
     2,
-    (
-        3,
-        4,
-        (
-            (5, 6, (7,), (8, (9, 10), 11), (12, 13, (14, 15)), 16),
-            17,
-        ),
-        18,
-        19,
-    ),
+    (3, 4, ((5, 6, (7,), (8, (9, 10), 11), (12, 13, (14, 15)), 16), 17), 18, 19),
     20,
 )
 
@@ -57,10 +48,7 @@ nested_mixed = [
 
 
 @pytest.mark.parametrize("result", [None, [], ["existing"], ["existing1", "existing2"]])
-@pytest.mark.parametrize(
-    "nested",
-    [nested_depth, nested_mixed, nested_set],
-)
+@pytest.mark.parametrize("nested", [nested_depth, nested_mixed, nested_set])
 def test_flatten(nested, result):
     if result is None:
         val = flatten(nested, result)
@@ -232,6 +220,9 @@ def test_create_random_state():
     assert isinstance(create_random_state(None), rs)
     assert isinstance(create_random_state(np.random), rs)
     assert isinstance(create_random_state(rs(1)), rs)
+    # Support for numpy.random.Generator
+    rng = np.random.default_rng()
+    assert isinstance(create_random_state(rng), np.random.Generator)
     pytest.raises(ValueError, create_random_state, "a")
 
     assert np.all(rs(1).rand(10) == create_random_state(1).rand(10))
@@ -255,33 +246,53 @@ def test_create_py_random_state():
     assert isinstance(PythonRandomInterface(), nprs)
 
 
-def test_PythonRandomInterface():
+def test_PythonRandomInterface_RandomState():
     np = pytest.importorskip("numpy")
+
     rs = np.random.RandomState
     rng = PythonRandomInterface(rs(42))
     rs42 = rs(42)
 
     # make sure these functions are same as expected outcome
     assert rng.randrange(3, 5) == rs42.randint(3, 5)
-    assert np.all(rng.choice([1, 2, 3]) == rs42.choice([1, 2, 3]))
+    assert rng.choice([1, 2, 3]) == rs42.choice([1, 2, 3])
     assert rng.gauss(0, 1) == rs42.normal(0, 1)
     assert rng.expovariate(1.5) == rs42.exponential(1 / 1.5)
     assert np.all(rng.shuffle([1, 2, 3]) == rs42.shuffle([1, 2, 3]))
     assert np.all(
         rng.sample([1, 2, 3], 2) == rs42.choice([1, 2, 3], (2,), replace=False)
     )
-    assert rng.randint(3, 5) == rs42.randint(3, 6)
+    assert np.all(
+        [rng.randint(3, 5) for _ in range(100)]
+        == [rs42.randint(3, 6) for _ in range(100)]
+    )
     assert rng.random() == rs42.random_sample()
 
 
+def test_PythonRandomInterface_Generator():
+    np = pytest.importorskip("numpy")
+
+    rng = np.random.default_rng(42)
+    pri = PythonRandomInterface(np.random.default_rng(42))
+
+    # make sure these functions are same as expected outcome
+    assert pri.randrange(3, 5) == rng.integers(3, 5)
+    assert pri.choice([1, 2, 3]) == rng.choice([1, 2, 3])
+    assert pri.gauss(0, 1) == rng.normal(0, 1)
+    assert pri.expovariate(1.5) == rng.exponential(1 / 1.5)
+    assert np.all(pri.shuffle([1, 2, 3]) == rng.shuffle([1, 2, 3]))
+    assert np.all(
+        pri.sample([1, 2, 3], 2) == rng.choice([1, 2, 3], (2,), replace=False)
+    )
+    assert np.all(
+        [pri.randint(3, 5) for _ in range(100)]
+        == [rng.integers(3, 6) for _ in range(100)]
+    )
+    assert pri.random() == rng.random()
+
+
 @pytest.mark.parametrize(
-    ("iterable_type", "expected"),
-    (
-        (list, 1),
-        (tuple, 1),
-        (str, "["),
-        (set, 1),
-    ),
+    ("iterable_type", "expected"), ((list, 1), (tuple, 1), (str, "["), (set, 1))
 )
 def test_arbitrary_element(iterable_type, expected):
     iterable = iterable_type([1, 2, 3])
@@ -289,11 +300,7 @@ def test_arbitrary_element(iterable_type, expected):
 
 
 @pytest.mark.parametrize(
-    "iterator",
-    (
-        (i for i in range(3)),  # generator
-        iter([1, 2, 3]),
-    ),
+    "iterator", ((i for i in range(3)), iter([1, 2, 3]))  # generator
 )
 def test_arbitrary_element_raises(iterator):
     """Value error is raised when input is an iterator."""

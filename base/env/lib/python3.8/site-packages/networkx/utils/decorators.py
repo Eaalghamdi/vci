@@ -2,7 +2,6 @@ from collections import defaultdict
 from os.path import splitext
 from contextlib import contextmanager
 from pathlib import Path
-import warnings
 
 import networkx as nx
 from networkx.utils import create_random_state, create_py_random_state
@@ -93,10 +92,12 @@ def not_implemented_for(*graph_types):
 
 # To handle new extensions, define a function accepting a `path` and `mode`.
 # Then add the extension to _dispatch_dict.
-_dispatch_dict = defaultdict(lambda: open)
-_dispatch_dict[".gz"] = gzip.open
-_dispatch_dict[".bz2"] = bz2.BZ2File
-_dispatch_dict[".gzip"] = gzip.open
+fopeners = {
+    ".gz": gzip.open,
+    ".gzip": gzip.open,
+    ".bz2": bz2.BZ2File,
+}
+_dispatch_dict = defaultdict(lambda: open, **fopeners)  # type: ignore
 
 
 def open_file(path_arg, mode="r"):
@@ -128,11 +129,11 @@ def open_file(path_arg, mode="r"):
            pass
 
        @open_file(1,"w")
-       def write_function(G, pathname="graph.dot")
+       def write_function(G, pathname="graph.dot"):
            pass
 
        @open_file("pathname","w")
-       def write_function(G, pathname="graph.dot")
+       def write_function(G, pathname="graph.dot"):
            pass
 
        @open_file("path", "w+")
@@ -146,7 +147,7 @@ def open_file(path_arg, mode="r"):
     specified as a string, but it does not handle the situation when the
     function wants to accept a default of None (and then handle it).
 
-    Here is an example of how to handle this case:
+    Here is an example of how to handle this case::
 
       @open_file("path")
       def some_function(arg1, arg2, path=None):
@@ -285,6 +286,8 @@ def preserve_random_state(func):
     -----
     If numpy.random is not importable, the state is not saved or restored.
     """
+    import warnings
+
     msg = "preserve_random_state is deprecated and will be removed in 3.0."
     warnings.warn(msg, DeprecationWarning)
 
@@ -310,7 +313,7 @@ def preserve_random_state(func):
         return func
 
 
-def random_state(random_state_argument):
+def np_random_state(random_state_argument):
     """Decorator to generate a `numpy.random.RandomState` instance.
 
     The decorator processes the argument indicated by `random_state_argument`
@@ -354,7 +357,25 @@ def random_state(random_state_argument):
     return argmap(create_random_state, random_state_argument)
 
 
-np_random_state = random_state
+def random_state(random_state_argument):
+    """Decorator to generate a `numpy.random.RandomState` instance.
+
+    .. deprecated:: 2.7
+
+       This function is a deprecated alias for `np_random_state` and will be
+       removed in version 3.0. Use np_random_state instead.
+    """
+    import warnings
+
+    warnings.warn(
+        (
+            "`random_state` is a deprecated alias for `np_random_state`\n"
+            "and will be removed in version 3.0. Use `np_random_state` instead."
+        ),
+        DeprecationWarning,
+        stacklevel=2,
+    )
+    return np_random_state(random_state_argument)
 
 
 def py_random_state(random_state_argument):
@@ -1014,7 +1035,7 @@ class argmap:
                 name = ", ".join(get_name(x, False) for x in arg)
                 return name if first else f"({name})"
             if arg in applied:
-                raise nx.NetworkXError(f"argument {name} is specified multiple times")
+                raise nx.NetworkXError(f"argument {arg} is specified multiple times")
             applied.add(arg)
             if arg in sig.names:
                 return sig.names[arg]
@@ -1061,7 +1082,7 @@ class argmap:
 
     @classmethod
     def signature(cls, f):
-        """Construct a Signature object describing `f`
+        r"""Construct a Signature object describing `f`
 
         Compute a Signature so that we can write a function wrapping f with
         the same signature and call-type.
@@ -1076,6 +1097,8 @@ class argmap:
         sig : argmap.Signature
             The Signature of f
 
+        Notes
+        -----
         The Signature is a namedtuple with names:
 
             name : a unique version of the name of the decorated function
@@ -1084,8 +1107,8 @@ class argmap:
             call_sig : a string used as code to call the decorated function
             names : a dict keyed by argument name and index to the argument's name
             n_positional : the number of positional arguments in the signature
-            args : the name of the VAR_POSITIONAL argument if any, i.e. *theseargs
-            kwargs : the name of the VAR_KEYWORDS argument if any, i.e. **kwargs
+            args : the name of the VAR_POSITIONAL argument if any, i.e. \*theseargs
+            kwargs : the name of the VAR_KEYWORDS argument if any, i.e. \*\*kwargs
 
         These named attributes of the signature are used in `assemble` and `compile`
         to construct a string of source code for the decorated function.

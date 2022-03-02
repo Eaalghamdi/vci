@@ -176,6 +176,63 @@ def set_warnings():
     warnings.filterwarnings(
         "ignore", category=DeprecationWarning, message="preserve_random_state"
     )
+    warnings.filterwarnings(
+        "ignore",
+        category=FutureWarning,
+        message="google_matrix will return an np.ndarray instead of a np.matrix",
+    )
+    ### Future warnings from scipy.sparse array transition
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="biadjacency_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="bethe_hessian_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="incidence_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="laplacian_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="normalized_laplacian_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="directed_laplacian_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore",
+        category=FutureWarning,
+        message="directed_combinatorial_laplacian_matrix",
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="modularity_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="directed_modularity_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore", category=FutureWarning, message="adjacency_matrix"
+    )
+    warnings.filterwarnings(
+        "ignore",
+        category=DeprecationWarning,
+        message="\n\nThe scipy.sparse array containers",
+    )
+    warnings.filterwarnings(
+        "ignore", category=DeprecationWarning, message="networkx.project"
+    )
+    warnings.filterwarnings(
+        "ignore", category=DeprecationWarning, message="\nfind_cores"
+    )
+    warnings.filterwarnings("ignore", category=FutureWarning, message="attr_matrix")
+    warnings.filterwarnings(
+        "ignore", category=DeprecationWarning, message=r"\n\nmake_small_.*"
+    )
+    warnings.filterwarnings(
+        "ignore", category=DeprecationWarning, message="to_numpy_recarray"
+    )
+    warnings.filterwarnings("ignore", category=DeprecationWarning, message="info")
 
 
 @pytest.fixture(autouse=True)
@@ -247,6 +304,7 @@ except ImportError:
 collect_ignore = []
 
 needs_numpy = [
+    "algorithms/approximation/traveling_salesman.py",
     "algorithms/centrality/current_flow_closeness.py",
     "algorithms/node_classification/__init__.py",
     "algorithms/non_randomness.py",
@@ -256,6 +314,7 @@ needs_numpy = [
     "utils/misc.py",
 ]
 needs_scipy = [
+    "algorithms/approximation/traveling_salesman.py",
     "algorithms/assortativity/correlation.py",
     "algorithms/assortativity/mixing.py",
     "algorithms/assortativity/pairs.py",
@@ -270,6 +329,7 @@ needs_scipy = [
     "algorithms/communicability_alg.py",
     "algorithms/link_analysis/hits_alg.py",
     "algorithms/link_analysis/pagerank_alg.py",
+    "algorithms/node_classification/__init__.py",
     "algorithms/node_classification/hmn.py",
     "algorithms/node_classification/lgc.py",
     "algorithms/similarity.py",
@@ -278,6 +338,7 @@ needs_scipy = [
     "generators/spectral_graph_forge.py",
     "linalg/algebraicconnectivity.py",
     "linalg/attrmatrix.py",
+    "linalg/bethehessianmatrix.py",
     "linalg/graphmatrix.py",
     "linalg/modularitymatrix.py",
     "linalg/spectrum.py",

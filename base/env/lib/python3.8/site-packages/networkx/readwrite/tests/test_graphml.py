@@ -1385,11 +1385,11 @@ class TestWriteGraphML(BaseGraphML):
 
         assert nodes_equal(G.nodes(), H.nodes())
         assert edges_equal(G.edges(), H.edges())
-        assert sorted([data.get("eid") for u, v, data in H.edges(data=True)]) == sorted(
+        assert sorted(data.get("eid") for u, v, data in H.edges(data=True)) == sorted(
             edge_attributes.values()
         )
         # NetworkX uses edge_ids as keys in multigraphs if no key
-        assert sorted([key for u, v, key in H.edges(keys=True)]) == sorted(
+        assert sorted(key for u, v, key in H.edges(keys=True)) == sorted(
             edge_attributes.values()
         )
 
@@ -1412,11 +1412,11 @@ class TestWriteGraphML(BaseGraphML):
 
         assert nodes_equal(G.nodes(), J.nodes())
         assert edges_equal(G.edges(), J.edges())
-        assert sorted([data.get("eid") for u, v, data in J.edges(data=True)]) == sorted(
+        assert sorted(data.get("eid") for u, v, data in J.edges(data=True)) == sorted(
             edge_attributes.values()
         )
         # NetworkX uses edge_ids as keys in multigraphs if no key
-        assert sorted([key for u, v, key in J.edges(keys=True)]) == sorted(
+        assert sorted(key for u, v, key in J.edges(keys=True)) == sorted(
             edge_attributes.values()
         )
 
@@ -1500,3 +1500,39 @@ class TestXMLGraphML(TestWriteGraphML):
     @classmethod
     def setup_class(cls):
         TestWriteGraphML.setup_class()
+
+
+def test_exception_for_unsupported_datatype_node_attr():
+    """Test that a detailed exception is raised when an attribute is of a type
+    not supported by GraphML, e.g. a list"""
+    pytest.importorskip("lxml.etree")
+    # node attribute
+    G = nx.Graph()
+    G.add_node(0, my_list_attribute=[0, 1, 2])
+    fh = io.BytesIO()
+    with pytest.raises(TypeError, match="GraphML does not support"):
+        nx.write_graphml(G, fh)
+
+
+def test_exception_for_unsupported_datatype_edge_attr():
+    """Test that a detailed exception is raised when an attribute is of a type
+    not supported by GraphML, e.g. a list"""
+    pytest.importorskip("lxml.etree")
+    # edge attribute
+    G = nx.Graph()
+    G.add_edge(0, 1, my_list_attribute=[0, 1, 2])
+    fh = io.BytesIO()
+    with pytest.raises(TypeError, match="GraphML does not support"):
+        nx.write_graphml(G, fh)
+
+
+def test_exception_for_unsupported_datatype_graph_attr():
+    """Test that a detailed exception is raised when an attribute is of a type
+    not supported by GraphML, e.g. a list"""
+    pytest.importorskip("lxml.etree")
+    # graph attribute
+    G = nx.Graph()
+    G.graph["my_list_attribute"] = [0, 1, 2]
+    fh = io.BytesIO()
+    with pytest.raises(TypeError, match="GraphML does not support"):
+        nx.write_graphml(G, fh)

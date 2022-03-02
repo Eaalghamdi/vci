@@ -59,7 +59,7 @@
  [],
  False,
  True,
- 1646196310,
+ 1646203478,
  [('run',
    '/Users/niccanordhasm/Documents/Untitled/base/env/lib/python3.8/site-packages/PyInstaller/bootloader/Darwin-64bit/run',
    'EXECUTABLE')])

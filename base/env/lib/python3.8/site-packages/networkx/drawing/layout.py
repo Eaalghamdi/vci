@@ -16,7 +16,7 @@ Warning: Most layout routines have only been tested in 2-dimensions.
 
 """
 import networkx as nx
-from networkx.utils import random_state
+from networkx.utils import np_random_state
 
 __all__ = [
     "bipartite_layout",
@@ -56,7 +56,7 @@ def _process_params(G, center, dim):
     return G, center
 
 
-@random_state(3)
+@np_random_state(3)
 def random_layout(G, center=None, dim=2, seed=None):
     """Position nodes uniformly at random in the unit square.
 
@@ -342,7 +342,7 @@ def bipartite_layout(
     return pos
 
 
-@random_state(10)
+@np_random_state(10)
 def spring_layout(
     G,
     k=None,
@@ -473,7 +473,7 @@ def spring_layout(
         # Sparse matrix
         if len(G) < 500:  # sparse solver for large graphs
             raise ValueError
-        A = nx.to_scipy_sparse_matrix(G, weight=weight, dtype="f")
+        A = nx.to_scipy_sparse_array(G, weight=weight, dtype="f")
         if k is None and fixed is not None:
             # We must adjust k by domain size for layouts not near 1x1
             nnodes, _ = A.shape
@@ -499,7 +499,7 @@ def spring_layout(
 fruchterman_reingold_layout = spring_layout
 
 
-@random_state(7)
+@np_random_state(7)
 def _fruchterman_reingold(
     A, k=None, pos=None, fixed=None, iterations=50, threshold=1e-4, dim=2, seed=None
 ):
@@ -509,9 +509,9 @@ def _fruchterman_reingold(
 
     try:
         nnodes, _ = A.shape
-    except AttributeError as e:
+    except AttributeError as err:
         msg = "fruchterman_reingold() takes an adjacency matrix as input"
-        raise nx.NetworkXError(msg) from e
+        raise nx.NetworkXError(msg) from err
 
     if pos is None:
         # random initial positions
@@ -556,13 +556,12 @@ def _fruchterman_reingold(
         pos += delta_pos
         # cool temperature
         t -= dt
-        err = np.linalg.norm(delta_pos) / nnodes
-        if err < threshold:
+        if (np.linalg.norm(delta_pos) / nnodes) < threshold:
             break
     return pos
 
 
-@random_state(7)
+@np_random_state(7)
 def _sparse_fruchterman_reingold(
     A, k=None, pos=None, fixed=None, iterations=50, threshold=1e-4, dim=2, seed=None
 ):
@@ -575,14 +574,14 @@ def _sparse_fruchterman_reingold(
 
     try:
         nnodes, _ = A.shape
-    except AttributeError as e:
+    except AttributeError as err:
         msg = "fruchterman_reingold() takes an adjacency matrix as input"
-        raise nx.NetworkXError(msg) from e
+        raise nx.NetworkXError(msg) from err
     # make sure we have a LIst of Lists representation
     try:
         A = A.tolil()
     except AttributeError:
-        A = (sp.sparse.coo_matrix(A)).tolil()
+        A = (sp.sparse.coo_array(A)).tolil()
 
     if pos is None:
         # random initial positions
@@ -619,7 +618,7 @@ def _sparse_fruchterman_reingold(
             # enforce minimum distance of 0.01
             distance = np.where(distance < 0.01, 0.01, distance)
             # the adjacency matrix row
-            Ai = np.asarray(A.getrowview(i).toarray())
+            Ai = A.getrowview(i).toarray()  # TODO: revisit w/ sparse 1D container
             # displacement "force"
             displacement[:, i] += (
                 delta * (k * k / distance ** 2 - Ai * distance / k)
@@ -631,8 +630,7 @@ def _sparse_fruchterman_reingold(
         pos += delta_pos
         # cool temperature
         t -= dt
-        err = np.linalg.norm(delta_pos) / nnodes
-        if err < threshold:
+        if (np.linalg.norm(delta_pos) / nnodes) < threshold:
             break
     return pos
 
@@ -823,7 +821,7 @@ def spectral_layout(G, weight="weight", scale=1, center=None, dim=2):
         # Sparse matrix
         if len(G) < 500:  # dense solver is faster for small graphs
             raise ValueError
-        A = nx.to_scipy_sparse_matrix(G, weight=weight, dtype="d")
+        A = nx.to_scipy_sparse_array(G, weight=weight, dtype="d")
         # Symmetrize directed graphs
         if G.is_directed():
             A = A + np.transpose(A)
@@ -848,9 +846,9 @@ def _spectral(A, dim=2):
 
     try:
         nnodes, _ = A.shape
-    except AttributeError as e:
+    except AttributeError as err:
         msg = "spectral() takes an adjacency matrix as input"
-        raise nx.NetworkXError(msg) from e
+        raise nx.NetworkXError(msg) from err
 
     # form Laplacian matrix where D is diagonal of degrees
     D = np.identity(nnodes, dtype=A.dtype) * np.sum(A, axis=1)
@@ -873,20 +871,20 @@ def _sparse_spectral(A, dim=2):
 
     try:
         nnodes, _ = A.shape
-    except AttributeError as e:
+    except AttributeError as err:
         msg = "sparse_spectral() takes an adjacency matrix as input"
-        raise nx.NetworkXError(msg) from e
+        raise nx.NetworkXError(msg) from err
 
     # form Laplacian matrix
-    data = np.asarray(A.sum(axis=1).T)
-    D = sp.sparse.spdiags(data, 0, nnodes, nnodes)
+    # TODO: Rm csr_array wrapper in favor of spdiags array constructor when available
+    D = sp.sparse.csr_array(sp.sparse.spdiags(A.sum(axis=1), 0, nnodes, nnodes))
     L = D - A
 
     k = dim + 1
     # number of Lanczos vectors for ARPACK solver.What is the right scaling?
     ncv = max(2 * k + 1, int(np.sqrt(nnodes)))
     # return smallest k eigenvalues and eigenvectors
-    eigenvalues, eigenvectors = sp.sparse.linalg.eigen.eigsh(L, k, which="SM", ncv=ncv)
+    eigenvalues, eigenvectors = sp.sparse.linalg.eigsh(L, k, which="SM", ncv=ncv)
     index = np.argsort(eigenvalues)[1:k]  # 0 index is zero eigenvalue
     return np.real(eigenvectors[:, index])
 
@@ -959,14 +957,17 @@ def spiral_layout(G, scale=1, center=None, dim=2, resolution=0.35, equidistant=F
         Scale factor for positions.
     center : array-like or None
         Coordinate pair around which to center the layout.
-    dim : int
+    dim : int, default=2
         Dimension of layout, currently only dim=2 is supported.
         Other dimension values result in a ValueError.
-    resolution : float
+    resolution : float, default=0.35
         The compactness of the spiral layout returned.
         Lower values result in more compressed spiral layouts.
-    equidistant : bool
-        If True, nodes will be plotted equidistant from each other.
+    equidistant : bool, default=False
+        If True, nodes will be positioned equidistant from each other
+        by decreasing angle further from center.
+        If False, nodes will be positioned at equal angles
+        from each other by increasing separation further from center.
 
     Returns
     -------
@@ -1005,23 +1006,16 @@ def spiral_layout(G, scale=1, center=None, dim=2, resolution=0.35, equidistant=F
         chord = 1
         step = 0.5
         theta = resolution
+        theta += chord / (step * theta)
         for _ in range(len(G)):
             r = step * theta
             theta += chord / r
             pos.append([np.cos(theta) * r, np.sin(theta) * r])
 
     else:
-        # set the starting angle and step
-        step = 1
-        angle = 0.0
-        dist = 0.0
-        # set the radius for the spiral to the number of nodes in the graph
-        radius = len(G)
-
-        while dist * np.hypot(np.cos(angle), np.sin(angle)) < radius:
-            pos.append([dist * np.cos(angle), dist * np.sin(angle)])
-            dist += step
-            angle += resolution
+        dist = np.arange(len(G), dtype=float)
+        angle = resolution * dist
+        pos = np.transpose(dist * np.array([np.cos(angle), np.sin(angle)]))
 
     pos = rescale_layout(np.array(pos), scale=scale) + center
 
@@ -1092,7 +1086,7 @@ def multipartite_layout(G, subset_key="subset", align="vertical", scale=1, cente
     nodes = []
 
     width = len(layers)
-    for i, layer in layers.items():
+    for i, layer in enumerate(layers.values()):
         height = len(layer)
         xs = np.repeat(i, height)
         ys = np.arange(0, height, dtype=float)
@@ -1167,13 +1161,14 @@ def rescale_layout_dict(pos, scale=1):
 
     Examples
     --------
-    >>> pos = {0: (0, 0), 1: (1, 1), 2: (0.5, 0.5)}
+    >>> import numpy as np
+    >>> pos = {0: np.array((0, 0)), 1: np.array((1, 1)), 2: np.array((0.5, 0.5))}
     >>> nx.rescale_layout_dict(pos)
-    {0: (-1.0, -1.0), 1: (1.0, 1.0), 2: (0.0, 0.0)}
+    {0: array([-1., -1.]), 1: array([1., 1.]), 2: array([0., 0.])}
 
-    >>> pos = {0: (0, 0), 1: (-1, 1), 2: (-0.5, 0.5)}
+    >>> pos = {0: np.array((0, 0)), 1: np.array((-1, 1)), 2: np.array((-0.5, 0.5))}
     >>> nx.rescale_layout_dict(pos, scale=2)
-    {0: (2.0, -2.0), 1: (-2.0, 2.0), 2: (0.0, 0.0)}
+    {0: array([ 2., -2.]), 1: array([-2.,  2.]), 2: array([0., 0.])}
 
     See Also
     --------
@@ -1185,4 +1180,4 @@ def rescale_layout_dict(pos, scale=1):
         return {}
     pos_v = np.array(list(pos.values()))
     pos_v = rescale_layout(pos_v, scale=scale)
-    return {k: tuple(v) for k, v in zip(pos.keys(), pos_v)}
+    return dict(zip(pos, pos_v))
