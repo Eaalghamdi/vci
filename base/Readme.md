@@ -1,11 +1,11 @@
 pip install --upgrade pip
-pip3 install opencv-python-headless
-pip3 install opencv-contrib-python
-pip3 install imutils
-pip install scikit-image (latest - 0.19 use pip only for this)
-pip3 install scenedetect
-pip3 install ffmpeg-python
-pip3 install pyinstaller
+pip install opencv-python-headless
+pip install opencv-contrib-python
+pip install imutils
+python -m pip install -U scikit-image
+pip install scenedetect
+pip install ffmpeg-python
+pip install pyinstaller
 
 ****TODO*****
 before use pyinstaller
@@ -13,4 +13,5 @@ create api.spec file and
 add this to api.spec --> datas=[ ('/Users/niccanordhasm/Documents/Untitled/base/src', 'src')]
 Pyinstaller api.spec 
 
+open before xcode
 python3 -m venv /path/to/new/virtual/environment
