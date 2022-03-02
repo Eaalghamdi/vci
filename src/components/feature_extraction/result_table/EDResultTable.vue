@@ -10,6 +10,7 @@
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1400px">
         <Column field="id" header="Id"></Column>
+        <Column field="imgname" header="Image Name"></Column>
         <Column field="meanval" header="Mean Value"></Column>
         <Column field="stdval" header="Std Value"></Column>
         <Column field="meanadjabs" header="Mean Adj Abs"></Column>
@@ -44,7 +45,7 @@ export default {
           ipcRenderer.send(ipcKeys.mainAppLoading, "stoploadfe");
         });
       }
-    }); 
+    });
   },
 };
 </script>

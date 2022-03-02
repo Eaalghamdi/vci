@@ -42,7 +42,10 @@ def object_detection(frameDir, thrHold):
         #     cv2.rectangle(imgFinal, boxes, (255,0,0),2)
         # cv2.imshow('', cv2.cvtColor(imgFinal, cv2.COLOR_BGR2RGB))
         # cv2.waitKey(0)
+        imgNam = os.path.basename(img)
+        imgName = imgNam.split(".")[0]
+
         Provider.insert_objectdetection(
-            [str(ClassIndex), str(confidence), str(bbox)])
+            [imgName, str(ClassIndex[0]), str(confidence[0]), str(bbox[0])])
 
     return 'completed'

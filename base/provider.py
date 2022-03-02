@@ -53,6 +53,7 @@ def colorfulness(path, mode):
 
 def insert_colorfulness(values):
     return Models.insert_one(Parms.TBNAME_COLORFULNESS, (
+        Parms.PARAMS_COLORFULNESS['imgname'],
         Parms.PARAMS_COLORFULNESS['imgcolor'],
         Parms.PARAMS_COLORFULNESS['meancolor'],
         Parms.PARAMS_COLORFULNESS['stdcolor'],
@@ -79,6 +80,7 @@ def edgedetection(frameDir, mode, submode, thrHold1, thrHold2):
 
 def insert_edgedetection(values):
     return Models.insert_one(Parms.TBNAME_EDGEDETECTION, (
+        Parms.PARAMS_EDGEDETECTION['imgname'],
         Parms.PARAMS_EDGEDETECTION['meanval'],
         Parms.PARAMS_EDGEDETECTION['stdval'],
         Parms.PARAMS_EDGEDETECTION['meanadjabs'],
@@ -102,6 +104,7 @@ def objectdetection(frameDir, thrHold):
 
 def insert_objectdetection(values):
     return Models.insert_one(Parms.TBNAME_OBJECTDETECTION, (
+        Parms.PARAMS_OBJECTDETECTION['imgname'],
         Parms.PARAMS_OBJECTDETECTION['classindex'],
         Parms.PARAMS_OBJECTDETECTION['confidence'],
         Parms.PARAMS_OBJECTDETECTION['bbox']
@@ -199,6 +202,10 @@ def insert_motion(values):
         Parms.PARAMS_MOTION['ratioofmovingdurtiontm'],
         Parms.PARAMS_MOTION['satrtendtimes']
     ), values)
+
+
+def clear_motion():
+    return Models.clear_all(Parms.TBNAME_MOTION)
 
 
 def get_motion():

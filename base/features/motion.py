@@ -6,6 +6,7 @@
 import cv2
 from statistics import mean, variance, stdev
 import provider as Provider
+import os
 
 
 ### issue: fix te code intedenence or flow ###
@@ -21,7 +22,8 @@ def safe_divide(numerator, denominator):
 def motion(videoPath):
 
     cap = cv2.VideoCapture(videoPath)
-    videoName = videoPath.split(".")[0]
+    vidNa = os.path.basename(videoPath)
+    vidName = vidNa.split(".")[0]
 
     # stores the presence/absence of object in the present frame. -1 for absent and 1 for present
     statusList = [None, None]
@@ -48,6 +50,8 @@ def motion(videoPath):
     movingDurtionDifference_sd = 0
     movingDurtion_s = 0
     movingDurtion_m = 0
+
+    Provider.clear_motion()
 
     while True:
         if frame1 is not None:
@@ -123,7 +127,7 @@ def motion(videoPath):
 
     # # add features to results
     Provider.insert_motion(
-        [videoName,
+        [vidName,
             str(numberOfMovingObjects),
             str(movingDurtionAll_ms),
             str(movingObjects_s),
@@ -132,7 +136,7 @@ def motion(videoPath):
             str(movingDurtionDifference_varaince),
             str(movingDurtionDifference_sd),
             str(movingDurtion_s),
-            str(movingDurtion_m),
-            str(times)])
+            str(movingDurtion_m), str(times[0]) + ' to ' +
+            str(times[len(times) - 2])])
 
     return 'completed'

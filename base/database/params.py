@@ -15,6 +15,7 @@ PARAMS_PROJECTS = {
 }
 
 PARAMS_COLORFULNESS = {
+    'imgname': 'imgname',
     'imgcolor': 'imgcolor',
     'meancolor': 'meancolor',
     'stdcolor': 'stdcolor',
@@ -25,6 +26,7 @@ PARAMS_COLORFULNESS = {
 }
 
 PARAMS_EDGEDETECTION = {
+    'imgname': 'imgname',
     'meanval': 'meanval',
     'stdval': 'stdval',
     'meanadjabs': 'meanadjabs',
@@ -32,6 +34,7 @@ PARAMS_EDGEDETECTION = {
 }
 
 PARAMS_OBJECTDETECTION = {
+    'imgname': 'imgname',
     'classindex': 'classindex',
     'confidence': 'confidence',
     'bbox': 'bbox'

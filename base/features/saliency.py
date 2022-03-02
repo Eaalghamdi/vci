@@ -12,9 +12,8 @@ def saliency(frameDir):
             if x.endswith(".jpg"):
                 imgs.append(frameDir + '/' + x)
 
-        for img in imgs:
-            head, tail = os.path.split(img)
-            image = cv2.imread(img)
+        for imgq in imgs:
+            image = cv2.imread(imgq)
 
             # initialize OpenCV's static saliency spectral residual detector and
             # compute the saliency map
@@ -31,7 +30,10 @@ def saliency(frameDir):
             mean = np.mean(threshMap.astype("uint8"))
             std = np.std(threshMap.astype("uint8"))
 
+            imgNam = os.path.basename(imgq)
+            imgName = imgNam.split(".")[0]
+
             Provider.insert_saliency(
-                [tail, mean, std])
+                [imgName, mean, std])
 
         return 'completed'

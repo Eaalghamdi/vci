@@ -1,109 +1,110 @@
 <template>
   <div class="stepsdemo-content">
     <Card>
-      <template #title> Seat Information </template>
-      <template #subtitle> Choose your seat </template>
+      <template #title> Plot Information </template>
       <template #content>
         <div class="p-fluid p-formgrid p-grid">
           <div class="p-field p-col-12 p-md-6">
             <label for="class">Class</label>
             <Dropdown
-              inputId="class"
-              v-model="selectedClass"
-              :options="classes"
-              @change="setVagons($event)"
+              v-model="selecFunc"
+              :options="funcList"
               optionLabel="name"
-              placeholder="Select a Class"
+              optionValue="value"
+              placeholder="Select a Method"
             />
           </div>
           <div class="p-field p-col-12 p-md-6">
-            <label for="lastname">Wagon</label>
+            <label for="lastname">Chart Type</label>
             <Dropdown
-              inputId="wagon"
-              v-model="selectedVagon"
-              :options="vagons"
-              @change="setSeats($event)"
-              optionLabel="vagon"
-              placeholder="Select a Vagon"
-            />
-          </div>
-          <div class="p-field p-col-12">
-            <label for="seat">Seat</label>
-            <Dropdown
-              inputId="seat"
-              v-model="selectedSeat"
-              :options="seats"
-              optionLabel="seat"
-              placeholder="Select a Seat"
+              v-model="selecPlot"
+              :options="plotList"
+              optionLabel="name"
+              optionValue="value"
+              placeholder="Select a Plot"
             />
           </div>
         </div>
       </template>
       <template #footer>
         <div class="p-grid p-nogutter p-justify-between">
-          <Button label="Back" @click="prevPage()" icon="pi pi-angle-left" />
-          <Button
-            label="Next"
-            @click="nextPage()"
-            icon="pi pi-angle-right"
-            iconPos="right"
-          />
+          <Button @click="onSubmit" class="create_btn" label="Submit" />
         </div>
       </template>
     </Card>
   </div>
 </template>
 <script>
+import { ipcRenderer } from "electron";
+import { ipcKeys } from "../../utils/config";
+
 export default {
   name: "FrameExtraxtionOoptions",
   data() {
     return {
-      selectedClass: "",
-      classes: [
-        { name: "First Class", code: "A", factor: 1 },
-        { name: "Second Class", code: "B", factor: 2 },
-        { name: "Third Class", code: "C", factor: 3 },
+      selecFunc: "",
+      funcList: [
+        { name: "Object Recognition", value: 1 },
+        { name: "Colorfulness", value: 2 },
+        { name: "Structural Similarity", value: 3 },
+        { name: "Compression", value: 4 },
+        { name: "Face Recognition", value: 5 },
+        { name: "Edge Detecion", value: 6 },
+        { name: "Motion", value: 7 },
+        { name: "Sailency", value: 8 },
       ],
-      vagons: [],
-      selectedVagon: "",
-      seats: [],
-      selectedSeat: "",
+      selecPlot: "",
+      plotList: [
+        { name: "Bar Chart", value: 1 },
+        { name: "Line Chart", value: 2 },
+      ],
     };
   },
+
   methods: {
-    setVagons(event) {
-      if (this.selectedClass && event.value) {
-        this.vagons = [];
-        this.seats = [];
-        for (let i = 1; i < 3 * event.value.factor; i++) {
-          this.vagons.push({
-            vagon: i + event.value.code,
-            type: event.value.name,
-            factor: event.value.factor,
-          });
-        }
+    onSubmit() {
+      ipcRenderer.send(ipcKeys.mainAppLoading, "loadVis");
+      if (this.selecFunc == 1) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showORPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 2) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showCFPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 3) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showSSPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 4) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showCOPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 5) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showFDPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 6) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showEDPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 7) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showMOPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
+      } else if (this.selecFunc == 8) {
+        ipcRenderer.send(ipcKeys.panelVisibility, [
+          "showSAPlan",
+          this.selecPlot == 1 ? "bar" : "line",
+        ]);
       }
-    },
-    setSeats(event) {
-      if (this.selectedVagon && event.value) {
-        this.seats = [];
-        for (let i = 1; i < 10 * event.value.factor; i++) {
-          this.seats.push({ seat: i, type: event.value.type });
-        }
-      }
-    },
-    nextPage() {
-      this.$emit("next-page", {
-        formData: {
-          class: this.selectedClass.name,
-          vagon: this.selectedVagon.vagon,
-          seat: this.selectedSeat.seat,
-        },
-        pageIndex: 1,
-      });
-    },
-    prevPage() {
-      this.$emit("prev-page", { pageIndex: 1 });
     },
   },
 };

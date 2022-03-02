@@ -41,8 +41,8 @@ def get_colorfulness(frameDir, mode):
                 imgs.append(frameDir + '/' + x)
 
         if mode == 0:
-            for img in imgs:
-                img = cv2.imread(img, cv2.IMREAD_UNCHANGED)
+            for imga in imgs:
+                img = cv2.imread(imga, cv2.IMREAD_UNCHANGED)
 
                 img1_color = colorfulness(img)
 
@@ -56,16 +56,19 @@ def get_colorfulness(frameDir, mode):
                 mean_adj_abs = np.mean(abs(img1_color))
                 std_adj_abs = np.std(abs(img1_color))
 
+                imgNamF1 = os.path.basename(imga)
+                imgNameF1 = imgNamF1.split(".")[0]
+
                 Provider.insert_colorfulness(
-                    [img1_color, mean_color, std_color, mean_adj, std_adj, mean_adj_abs, std_adj_abs])
+                    [imgNameF1, img1_color, mean_color, std_color, mean_adj, std_adj, mean_adj_abs, std_adj_abs])
 
             return 'completed'
 
         elif mode == 1:
-            for f1, f2 in zip(imgs, imgs[1:]):
+            for f1Img, f2Img in zip(imgs, imgs[1:]):
 
-                f1 = cv2.imread(f1, cv2.IMREAD_UNCHANGED)
-                f2 = cv2.imread(f2)
+                f1 = cv2.imread(f1Img, cv2.IMREAD_UNCHANGED)
+                f2 = cv2.imread(f2Img)
 
                 width = int(f1.shape[1])
                 height = int(f1.shape[0])
@@ -86,7 +89,12 @@ def get_colorfulness(frameDir, mode):
                 mean_adj_abs = np.mean(abs(img1_color - img2_color))
                 std_adj_abs = np.std(abs(img1_color - img2_color))
 
+                imgNamF1 = os.path.basename(f1Img)
+                imgNamF2 = os.path.basename(f2Img)
+                imgNameF1 = imgNamF1.split(".")[0]
+                imgNameF2 = imgNamF2.split(".")[0]
+
                 Provider.insert_colorfulness(
-                    [img1_color, mean_color, std_color, mean_adj, std_adj, mean_adj_abs, std_adj_abs])
+                    [imgNameF1 + ' - ' + imgNameF2, str(img1_color) + ' - ' + str(img2_color), mean_color, std_color, mean_adj, std_adj, mean_adj_abs, std_adj_abs])
 
             return 'completed'

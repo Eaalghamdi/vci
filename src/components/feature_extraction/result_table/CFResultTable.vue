@@ -10,6 +10,7 @@
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1400px">
         <Column field="id" header="Id"></Column>
+        <Column field="imgname" header="Image Name"></Column>
         <Column field="imgcolor" header="Image Color"></Column>
         <Column field="meancolor" header="Mean Color"></Column>
         <Column field="stdcolor" header="Std Color"></Column>

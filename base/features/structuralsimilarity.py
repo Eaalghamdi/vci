@@ -62,10 +62,13 @@ def strctural_similarity(frameDir):
         if round(ratio_orig, 2) == round(ratio_comp, 2):
             mse_value = mse(gray1, gray2)
             ssim_value = compare(gray1, gray2)
-            headf1, tailf1 = os.path.split(f1)
-            headf2, tailf2 = os.path.split(f2)
+
+            imgf1 = os.path.basename(f1)
+            imgf2 = os.path.basename(f2)
+            imgNameF1 = imgf1.split(".")[0]
+            imgNameF2 = imgf2.split(".")[0]
 
             Provider.insert_structsimilarity(
-                [tailf1, tailf2, mse_value, ssim_value])
+                [imgNameF1, imgNameF2, mse_value, ssim_value])
 
     return 'completed'

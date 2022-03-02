@@ -10,6 +10,7 @@
     <ScrollPanel style="height: 600px" class="custom">
       <DataTable :value="products" style="width: 1000px">
         <Column field="id" header="Id"></Column>
+        <Column field="imgname" header="Iamge Name"></Column>
         <Column field="classindex" header="Class Index"></Column>
         <Column field="confidence" header="Confidence"></Column>
         <Column field="bbox" header="BBox"></Column>

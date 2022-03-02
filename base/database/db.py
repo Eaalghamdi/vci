@@ -18,6 +18,7 @@ CREATE_TABLE_LIST = [
 );""",
     """CREATE TABLE IF NOT EXISTS colorfulness (
 	id INTEGER NOT NULL, 
+    "imgname" VARCHAR,
 	"imgcolor" VARCHAR, 
 	"meancolor" VARCHAR, 
 	"stdcolor" VARCHAR, 
@@ -29,6 +30,7 @@ CREATE_TABLE_LIST = [
 );""",
     """CREATE TABLE IF NOT EXISTS edgedetection (
 	id INTEGER NOT NULL, 
+    "imgname" VARCHAR,
 	"meanval" VARCHAR, 
 	"stdval" VARCHAR, 
 	"meanadjabs" VARCHAR, 
@@ -36,7 +38,8 @@ CREATE_TABLE_LIST = [
 	PRIMARY KEY (id)
 );""",
     """CREATE TABLE IF NOT EXISTS objectdetection (
-	id INTEGER NOT NULL, 
+	id INTEGER NOT NULL,
+    "imgname" VARCHAR,
 	"classindex" VARCHAR, 
 	"confidence" VARCHAR, 
 	"bbox" VARCHAR,

@@ -14,9 +14,9 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
 
     if mode == 'static':
         if submode == 'spectral':
-            for img in imgs:
+            for imgw in imgs:
                 # Read the original image
-                img = cv2.imread(img)
+                img = cv2.imread(imgw)
 
                 # initialize OpenCV's static saliency spectral residual detector and
                 # compute the saliency map
@@ -32,15 +32,18 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
                 mean_adj_abs = np.mean(abs(mapss))
                 std_adj_abs = np.std(abs(mapss))
 
+                imgNam = os.path.basename(imgw)
+                imgName = imgNam.split(".")[0]
+
                 Provider.insert_edgedetection(
-                    [mean_color, std_color, mean_adj_abs, std_adj_abs])
+                    [imgName, mean_color, std_color, mean_adj_abs, std_adj_abs])
 
             return 'completed'
 
         elif submode == 'finegrained':
-            for img in imgs:
+            for imgq in imgs:
                 # Read the original image
-                img = cv2.imread(img)
+                img = cv2.imread(imgq)
 
                 # initialize OpenCV's static fine grained saliency detector and
                 # compute the saliency map
@@ -56,15 +59,18 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
                 mean_adj_abs = np.mean(abs(mapss))
                 std_adj_abs = np.std(abs(mapss))
 
+                imgNam = os.path.basename(imgq)
+                imgName = imgNam.split(".")[0]
+
                 Provider.insert_edgedetection(
-                    [mean_color, std_color, mean_adj_abs, std_adj_abs])
+                    [imgName, mean_color, std_color, mean_adj_abs, std_adj_abs])
 
             return 'completed'
 
         elif submode == 'canny':
-            for img in imgs:
+            for imgq in imgs:
                 # Read the original image
-                img = cv2.imread(img)
+                img = cv2.imread(imgq)
 
                 # Convert to graycsale
                 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -73,7 +79,7 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
 
                 # Canny Edge Detection
                 edges = cv2.Canny(image=img_blur, threshold1=thrHold1,
-                                threshold2=thrHold2)  
+                                  threshold2=thrHold2)
 
                 mapss = (edges * 255).astype("uint8")
 
@@ -84,9 +90,10 @@ def edge_detection(frameDir, mode, submode, thrHold1, thrHold2):
                 mean_adj_abs = np.mean(abs(mapss))
                 std_adj_abs = np.std(abs(mapss))
 
-                Provider.insert_edgedetection(
-                    [mean_color, std_color, mean_adj_abs, std_adj_abs])
-            
-            return 'completed'
+                imgNam = os.path.basename(imgq)
+                imgName = imgNam.split(".")[0]
 
- 
+                Provider.insert_edgedetection(
+                    [imgName, mean_color, std_color, mean_adj_abs, std_adj_abs])
+
+            return 'completed'

@@ -30,7 +30,7 @@ import Checkbox from "primevue/checkbox";
 import TabMenu from "primevue/tabmenu";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
-import Chart from "primevue/chart";
+// import Chart from "primevue/chart";
 
 import "primevue/resources/themes/arya-green/theme.css"; //theme
 import "primevue/resources/primevue.min.css"; //core css
@@ -67,6 +67,6 @@ app.component("Checkbox", Checkbox);
 app.component("TabMenu", TabMenu);
 app.component("DataTable", DataTable);
 app.component("Column", Column);
-app.component("Chart", Chart);
+// app.component("Chart", Chart);
 
 app.use(router).mount("#app");
