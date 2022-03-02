@@ -1,5 +1,5 @@
 <template>
-  <ScrollPanel style="width: 100%; height: 360px">
+  <ScrollPanel style="height: 320px">
     <div class="col">
       <ul>
         <li v-for="image in images" v-bind:key="image.id">

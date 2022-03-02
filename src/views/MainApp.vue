@@ -44,7 +44,6 @@ import "vue-loading-overlay/dist/vue-loading.css";
 import { ipcRenderer } from "electron";
 import { ipcKeys } from "../utils/config";
 
-
 export default {
   name: "MainApp",
   props: ["id", "filePath", "fileName"],
@@ -90,7 +89,6 @@ export default {
 }
 
 .SideMenu {
-  height: 100vh;
   margin: 0px;
   background-color: #1e1e1e;
 }
