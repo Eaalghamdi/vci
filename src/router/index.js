@@ -17,13 +17,13 @@ const routes = [
     component: MainApp
   },
   {
-    path: '/feauextraction/:id',
+    path: '/feauextraction/:id/:filePath/:fileName',
     name: 'featureExtraction',
     props: true,
     component: FeatureExtraction
   },
   {
-    path: '/visualization/:id',
+    path: '/visualization/:id/:filePath/:fileName',
     name: 'visualization',
     props: true,
     component: Visualization

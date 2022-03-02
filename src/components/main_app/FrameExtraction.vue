@@ -135,7 +135,6 @@ import { ipcKeys } from "../../utils/config";
 
 export default {
   name: "FrameExtraction",
-  props: ["id", "filePath", "fileName"],
 
   data() {
     return {

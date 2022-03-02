@@ -40,6 +40,7 @@ import { ipcKeys } from "../../utils/config";
 
 export default {
   name: "FrameExtraxtionOoptions",
+    props: ["id", "filePath", "fileName"],
   data() {
     return {
       selecFunc: "",

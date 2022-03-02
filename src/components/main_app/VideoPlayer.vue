@@ -9,7 +9,6 @@
 
 export default {
   name: "VideoPlayer",
-  props: ["id", "filePath", "fileName"],
 
   data() {
     return {

@@ -116,6 +116,7 @@ export default {
     setTimeout(() => {
       getProject((data) => {
         this.framePathData = data;
+        console.log(data);
         ipcRenderer.send(ipcKeys.mainAppLoading, "stoploadfe");
       }, this.$route.params.id);
     }, 1000);

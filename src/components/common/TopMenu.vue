@@ -19,19 +19,31 @@ export default {
             "/mainApp/" +
             this.$route.params.id +
             "/" +
-            this.$route.params.filePath +
+            this.$route.params.filePath.split('/').join(',') +
             "/" +
             this.$route.params.fileName,
         },
         {
           label: "Feature Extraction",
           icon: "pi pi-fw pi-cog",
-          to: "/feauextraction/" + this.$route.params.id,
+          to:
+            "/feauextraction/" +
+            this.$route.params.id +
+            "/" +
+            this.$route.params.filePath.split('/').join(',') +
+            "/" +
+            this.$route.params.fileName,
         },
         {
           label: "Visualization",
           icon: "pi pi-chart-line",
-          to: "/visualization/" + this.$route.params.id,
+          to:
+            "/visualization/" +
+            this.$route.params.id +
+            "/" +
+            this.$route.params.filePath.split('/').join(',') +
+            "/" +
+            this.$route.params.fileName,
         },
       ],
     };

@@ -24,7 +24,11 @@ export default {
       images: [],
       sourcePath: null,
       VideoPath:
-        this.$route.params.filePath + "/" + this.$route.params.fileName,
+        (this.$route.params.filePath.includes(",")
+          ? this.$route.params.filePath.split(',').join('/')
+          : this.$route.params.filePath) +
+        "/" +
+        this.$route.params.fileName,
     };
   },
 
@@ -33,7 +37,9 @@ export default {
       (image) => {
         this.images.push(image);
       },
-      this.$route.params.filePath,
+      this.$route.params.filePath.includes(",")
+        ? this.$route.params.filePath.split(',').join('/')
+        : this.$route.params.filePath,
       this.$route.params.fileName
     );
     ipcRenderer.on(ipcKeys.getGallaryAck, (event, data) => {
@@ -43,7 +49,9 @@ export default {
           this.images.push(image);
           ipcRenderer.send(ipcKeys.mainAppLoading, "stopload");
         },
-        this.$route.params.filePath,
+        this.$route.params.filePath.includes(",")
+          ? this.$route.params.filePath.split(',').join('/')
+          : this.$route.params.filePath,
         this.$route.params.fileName
       );
     });

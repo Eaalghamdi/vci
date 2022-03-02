@@ -19,6 +19,7 @@ import getSliency from "../../provider/getSliency";
 
 export default {
   name: "VisulaizationCanves",
+  props: ["id", "filePath", "fileName"],
   data() {
     return {};
   },
