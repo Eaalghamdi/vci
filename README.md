@@ -16,7 +16,7 @@ AUVANA is an automated tool for extracting, computing, and visualizing complexit
 10.	Motion detection and estimation
 
 
-#downloading the software 
+# Downloading the software 
 
 For mac users
 https://drive.google.com/file/d/1jZR2rdi3U7mv0W8bk_RSa2QaWxw2fix2/view?usp=sharing
