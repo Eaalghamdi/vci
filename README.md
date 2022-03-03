@@ -19,7 +19,7 @@ AUVANA is an automated tool for extracting, computing, and visualizing complexit
 # Downloading the software 
 
 For mac users
-https://drive.google.com/file/d/1jZR2rdi3U7mv0W8bk_RSa2QaWxw2fix2/view?usp=sharing
+https://drive.google.com/file/d/14drVCK3kKGGUPMW8l85J8DKzSuWFGfTb/view?usp=sharing
 
 For Windows user 
 COMING SOON
