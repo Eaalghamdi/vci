@@ -11,10 +11,14 @@ AUVANA is an automated tool for extracting, computing, and visualizing complexit
 5.	Saliency detection 
 6.	Colorfulness
 7.	Structural similarity 
+8.	Face recognition 
+9.	Edge detection 
+10.	Motion detection and estimation
+
 
 
 To download the Mac version 
-
+https://drive.google.com/file/d/1jZR2rdi3U7mv0W8bk_RSa2QaWxw2fix2/view?usp=sharing
 
 
  
