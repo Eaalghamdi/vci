@@ -23,12 +23,13 @@ export default {
     return {
       images: [],
       sourcePath: null,
-      VideoPath:
-        (this.$route.params.filePath.includes(",")
-          ? this.$route.params.filePath.split(',').join('/')
-          : this.$route.params.filePath) +
-        "/" +
-        this.$route.params.fileName,
+      VideoPath: '',
+      // VideoPath:
+      //   (this.$route.params.filePath.includes(",")
+      //     ? this.$route.params.filePath.split(',').join('/')
+      //     : this.$route.params.filePath) +
+      //   "/" +
+      //   this.$route.params.fileName,
     };
   },
 
