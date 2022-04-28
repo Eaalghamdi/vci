@@ -36,7 +36,7 @@ missing module named _winreg - imported by platform (delayed, optional), pkg_res
 missing module named org - imported by pickle (optional)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional), zipimport (top-level)
-missing module named nt - imported by shutil (conditional), ntpath (optional), pathlib (conditional), ctypes (delayed, conditional), os (delayed, conditional, optional)
+missing module named nt - imported by os (delayed, conditional, optional), ntpath (optional), shutil (conditional), pathlib (conditional), ctypes (delayed, conditional)
 missing module named pyimod03_importers - imported by /Users/niccanordhasm/Documents/Untitled/base/env/lib/python3.8/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (top-level)
 missing module named sqlite3.Error - imported by sqlite3 (top-level), database.db (top-level), database.models (top-level)
 missing module named numarray - imported by numpy.distutils.system_info (delayed, conditional, optional)

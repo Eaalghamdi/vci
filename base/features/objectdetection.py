@@ -46,6 +46,6 @@ def object_detection(frameDir, thrHold):
         imgName = imgNam.split(".")[0]
 
         Provider.insert_objectdetection(
-            [imgName, str(ClassIndex[0]), str(confidence[0]), str(bbox[0])])
+            [imgName, classLabels[ClassIndex[0]], str(confidence[0]), str(bbox[0])])
 
     return 'completed'
