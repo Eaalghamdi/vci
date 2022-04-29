@@ -91,3 +91,17 @@ def delete_one(tbname, id):
         return json_output
     except Error as e:
         return e
+
+
+def clear_all(tbname):
+    sql = (f"DELETE FROM {tbname};")
+    try:
+        connection = db.create_connection()
+        cur = connection.cursor()
+        cur.execute(sql)
+        connection.commit()
+        cur.close()
+        connection.close()
+        return 'completed'
+    except Error as e:
+        return e

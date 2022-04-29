@@ -71,6 +71,9 @@ export function tmpVideoDirectory() {
     }
 }
 
+export const resDefaultHeight = 768
+export const resDefaultWidth = 1024
+
 // add same key in keysForClear while adding new key in keys
 export const prefKeys = {
     selVideoFileName: "selVideoFileName",
@@ -95,7 +98,23 @@ export const apiArgs = {
     createProject: "create_project",
     shotBounDetec: "shot_bundry_detection",
     deleteProject: "delete_project",
-    manFrame: "manual_frame"
+    manFrame: "manual_frame",
+    colorFulness: "colorfulness",
+    getColorfulness: "get_colorfulness",
+    edgeDetection: "edgedetection",
+    getEdgeDetection: "get_edgedetection",
+    objectdetection: "objectdetection",
+    getObjectdetection: "get_objectdetection",
+    structSimilarity: "strusimilarity",
+    getStructSimilarity: "get_strusimilarity",
+    compression: "compression",
+    getCompression: "get_compression",
+    faceDetection: "facedetection",
+    getFaceDetection: "get_facedetection",
+    motion: "motion",
+    getMotion: "get_motion",
+    saliency: "saliency",
+    getSaliency: "get_saliency"
 }
 
 export const epMode = {
@@ -121,6 +140,10 @@ export const ipcKeys = {
     mainAppFieldEmpty: "main-app-fields-empty",
     getGallary: "get-gallary-fetch-images",
     getGallaryAck: "get-gallary-fetch-images-ack",
+    getResultTable: "get-result-table",
+    getResultTableAck: "get-result-table-ack",
+    panelVisibility: "get-panel-visibility",
+    panelVisibilityAck: "get-panel-visibility-ack",
 }
 
 

@@ -16,9 +16,6 @@
           <div class="p-col row-top">
             <FrameExtraction />
           </div>
-          <div class="p-col row-down">
-            <Prepreossing />
-          </div>
         </div>
       </div>
       <div class="p-col col-2">
@@ -39,8 +36,7 @@
 
 <script>
 import VideoPlayer from "../components/main_app/VideoPlayer.vue";
-import TopMenu from "../components/TopMenu.vue";
-import Prepreossing from "../components/main_app/Preprocessing.vue";
+import TopMenu from "../components/common/TopMenu.vue";
 import FrameExtraction from "../components/main_app/FrameExtraction.vue";
 import FrameGallary from "../components/main_app/FrameGallary.vue";
 import Loading from "vue-loading-overlay";
@@ -50,6 +46,7 @@ import { ipcKeys } from "../utils/config";
 
 export default {
   name: "MainApp",
+  props: ["id", "filePath", "fileName"],
   data() {
     return {
       isLoading: false,
@@ -65,7 +62,6 @@ export default {
     VideoPlayer,
     TopMenu,
     FrameExtraction,
-    Prepreossing,
     FrameGallary,
   },
 
@@ -93,7 +89,6 @@ export default {
 }
 
 .SideMenu {
-  height: 100vh;
   margin: 0px;
   background-color: #1e1e1e;
 }

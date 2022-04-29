@@ -39,8 +39,8 @@ export default {
   data() {
     return {
       projects: {},
-      videoFileName: "",
-      projectTitle: "",
+      videoFileName: null,
+      projectTitle: null,
     };
   },
   mounted() {

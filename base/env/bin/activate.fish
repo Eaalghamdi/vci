@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/niccanordhasm/Documents/GitHub/auvana_v_1/base/env"
+set -gx VIRTUAL_ENV "/Users/niccanordhasm/Documents/Untitled/base/env"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH

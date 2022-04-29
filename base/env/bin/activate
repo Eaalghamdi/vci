@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/niccanordhasm/Documents/GitHub/auvana_v_1/base/env"
+VIRTUAL_ENV="/Users/niccanordhasm/Documents/Untitled/base/env"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

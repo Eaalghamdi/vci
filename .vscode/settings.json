@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./base/dist/api",
+        "./base/env/lib/python3.8/site-packages"
+    ]
+}

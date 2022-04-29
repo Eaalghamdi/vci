@@ -15,17 +15,20 @@
   },
   "main": "background.js",
   "dependencies": {
-    "chart.js": "^3.7.0",
+    "chart.js": "^3.7.1",
+    "chartjs-adapter-moment": "^1.0.0",
     "core-js": "^3.6.5",
     "electron-notarize": "^1.1.1",
     "electron-store": "^8.0.1",
+    "moment": "^2.29.1",
     "primeflex": "^3.1.2",
     "primeicons": "^5.0.0",
     "primevue": "^3.1.1",
     "python-shell": "^3.0.1",
     "vue": "^3.0.0",
     "vue-loading-overlay": "^5.0.3",
-    "vue-router": "^4.0.6"
+    "vue-router": "^4.0.6",
+    "xlsx": "^0.18.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

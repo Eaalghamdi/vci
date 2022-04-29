@@ -1,5 +1,5 @@
 <template>
-  <ScrollPanel style="width: 100%; height: 360px">
+  <ScrollPanel style="height: 320px">
     <div class="col">
       <ul>
         <li v-for="image in images" v-bind:key="image.id">
@@ -23,8 +23,13 @@ export default {
     return {
       images: [],
       sourcePath: null,
-      VideoPath:
-        this.$route.params.filePath + "/" + this.$route.params.fileName,
+      VideoPath: '',
+      // VideoPath:
+      //   (this.$route.params.filePath.includes(",")
+      //     ? this.$route.params.filePath.split(',').join('/')
+      //     : this.$route.params.filePath) +
+      //   "/" +
+      //   this.$route.params.fileName,
     };
   },
 
@@ -33,7 +38,9 @@ export default {
       (image) => {
         this.images.push(image);
       },
-      this.$route.params.filePath,
+      this.$route.params.filePath.includes(",")
+        ? this.$route.params.filePath.split(',').join('/')
+        : this.$route.params.filePath,
       this.$route.params.fileName
     );
     ipcRenderer.on(ipcKeys.getGallaryAck, (event, data) => {
@@ -43,7 +50,9 @@ export default {
           this.images.push(image);
           ipcRenderer.send(ipcKeys.mainAppLoading, "stopload");
         },
-        this.$route.params.filePath,
+        this.$route.params.filePath.includes(",")
+          ? this.$route.params.filePath.split(',').join('/')
+          : this.$route.params.filePath,
         this.$route.params.fileName
       );
     });

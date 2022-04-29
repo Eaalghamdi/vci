@@ -40,8 +40,10 @@ module.exports = {
           entitlementsInherit: "./src/build/entitlements.mac.plist",
           hardenedRuntime: true,
           gatekeeperAssess: false,
+          icon: "./src/assets/app_icon.icns",
         },
         win: {
+          icon: "./src/assets/app_logo.png",
           target: ["nsis"]
         },
         linux: {

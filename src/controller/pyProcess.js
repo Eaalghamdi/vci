@@ -28,15 +28,21 @@ export function pyProcess(mode, widget, args) {
         console.log(argsMain)
         try {
             if (mode == epMode.GET) {
+                let datasss = ''
                 spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
-                        widget(data);
+                        datasss = datasss + data
+                    }).on('end', () => {
+                        widget(datasss)
                     });
                 argsMain = []
             } else if (mode == epMode.POST) {
+                let datasss = ''
                 spawn(pyVenvPath(), argsMain).stdout
                     .on('data', (data) => {
-                        widget(data);
+                        datasss = datasss + data
+                    }).on('end', () => {
+                        widget(datasss)
                     });
                 argsMain = []
             }
@@ -47,17 +53,20 @@ export function pyProcess(mode, widget, args) {
     } else if (getMode() == 'production') {
         var argsMain = [];
         argsMain.push.apply(argsMain, args);
-        console.log(argsMain)
+        console.log([productionPath(), argsMain])
         try {
             if (mode == epMode.GET) {
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    widget(stdout);
+                    console.log(error)
+                    console.log(stderror)
+                    widget(stdout)
                 })
                 argsMain = []
             } else if (mode == epMode.POST) {
                 execFile(productionPath(), argsMain, {}, (error, stdout, stderror) => {
-                    widget(stdout);
-
+                    console.log(error)
+                    console.log(stderror)
+                    widget(stdout)
                 })
                 argsMain = []
             }
