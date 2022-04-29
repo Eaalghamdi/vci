@@ -34,12 +34,12 @@ https://bit.ly/3EYMAgH
 
 
 
-# If you use the software please cite this study 
+## If you use the software please cite this study 
 https://osf.io/kj9hx/
 
 
 
-To build the tool locally 
+## To build the tool locally 
 
 for node_modules
 yarn install
