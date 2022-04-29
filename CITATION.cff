@@ -1,7 +1,19 @@
-@article{Alghamdi2021Auvana,
-title = {{AUVANA}: An automated video analysis tool for visual complexity},
-  author  = {Alghamdi, Emad A. and Velloso, Eduardo and  Gruba, Paul}, 
-  year    = {2021},
-  doi = {https://doi.org/10.31219/osf.io/kj9hx}
- 
-}
+
+
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Alghamdi"
+  given-names: "Emad"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Velloso"
+  given-names: "Eduardo"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+- family-names: "Gruba"
+  given-names: "Paul"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "AUVANA}: An automated video analysis tool for visual complexity"
+version: 0.1.0
+doi: 10.31219/osf.io/kj9hx
+date-released: 2021
+url: ""
