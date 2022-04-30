@@ -35,7 +35,9 @@ https://bit.ly/3EYMAgH
 
 
 ## If you use the software please cite this study 
-https://osf.io/kj9hx/
+Alghamdi, E., Velloso, E, & Gruba, P. (2021). AUVANA: An Automated Video Analysis Tool for Visual Complexity. Preprint, https://doi.org/10.31219/osf.io/kj9h
+
+
 
 
 
