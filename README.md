@@ -1,8 +1,8 @@
 
 
-# AUVANA (v 0.1.0)
+# VCI (v 0.1.0)
 
-AUVANA is an automated tool for extracting, computing, and visualizing complexity in videos using techniques and algorithms from the field of computer vision and video processing. The current version (v 1.0.1) commutes the following complexity indices/features
+Visual Complexity Inspector (VCI) is an automated tool for extracting, computing, and visualizing complexity in videos using techniques and algorithms from the field of computer vision and video processing. The current version (v 1.0.1) commutes the following complexity indices/features
 
 1.	Shot boundary Detection 
 2.	Extraction of frames
